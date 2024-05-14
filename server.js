@@ -67,6 +67,10 @@ app.get('/login', (req, res) => {
   res.render("login")
 })
 
+app.get('/loggedin', (req, res) => {
+  res.render("bottom_main_menu")
+})
+
 
 
 
