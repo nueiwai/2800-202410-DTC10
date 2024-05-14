@@ -20,5 +20,8 @@
     "mongodb": "^6.6.1",
     "mongoose": "^8.3.4",
     "nodemon": "^3.1.0"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.3"
   }
 }

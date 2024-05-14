@@ -18,14 +18,18 @@ const mongodb_database = process.env.MONGODB_DATABASE;
 const mongodb_session_secret = process.env.MONGODB_SESSION_SECRET;
 /* END secret section */
 
+
+// Create database connection to use as the store option in the session object below
 const db = MongoStore.create({
   mongoUrl: `mongodb+srv://${mongodb_user}:${mongodb_password}@${mongodb_host}`
 })
 
+// Express application setup
 app.set('view engine', 'ejs');
 app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(express.static("src"));
 app.use(session({
   secret: bcrypt.hashSync(`${mongodb_session_secret}`, 10),
   resave: false,
@@ -44,12 +48,24 @@ app.get('/', async (req, res) => {
   res.render("index")
 })
 
-app.post('/newuser', async (req, res) => {
-  const randomEmail = Math.floor(Math.random() * 101);
-  const randomPW = Math.floor(Math.random() * 100001);
-  const test = await new userModel({ name: "testing", email: `${randomEmail}@gmail.com`, password: `${randomPW}`, })
-  await test.save()
-  res.send("user saved")
+// app.post('/newuser', async (req, res) => {
+//   const randomEmail = Math.floor(Math.random() * 101);
+//   const randomPW = Math.floor(Math.random() * 100001);
+//   const test = await new userModel({ name: "testing", email: `${randomEmail}@gmail.com`, password: `${randomPW}`, })
+//   await test.save()
+//   res.send("user saved")
+// })
+
+app.get('/signup', (req, res) => {
+  res.render("signup")
 })
+
+app.get('/login', (req, res) => {
+  res.render("login")
+})
+
+
+
+
 
 
