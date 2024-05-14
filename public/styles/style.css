@@ -1,0 +1,38 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.geocoder {
+  position: absolute;
+  z-index: 1;
+  width: 60%;
+  left: 40%;
+  margin-left: -20%;
+  top: 20px;
+}
+
+.mapboxgl-ctrl-geocoder {
+  min-width: 100%;
+}
+
+.account-icon {
+  position: absolute;
+  top: 24px;
+  right: 5%;
+  z-index: 1;
+}
+
+.home-icon {
+  position: absolute;
+  top: 24px;
+  left: 5%;
+  z-index: 1;
+}
