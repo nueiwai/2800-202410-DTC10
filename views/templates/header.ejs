@@ -1,9 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="./output.css" type="text/css" rel="stylesheet" />
-    <title>Document</title>
-  </head>
-</html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="./output.css" type="text/css" rel="stylesheet" />
+  <title>Dronify</title>
+
+  <link rel="icon" type="image/x-icon" href="/images/Dronify_Favicon.png">
+  <link rel="stylesheet" href="/styles/style.css">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+
+  <!-- import map JS (different from tiles) -->
+  <script src='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css' rel='stylesheet' />
+
+  <!-- import geocoder plugins for search bar from Mapbox -->
+  <script
+    src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.min.js'></script>
+  <link rel='stylesheet'
+    href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.css'
+    type='text/css' />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        colors: {
+          transparent: 'transparent',
+          current: 'currentColor',
+          'white': '#ffffff',
+          'black': '#000000',
+          'cardBg': '#31B6C0',
+          'cardBgHover': '#2A9AA2',
+          'buttonBg': '#074464',
+        },
+      },
+    }
+  </script>
+</head>
+
+<body>
