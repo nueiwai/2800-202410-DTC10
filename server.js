@@ -44,6 +44,9 @@ app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
 
+// Serve static files
+app.use(express.static(__dirname + "/public"));
+
 app.get('/', async (req, res) => {
   res.render("index")
 })
@@ -63,7 +66,6 @@ app.get('/signup', (req, res) => {
 app.get('/login', (req, res) => {
   res.render("login")
 })
-
 
 
 
