@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const port = 3001
+const port = 3000
 const session = require('express-session')
 const bcrypt = require('bcrypt')
 const ejs = require('ejs');
@@ -129,8 +129,13 @@ app.get('/getInfo', async (req, res) => {
 // Updates the name of user
 app.post('/update', async(req, res) => {
   const user = await userModel.findById(req.body.userID)
-  user.name = req.body.userName
-  await user.save()
-  console.log("name saved")
+  console.log(req.body.query)
+  await user.updateOne({$set: req.body.query})
+  .then(()=> {
+    console.log("saved")
+  })
+  .catch(error => {
+    console.log(error)
+  })
 })
 
