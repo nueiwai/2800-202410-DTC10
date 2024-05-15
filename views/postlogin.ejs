@@ -1,0 +1,20 @@
+<%- include("templates/header") %>
+<p>logged in</p>
+
+<button id="menuBtn" onclick="toggleMenu()">click me to open account page</button>
+<div id="menu" class="flex flex-col invisible">
+    <input id="userName" type="text" placeholder="Name">
+    <button id="saveNameBtn" onclick="updateUser()" type="submit">Save</button>
+    <input type="text" placeholder="Street">
+    <input type="text" placeholder="Email">
+    <input type="text" placeholder="Password">
+    <input type="text" placeholder="Phone Number">
+    <div class="flex gap-2">
+        <button>Cancel</button>
+        <button>Save</button>
+    </div>
+    <form action="/logout" method="POST">
+        <button>log out</button>
+    </form>
+</div>
+<%- include("templates/footer") %>
