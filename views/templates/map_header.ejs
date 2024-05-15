@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset='utf-8' />
+  <title>Document</title>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/images/Dronify_Favicon.png">
+
+  <!-- Tailwind and Flowbite -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+
+  <!-- import map JS (different from tiles) -->
+  <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet">
+  <script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
+
+  <!-- import geocoder plugins for search bar from Mapbox -->
+  <script
+    src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
+  <link rel="stylesheet"
+    href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        colors: {
+          transparent: 'transparent',
+          current: 'currentColor',
+          'white': '#ffffff',
+          'black': '#000000',
+          'cardBg': '#31B6C0',
+          'cardBgHover': '#2A9AA2',
+          'buttonBg': '#074464',
+          'bluishGray': '#8FA3AD',
+          'yellowishGray': '#CBCBCB',
+          'darkestShade': '#010204',
+        },
+      },
+    }
+  </script>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    #map {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+    }
+
+    .geocoder {
+      position: absolute;
+      z-index: 1;
+      width: 60%;
+      left: 40%;
+      margin-left: -20%;
+      top: 20px;
+    }
+
+    .mapboxgl-ctrl-geocoder {
+      min-width: 100%;
+    }
+
+    .account-icon {
+      position: absolute;
+      top: 24px;
+      right: 5%;
+      z-index: 1;
+    }
+
+    .home-icon {
+      position: absolute;
+      top: 24px;
+      left: 5%;
+      z-index: 1;
+    }
+  </style>
+</head>
+
+<body>
