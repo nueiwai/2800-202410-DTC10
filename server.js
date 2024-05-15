@@ -118,8 +118,6 @@ app.post('/update', async(req, res) => {
   console.log("name saved")
 })
 
-//ToDo: change back to port 3000
-
 
 
 
