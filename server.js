@@ -129,3 +129,6 @@ app.post('/update', async(req, res) => {
   console.log("name saved")
 })
 
+app.get('/availablebattery', (req, res) => {
+  res.render("availablebattery")
+} )
