@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const port = 3000
+const port = 3001
 const session = require('express-session')
 const bcrypt = require('bcrypt')
 const ejs = require('ejs');
@@ -62,14 +62,14 @@ app.get('/login', (req, res) => {
   res.render("login")
 })
 
-<<<<<<< HEAD
+
 app.get('/packagesize', (req, res) => {
   res.render("packagesize")
 })
 
 app.get('/availableroute', (req, res) => {
   res.render("availableroute")
-}
+})
 
 // Forgot ID route
 app.get('/resetpassword', (req, res) => {
@@ -88,12 +88,17 @@ app.post('/logout', (req, res) => {
 })
 
 // Creates a new user from the body of the submitted form and writes to database
+// ToDo: Need to handle errors when user is trying to create account with exisitng email
 app.post('/signup', async (req, res) => {
   const newUser = await new userModel({
+    username: req.body.username,
     name: req.body.name,
     email: req.body.email,
     password: bcrypt.hashSync(req.body.password, 10)
   })
+  console.log(newUser.username)
+  console.log(newUser.name)
+  console.log(newUser.email)
   req.session.userid = newUser.id
   await newUser.save()
   res.redirect("postlogin")
@@ -101,7 +106,7 @@ app.post('/signup', async (req, res) => {
 
 // Checks the login information and redirects to landing page if successful, otherwise redirect to index 
 app.post('/login', async (req, res) => {
-  const user = await userModel.findOne({email: req.body.email})
+  const user = await userModel.findOne({username: req.body.username})
   const isAuth = await bcrypt.compare(req.body.password, user.password)
 
   if (isAuth){

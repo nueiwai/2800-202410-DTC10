@@ -16,6 +16,10 @@ async function main() {
 main().catch(err => console.log(err));
 
 const userSchema = new mongoose.Schema({
+  username: {
+    type: String,
+    required: true
+  },
   name: {
     type: String,
     required: true
