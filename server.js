@@ -19,7 +19,7 @@ const mongodb_session_secret = process.env.MONGODB_SESSION_SECRET;
 
 // Create database connection to use as the store option in the session object below
 const db = MongoStore.create({
-  mongoUrl: `mongodb+srv://${mongodb_user}:${mongodb_password}@${mongodb_host}`
+  mongoUrl: `mongodb+srv://${mongodb_user}:${mongodb_password}@${mongodb_host}/${mongodb_database}`
 })
 
 // Express application setup
@@ -52,6 +52,17 @@ app.get('/', async (req, res) => {
   res.render("index")
 })
 
+// Map testing routes:
+// Main map
+app.get('/map', async(req, res) => {
+  res.render("map")
+})
+
+// Routing between two points
+app.get('/routing', async (req, res) => {
+  res.render("routing")
+})
+
 // Signup route
 app.get('/signup', (req, res) => {
   res.render("signup")
@@ -62,14 +73,13 @@ app.get('/login', (req, res) => {
   res.render("login")
 })
 
-<<<<<<< HEAD
 app.get('/packagesize', (req, res) => {
   res.render("packagesize")
 })
 
 app.get('/availableroute', (req, res) => {
   res.render("availableroute")
-}
+})
 
 // Forgot ID route
 app.get('/resetpassword', (req, res) => {
@@ -82,7 +92,7 @@ app.get('/postlogin', (req, res) => {
 })
 
 // Logout route
-app.post('/logout', (req, res) => {
+app.get('/logout', (req, res) => {
   req.session.destroy()
   res.redirect('/')
 })
@@ -128,4 +138,3 @@ app.post('/update', async(req, res) => {
   await user.save()
   console.log("name saved")
 })
-
