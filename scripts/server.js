@@ -4,7 +4,7 @@ const port = 3001
 const session = require('express-session')
 const bcrypt = require('bcrypt')
 const ejs = require('ejs');
-const userModel = require('./users')
+const userModel = require('../users')
 const MongoStore = require('connect-mongo');
 const cors = require('cors')
 require('dotenv').config();
