@@ -62,14 +62,20 @@ app.get('/login', (req, res) => {
   res.render("login")
 })
 
-<<<<<<< HEAD
+// Package size route
 app.get('/packagesize', (req, res) => {
   res.render("packagesize")
 })
 
+// Available route route
 app.get('/availableroute', (req, res) => {
   res.render("availableroute")
-}
+})
+
+// Available battery route
+app.get('/availablebattery', (req, res) => {
+  res.render("availablebattery")
+} )
 
 // Forgot ID route
 app.get('/resetpassword', (req, res) => {
@@ -128,7 +134,3 @@ app.post('/update', async(req, res) => {
   await user.save()
   console.log("name saved")
 })
-
-app.get('/availablebattery', (req, res) => {
-  res.render("availablebattery")
-} )
