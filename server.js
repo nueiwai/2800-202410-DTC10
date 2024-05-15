@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const port = 3000
+const port = 3001
 const session = require('express-session')
 const bcrypt = require('bcrypt')
 const ejs = require('ejs');
@@ -30,6 +30,7 @@ app.use(express.urlencoded({ extended: false }));
 // Serve static files
 app.use(express.static("src"));
 app.use(express.static("scripts"));
+app.use(express.static("videos"));
 app.use(express.static(__dirname + "/public"));
 // Configure sessions
 app.use(session({
@@ -61,7 +62,6 @@ app.get('/signup', (req, res) => {
 app.get('/login', (req, res) => {
   res.render("login")
 })
-
 
 app.get('/packagesize', (req, res) => {
   res.render("packagesize")
