@@ -74,3 +74,7 @@ app.get('/packagesize', (req, res) => {
 app.get('/availableroute', (req, res) => {
   res.render("availableroute")
 })
+
+app.get('/availablebattery', (req, res) => {
+  res.render("availablebattery")
+} )
