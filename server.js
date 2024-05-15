@@ -126,7 +126,7 @@ app.get('/getInfo', async (req, res) => {
   res.send(userInfo)
 })
 
-// Updates the name of user
+// Updates the user with the given information in the req.body 
 app.post('/update', async(req, res) => {
   const user = await userModel.findById(req.body.userID)
   console.log(req.body.query)
@@ -138,4 +138,6 @@ app.post('/update', async(req, res) => {
     console.log(error)
   })
 })
+
+//ToDo: Add 404 route
 

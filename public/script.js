@@ -1,26 +1,26 @@
 // Toggles visibility of account information in the #menu element found in postlogin.ejs
 async function toggleMenu(){
     document.getElementById("menu").classList.toggle("invisible")
-    const info = await getUserInfo()
-    document.getElementById("name").value = info.name
-    username.value = info.username
-    email.value = info.email
-    if (info.address){
-        email.value = info.address
+    const user = await getUserInfo()
+    document.getElementById("name").value = user.name
+    username.value = user.username
+    email.value = user.email
+    if (user.address){
+        email.value = user.address
     }
-    if (info.phonenumbere){
-        email.value = info.phonenumber
+    if (user.phonenumber){
+        email.value = user.phonenumber
     }
 }
 
 // Returns the logged in users information. Only works if you are logged in! wont work after saving unless logging in again!
 async function getUserInfo(){
     const response = await fetch("/getInfo");
-    const info = await response.json();
-    return info
+    const user = await response.json();
+    return user
 }
 
-// Updates user information when save button is clicked
+// Updates the user information
 // ToDo: Handle errors when not logged in or else will crash
 document.querySelectorAll("#saveBtn").forEach(async (button) => {
     button.addEventListener("click", async (e) => {
@@ -40,8 +40,9 @@ document.querySelectorAll("#saveBtn").forEach(async (button) => {
             }
             }),
         })
-        const result = await response.json()
-        console.log(result)
+        await response.json()
+        .catch(error => {
+            console.log(error)
+        })
     })
-
 })
