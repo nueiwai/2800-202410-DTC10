@@ -60,6 +60,11 @@ app.get('/login', (req, res) => {
   res.render("login")
 })
 
+// Forgot ID route
+app.get('/resetpassword', (req, res) => {
+  res.render('resetpassword')
+})
+
 // Post login route
 app.get('/postlogin', (req, res) => {
   res.render("postlogin")
@@ -112,6 +117,9 @@ app.post('/update', async(req, res) => {
   await user.save()
   console.log("name saved")
 })
+
+//ToDo: change back to port 3000
+
 
 
 
