@@ -1,13 +1,10 @@
 <%- include("templates/header") %>
 <p>logged in</p>
-<form action="/logout" method="POST">
-    <button>log out</button>
-</form>
 
 <button id="menuBtn" onclick="toggleMenu()">click me to open account page</button>
-
-<form id="menu" action="/edit" method="POST" class="flex flex-col border invisible">
-    <input type="text" placeholder="Name">
+<div id="menu" class="flex flex-col invisible">
+    <input id="userName" type="text" placeholder="Name">
+    <button id="saveNameBtn" onclick="updateUser()" type="submit">Save</button>
     <input type="text" placeholder="Street">
     <input type="text" placeholder="Email">
     <input type="text" placeholder="Password">
@@ -16,5 +13,8 @@
         <button>Cancel</button>
         <button>Save</button>
     </div>
-</form>
+    <form action="/logout" method="POST">
+        <button>log out</button>
+    </form>
+</div>
 <%- include("templates/footer") %>
