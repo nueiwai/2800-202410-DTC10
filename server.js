@@ -74,3 +74,6 @@ app.get('/packagesize', (req, res) => {
 app.get('/availableroute', (req, res) => {
   res.render("availableroute")
 })
+
+
+
