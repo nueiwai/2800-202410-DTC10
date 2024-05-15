@@ -67,7 +67,6 @@ app.get('/login', (req, res) => {
   res.render("login")
 })
 
-
-
-
-
+app.get('/packagesize', (req, res) => {
+  res.render("package_size")
+})
