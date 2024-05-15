@@ -70,3 +70,7 @@ app.get('/login', (req, res) => {
 app.get('/packagesize', (req, res) => {
   res.render("packagesize")
 })
+
+app.get('/availableroute', (req, res) => {
+  res.render("availableroute")
+})
