@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const port = 3000
+const port = 3001
 const session = require('express-session')
 const bcrypt = require('bcrypt')
 const ejs = require('ejs');
@@ -30,6 +30,7 @@ app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static("src"));
+app.use(express.static("scripts"));
 app.use(session({
   secret: bcrypt.hashSync(`${mongodb_session_secret}`, 10),
   resave: false,
@@ -46,22 +47,47 @@ app.listen(port, () => {
 
 app.get('/', async (req, res) => {
   res.render("index")
+  console.log(req.session.userid)
 })
-
-// app.post('/newuser', async (req, res) => {
-//   const randomEmail = Math.floor(Math.random() * 101);
-//   const randomPW = Math.floor(Math.random() * 100001);
-//   const test = await new userModel({ name: "testing", email: `${randomEmail}@gmail.com`, password: `${randomPW}`, })
-//   await test.save()
-//   res.send("user saved")
-// })
 
 app.get('/signup', (req, res) => {
   res.render("signup")
 })
 
+app.post('/signup', async (req, res) => {
+  const newUser = await new userModel({
+    name: req.body.name,
+    email: req.body.email,
+    password: bcrypt.hashSync(req.body.password, 10)
+  })
+  req.session.userid = newUser.id
+  await newUser.save()
+  res.redirect("postlogin")
+})
+
 app.get('/login', (req, res) => {
   res.render("login")
+})
+
+app.post('/login', async (req, res) => {
+  const user = await userModel.findOne({email: req.body.email})
+  const isAuth = await bcrypt.compare(req.body.password, user.password)
+  if (isAuth){
+    req.session.userid = user.id
+    return res.redirect("postlogin")
+  }
+  else {
+    res.redirect("/")
+  }
+})
+
+app.get('/postlogin', (req, res) => {
+  res.render("postlogin")
+})
+
+app.post('/logout', (req, res) => {
+  req.session.destroy()
+  res.redirect('/')
 })
 
 
