@@ -1,20 +1,23 @@
 // Toggles visibility of account information in the #menu element found in postlogin.ejs
-async function toggleMenu(){
-    document.getElementById("menu").classList.toggle("invisible")
+async function toggelAccountMenu() {
+    document.getElementById("main-menu-drawer").classList.toggle("hidden")
+    droneShareBtn.classList.toggle("hidden")
+    directDeliveryBtn.classList.toggle("hidden")
+    roadsideAssistanceBtn.classList.toggle("hidden")
     const user = await getUserInfo()
     document.getElementById("name").value = user.name
     username.value = user.username
     email.value = user.email
-    if (user.address){
-        email.value = user.address
+    if (user.address) {
+        address.value = user.address
     }
-    if (user.phonenumber){
-        email.value = user.phonenumber
+    if (user.phonenumber) {
+        phonenumber.value = user.phonenumber
     }
 }
 
 // Returns the logged in users information. Only works if you are logged in! wont work after saving unless logging in again!
-async function getUserInfo(){
+async function getUserInfo() {
     const response = await fetch("/getInfo");
     const user = await response.json();
     return user
@@ -29,20 +32,20 @@ document.querySelectorAll("#saveBtn").forEach(async (button) => {
         const user = await getUserInfo()
         const uid = user._id
         const response = await fetch("/update", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json; charset=UTF-8"
-        },
-        body: JSON.stringify({ 
-            userID: uid, 
-            query: {
-                [updatedField]: updatedValue
-            }
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json; charset=UTF-8"
+            },
+            body: JSON.stringify({
+                userID: uid,
+                query: {
+                    [updatedField]: updatedValue
+                }
             }),
         })
         await response.json()
-        .catch(error => {
-            console.log(error)
-        })
+            .catch(error => {
+                console.log(error)
+            })
     })
 })
