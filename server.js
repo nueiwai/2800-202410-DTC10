@@ -106,10 +106,10 @@ app.post('/signup', async (req, res) => {
 
 // Checks the login information and redirects to landing page if successful, otherwise redirect to index 
 app.post('/login', async (req, res) => {
-  const user = await userModel.findOne({username: req.body.username})
+  const user = await userModel.findOne({ username: req.body.username })
   const isAuth = await bcrypt.compare(req.body.password, user.password)
 
-  if (isAuth){
+  if (isAuth) {
     req.session.userid = user.id
     return res.redirect("postlogin")
   }
@@ -121,22 +121,22 @@ app.post('/login', async (req, res) => {
 // Returns user info of session owner
 app.get('/getInfo', async (req, res) => {
   const userID = req.session.userid
-  const userInfo = await userModel.findById({_id: userID})
+  const userInfo = await userModel.findById({ _id: userID })
   // console.log(userInfo)
   res.send(userInfo)
 })
 
 // Updates the user with the given information in the req.body 
-app.post('/update', async(req, res) => {
+app.post('/update', async (req, res) => {
   const user = await userModel.findById(req.body.userID)
   console.log(req.body.query)
-  await user.updateOne({$set: req.body.query})
-  .then(()=> {
-    console.log("saved")
-  })
-  .catch(error => {
-    console.log(error)
-  })
+  await user.updateOne({ $set: req.body.query })
+    .then(() => {
+      console.log("saved")
+    })
+    .catch(error => {
+      console.log(error)
+    })
 })
 
 //ToDo: Add 404 route
