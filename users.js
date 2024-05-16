@@ -33,10 +33,19 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  address: {
+  // address: {
+  //   type: String
+  // },
+  phonenumber: {
     type: String
   },
-  phonenumber: {
+  street: {
+    type: String
+  },
+  city: {
+    type: String
+  },
+  postal: {
     type: String
   }
 });
