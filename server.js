@@ -91,14 +91,14 @@ app.get('/availablebattery', (req, res) => {
   res.render("availablebattery")
 })
 
-// Forget ID route
-app.get('/forgetid', (req, res) => {
-  res.render('forgetid')
-})
-
 // Select payment route
 app.get('/selectpayment', (req, res) => {
   res.render("selectpayment")
+})
+
+// Forget ID route
+app.get('/forgetid', (req, res) => {
+  res.render('forgetid')
 })
 
 // Reset password route
