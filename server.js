@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const port = 3001
+const port = 3000
 const session = require('express-session')
 const bcrypt = require('bcrypt')
 const ejs = require('ejs');
