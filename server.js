@@ -77,7 +77,12 @@ app.get('/availablebattery', (req, res) => {
   res.render("availablebattery")
 } )
 
-// Forgot ID route
+// Forget id route
+app.get('/forgetid', (req, res) => {
+  res.render('forgetid')
+})
+
+// Reset password route
 app.get('/resetpassword', (req, res) => {
   res.render('resetpassword')
 })
