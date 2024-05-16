@@ -1,4 +1,5 @@
-<%- include('templates/header') %>
+<%- include('templates/map_header') %>
+
     <!-- drawer init and toggle -->
     <div class="text-center">
         <button
@@ -70,8 +71,68 @@
                         <path d="M12 8l5 -3" />
                     </svg>
                 </div>
-                <div class="font-medium text-center text-gray-500 dark:text-gray-400">>L (5kg - 10kg)</div>
+                <div class="font-medium text-center text-gray-500 dark:text-gray-400">L (5kg - 10kg)</div>
             </div>
         </div>
     </div>
+
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1Ijoic3ByaW5nYyIsImEiOiJjbHRnOGc4dW8wd2o2MmxvNmN2NzRubnI3In0.njs3h0TJg9FhtoClPB9ovQ';
+
+        var map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center: [-123.112755, 49.241722], // Central Vancouver
+            zoom: 10.7
+        });
+
+        var geocoder = new MapboxGeocoder({
+            // Initialize the geocoder
+            accessToken: mapboxgl.accessToken,
+            mapboxgl: mapboxgl,
+            marker: false,
+            placeholder: 'Search address', // Placeholder text for the search bar
+            bbox: [-123.2460, 49.1666, -122.9086, 49.3200], // Loose boundary for Metro Vancouver (west to UBC, east to Burnaby Mountain)
+            proximity: {
+                longitude: -123.1207,
+                latitude: 49.2827
+            } // Coordinates of Central Vancouver
+        });
+
+        // Add the geocoder to the map
+        document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
+
+        // After the map style has loaded on the page,
+        // add a source layer and default styling for a single point
+        map.on('load', () => {
+            map.addSource('single-point', {
+                type: 'geojson',
+                data: {
+                    type: 'FeatureCollection',
+                    features: []
+                }
+            });
+
+            map.addLayer({
+                id: 'point',
+                source: 'single-point',
+                type: 'circle',
+                paint: {
+                    'circle-radius': 10,
+                    'circle-color': '#40E0D0'
+                }
+            });
+
+            // Listen for the result event from the Geocoder
+            // result event is triggered when a user makes a selection
+            // Add a marker at the result's coordinates
+            geocoder.on('result', (event) => {
+                map.getSource('single-point').setData(event.result.geometry);
+            });
+        });
+    </script>
+
     <%- include('templates/footer') %>
+        </body>
+
+        </html>
