@@ -1,4 +1,4 @@
-<%- include('templates/map_header.ejs') %>
+<%- include('templates/map_header') %>
   <!-- the account icon to the right of the search bar -->
   <div class="account-icon">
     <a href="/">
@@ -29,8 +29,6 @@
   <div id='map'></div>
   <!-- the geocoder search bar -->
   <div class="geocoder" id="geocoder"></div>
-
-  <%- include('bottom_main_menu') %>
 
     <script>
       const mapbox_access_token = '<%= process.env.MAPBOX_ACCESS_TOKEN %>';
