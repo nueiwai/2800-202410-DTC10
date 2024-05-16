@@ -31,6 +31,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static("src"));
 app.use(express.static("scripts"));
 app.use(express.static(__dirname + "/public"));
+app.use(express.static("public/images"));
+app.use(express.static("public/videos"));
 // Configure sessions
 app.use(session({
   secret: bcrypt.hashSync(`${mongodb_session_secret}`, 10),
@@ -49,7 +51,7 @@ app.listen(port, () => {
 
 // Landing page route
 app.get('/', async (req, res) => {
-  res.render("index")
+  res.render("landing_page")
 })
 
 // Signup route
@@ -62,14 +64,14 @@ app.get('/login', (req, res) => {
   res.render("login")
 })
 
-<<<<<<< HEAD
+
 app.get('/packagesize', (req, res) => {
   res.render("packagesize")
 })
 
 app.get('/availableroute', (req, res) => {
   res.render("availableroute")
-}
+})
 
 // Forgot ID route
 app.get('/resetpassword', (req, res) => {
@@ -81,8 +83,28 @@ app.get('/postlogin', (req, res) => {
   res.render("postlogin")
 })
 
+// Account route
+app.get('/account', (req, res) => {
+  res.render("account")
+})
+
+// Profile Edit route
+app.get('/profile_edit', (req, res) => {
+  res.render("profile_edit")
+})
+
+// Payment Edit route
+app.get('/payment_edit', (req, res) => {
+  res.render("payment_edit")
+})
+
+// Payment List route
+app.get('/payment_list', (req, res) => {
+  res.render("payment_list")
+})
+
 // Logout route
-app.post('/logout', (req, res) => {
+app.get('/logout', (req, res) => {
   req.session.destroy()
   res.redirect('/')
 })
@@ -101,10 +123,10 @@ app.post('/signup', async (req, res) => {
 
 // Checks the login information and redirects to landing page if successful, otherwise redirect to index 
 app.post('/login', async (req, res) => {
-  const user = await userModel.findOne({email: req.body.email})
+  const user = await userModel.findOne({ email: req.body.email })
   const isAuth = await bcrypt.compare(req.body.password, user.password)
 
-  if (isAuth){
+  if (isAuth) {
     req.session.userid = user.id
     return res.redirect("postlogin")
   }
@@ -116,16 +138,15 @@ app.post('/login', async (req, res) => {
 // Returns user info of session owner
 app.get('/getInfo', async (req, res) => {
   const userID = req.session.userid
-  const userInfo = await userModel.findById({_id: userID})
+  const userInfo = await userModel.findById({ _id: userID })
   // console.log(userInfo)
   res.send(userInfo)
 })
 
 // Updates the name of user
-app.post('/update', async(req, res) => {
+app.post('/update', async (req, res) => {
   const user = await userModel.findById(req.body.userID)
   user.name = req.body.userName
   await user.save()
   console.log("name saved")
 })
-
