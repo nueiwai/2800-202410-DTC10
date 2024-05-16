@@ -30,6 +30,7 @@ app.use(express.urlencoded({ extended: false }));
 // Serve static files
 app.use(express.static("src"));
 app.use(express.static("scripts"));
+app.use(express.static("videos"));
 app.use(express.static(__dirname + "/public"));
 app.use(express.static("public/images"));
 app.use(express.static("public/videos"));
@@ -64,7 +65,6 @@ app.get('/login', (req, res) => {
   res.render("login")
 })
 
-
 app.get('/packagesize', (req, res) => {
   res.render("packagesize")
 })
@@ -73,7 +73,12 @@ app.get('/availableroute', (req, res) => {
   res.render("availableroute")
 })
 
-// Forgot ID route
+// Forget ID route
+app.get('/forgetid', (req, res) => {
+  res.render('forgetid')
+})
+
+// Reset password route
 app.get('/resetpassword', (req, res) => {
   res.render('resetpassword')
 })
@@ -110,12 +115,17 @@ app.get('/logout', (req, res) => {
 })
 
 // Creates a new user from the body of the submitted form and writes to database
+// ToDo: Need to handle errors when user is trying to create account with exisitng email
 app.post('/signup', async (req, res) => {
   const newUser = await new userModel({
+    username: req.body.username,
     name: req.body.name,
     email: req.body.email,
     password: bcrypt.hashSync(req.body.password, 10)
   })
+  console.log(newUser.username)
+  console.log(newUser.name)
+  console.log(newUser.email)
   req.session.userid = newUser.id
   await newUser.save()
   res.redirect("postlogin")
@@ -123,7 +133,7 @@ app.post('/signup', async (req, res) => {
 
 // Checks the login information and redirects to landing page if successful, otherwise redirect to index 
 app.post('/login', async (req, res) => {
-  const user = await userModel.findOne({ email: req.body.email })
+  const user = await userModel.findOne({ username: req.body.username })
   const isAuth = await bcrypt.compare(req.body.password, user.password)
 
   if (isAuth) {
@@ -143,10 +153,18 @@ app.get('/getInfo', async (req, res) => {
   res.send(userInfo)
 })
 
-// Updates the name of user
+// Updates the user with the given information in the req.body 
 app.post('/update', async (req, res) => {
   const user = await userModel.findById(req.body.userID)
-  user.name = req.body.userName
-  await user.save()
-  console.log("name saved")
+  console.log(req.body.query)
+  await user.updateOne({ $set: req.body.query })
+    .then(() => {
+      console.log("saved")
+    })
+    .catch(error => {
+      console.log(error)
+    })
 })
+
+//ToDo: Add 404 route
+
