@@ -1,5 +1,5 @@
 <!-- Main Location Modal -->
-<div id="delivery-location-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-hidden overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-10rem)] max-h-full">
+<div id="delivery-location-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-hidden overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 max-h-full">
 
   <div class="relative p-4 w-full max-w-md max-h-full">
     <!-- Modal content -->
@@ -29,13 +29,10 @@
         <div class="space-y-4">
 
           <!-- Starting Location -->
-          <label for="starting-location" class="block mb-2 text-sm font-medium text-buttonBg">Starting Location:</label>
-          <div class="container flex flex-row gap-1 items-center overflow-x-clip">
-            <!-- <input type="text" name="starting-location" id="starting-location" class="flex bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-buttonBg w-full p-2.5" placeholder="Starting location" /> -->
-            <div id="starting-location" class="start-geocoder"></div>
-
+          <div class="flex container justify-between items-center w-full">
+            <label for="starting-location" class="block mb-2 text-lg font-medium text-buttonBg">Starting Location:</label>
             <!-- Location picker button -->
-            <button class="flex bg-buttonBg p-2 rounded-lg" onclick="geolocation()">
+            <button id="starting-location-picker" class="flex bg-buttonBg p-2 rounded-lg" onclick="geolocation()">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-current-location">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                 <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
@@ -47,15 +44,13 @@
               </svg>
             </button>
           </div>
+          <div id="starting-location" class="start-geocoder"></div>
 
           <!-- Destination -->
-          <label for="destination" class="block mb-2 text-sm font-medium text-buttonBg">Destination:</label>
-          <div class="container flex flex-row gap-1 items-center">
-            <!-- <input type="text" name="destination" id="destination" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-buttonBg w-full p-2.5" placeholder="Destination" /> -->
-            <div id="destination" class="end-geocoder"></div>
-
+          <div class="flex container justify-between items-center w-full">
+            <label for="destination" class="block mb-2 text-lg font-medium text-buttonBg">Destination:</label>
             <!-- Location picker button -->
-            <button class="flex bg-buttonBg p-2 rounded-lg">
+            <button id="destination-picker" class="flex bg-buttonBg p-2 rounded-lg" onclick="geolocation()">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-current-location">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                 <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
@@ -67,6 +62,7 @@
               </svg>
             </button>
           </div>
+          <div id="destination" class="end-geocoder"></div>
 
           <button class="w-full text-white bg-buttonBg focus:ring-white focus:ring-4 font-medium rounded-lg text-lg px-5 py-2.5 text-center">Confirm</button>
 
