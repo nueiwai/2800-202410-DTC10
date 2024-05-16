@@ -1,0 +1,92 @@
+<%- include('templates/map_header.ejs') %>
+  <!-- the map -->
+  <div id='map'></div>
+  <!-- the geocoder search bar -->
+  <div class="geocoder" id="geocoder"></div>
+
+    <script>
+      const mapbox_access_token = '<%= process.env.MAPBOX_ACCESS_TOKEN %>';
+      mapboxgl.accessToken = mapbox_access_token;
+
+      var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/dark-v11',  // Routing only works with the dark style map
+        center: [-123.112755, 49.241722],  // Vancouver
+        zoom: 10.7,
+        pitch: 44  // Controls how tilted the map is
+      });
+
+      // The start location searchbar
+      var startGeocoder = new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken,
+        mapboxgl: mapboxgl
+      });
+
+      // The end location searchbar
+      var endGeocoder = new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken,
+        mapboxgl: mapboxgl
+      });
+
+      // Add the search bars to the map
+      map.addControl(startGeocoder);
+      map.addControl(endGeocoder);
+
+      var startLocation, endLocation;  // Store the start and end location coordinates
+
+      startGeocoder.on('result', function (e) {
+        startLocation = e.result.geometry.coordinates;
+        drawRoute();
+      });
+
+      endGeocoder.on('result', function (e) {
+        endLocation = e.result.geometry.coordinates;
+        drawRoute();
+      });
+
+      /**
+       * Draw the route on the map
+       * @param {Array} startLocation - The start location coordinates
+       * @param {Array} endLocation - The end location coordinates
+       * 
+       * Documents referenced for drawing the route:
+       * https://docs.mapbox.com/mapbox-gl-js/example/measure/
+       * https://docs.mapbox.com/mapbox-gl-js/example/animate-point-along-route/
+       */
+      function drawRoute() {
+        if (startLocation && endLocation) {
+          var geojson = {
+            'type': 'Feature',
+            'properties': {},
+            'geometry': {
+              'type': 'LineString',
+              'coordinates': [startLocation, endLocation]
+            }
+          };
+
+          // If a route is already drawn, update the route
+          if (map.getSource('route')) {
+            map.getSource('route').setData(geojson);
+          } else {
+            // Otherwise, add a new route
+            map.addLayer({
+              'id': 'route',
+              'type': 'line',
+              'source': {
+                'type': 'geojson',
+                'data': geojson
+              },
+              'layout': {
+                'line-join': 'round',
+                'line-cap': 'round'
+              },
+              'paint': {
+                'line-color': '#31B6C0',  // custom paletter colour for Dronify
+                'line-width': 4
+              }
+            });
+          }
+        }
+      }
+    </script>
+    <%- include('templates/footer') %>

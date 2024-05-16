@@ -19,7 +19,7 @@ const mongodb_session_secret = process.env.MONGODB_SESSION_SECRET;
 
 // Create database connection to use as the store option in the session object below
 const db = MongoStore.create({
-  mongoUrl: `mongodb+srv://${mongodb_user}:${mongodb_password}@${mongodb_host}`
+  mongoUrl: `mongodb+srv://${mongodb_user}:${mongodb_password}@${mongodb_host}/${mongodb_database}`
 })
 
 // Express application setup
@@ -53,6 +53,17 @@ app.listen(port, () => {
 // Landing page route
 app.get('/', async (req, res) => {
   res.render("landing_page")
+})
+
+// Map testing routes:
+// Main map
+app.get('/map', async(req, res) => {
+  res.render("map")
+})
+
+// Routing between two points
+app.get('/routing', async (req, res) => {
+  res.render("routing")
 })
 
 // Signup route
