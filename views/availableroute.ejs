@@ -42,17 +42,17 @@
 
     <!-- drawer component -->
     <div id="drawer-swipe"
-        class="fixed z-40 w-full overflow-y-auto bg-white border-t border-gray-200 rounded-t-lg dark:border-gray-700 dark:bg-gray-800 transition-transform bottom-0 left-0 right-0 translate-y-full bottom-[60px]"
+        class="fixed z-40 w-full overflow-y-auto bg-cardBg border-t border-gray-200 rounded-t-lg dark:border-gray-700 dark:bg-gray-800 transition-transform bottom-0 left-0 right-0 translate-y-full bottom-[60px]"
         tabindex="-1" aria-labelledby="drawer-swipe-label">
-        <div class="p-4 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700" data-drawer-toggle="drawer-swipe">
-            <span
-                class="absolute w-8 h-1 -translate-x-1/2 bg-gray-300 rounded-lg top-3 left-1/2 dark:bg-gray-600"></span>
+        <div class="p-4 cursor-pointer flex flex-col items-center" data-drawer-toggle="drawer-swipe">
+            <span class="absolute w-8 h-1 -translate-x-1/2 bg-gray-300 rounded-lg top-3 left-1/2 dark:bg-gray-600">
+            </span>
+            <p class="font-bold py-2">Available Routes</p>
         </div>
         <div class="grid grid-cols-1 grid-rows-3 gap-4 p-4">
-            <div
-                class="p-4 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 dark:hover:bg-gray-600 dark:bg-gray-700">
+            <div class="p-4 rounded-lg cursor-pointer bg-buttonBg">
                 <div
-                    class="flex justify-center items-center p-2 mx-auto mb-2 bg-gray-200 dark:bg-gray-600 rounded-full w-[48px] h-[48px] max-w-[48px] max-h-[48px]">
+                    class="flex justify-center items-center p-2 mx-auto mb-2  dark:bg-gray-600 rounded-full w-[48px] h-[48px] max-w-[48px] max-h-[48px]">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-users" width="36"
                         height="36" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none"
                         stroke-linecap="round" stroke-linejoin="round">
@@ -63,12 +63,11 @@
                         <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" />
                     </svg>
                 </div>
-                <div class="font-medium text-center text-gray-500 dark:text-gray-400">ETA: 1hr and 20mins</div>
+                <div class="font-medium text-center text-gray-200 dark:text-gray-200">ETA: 1hr and 20mins</div>
             </div>
-            <div
-                class="p-4 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 dark:hover:bg-gray-600 dark:bg-gray-700">
+            <div class="p-4 rounded-lg cursor-pointer bg-buttonBg">
                 <div
-                    class="flex justify-center items-center p-2 mx-auto mb-2 bg-gray-200 dark:bg-gray-600 rounded-full w-[48px] h-[48px] max-w-[48px] max-h-[48px]">
+                    class="flex justify-center items-center p-2 mx-auto mb-2  dark:bg-gray-600 rounded-full w-[48px] h-[48px] max-w-[48px] max-h-[48px]">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-users" width="36"
                         height="36" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none"
                         stroke-linecap="round" stroke-linejoin="round">
@@ -79,12 +78,11 @@
                         <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" />
                     </svg>
                 </div>
-                <div class="font-medium text-center text-gray-500 dark:text-gray-400">ETA: 1hr</div>
+                <div class="font-medium text-center text-gray-200 dark:text-gray-200">ETA: 1hr</div>
             </div>
-            <div
-                class="p-4 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 dark:hover:bg-gray-600 dark:bg-gray-700">
+            <div class="p-4 rounded-lg cursor-pointer bg-buttonBg">
                 <div
-                    class="flex justify-center items-center p-2 mx-auto mb-2 bg-gray-200 dark:bg-gray-600 rounded-full w-[48px] h-[48px] max-w-[48px] max-h-[48px]">
+                    class="flex justify-center items-center p-2 mx-auto mb-2  dark:bg-gray-600 rounded-full w-[48px] h-[48px] max-w-[48px] max-h-[48px]">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-users" width="36"
                         height="36" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none"
                         stroke-linecap="round" stroke-linejoin="round">
@@ -95,7 +93,7 @@
                         <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" />
                     </svg>
                 </div>
-                <div class="font-medium text-center text-gray-500 dark:text-gray-400">ETA: 45mins</div>
+                <div class="font-medium text-center text-gray-200 dark:text-gray-200">ETA: 45mins</div>
             </div>
         </div>
     </div>
