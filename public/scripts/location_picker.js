@@ -1,3 +1,4 @@
+
 const geolocation = () => {
   if ('geolocation' in navigator) {
     navigator.geolocation.getCurrentPosition(showLocation, showError);
@@ -17,4 +18,4 @@ const showError = (error) => {
   console.log(error);
 }
 
-`https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?access_token=${accessToken}`
+// `https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?access_token=${accessToken}`

@@ -1,7 +1,5 @@
-<%- include('templates/header') %>
-
 <!-- Main Location Modal -->
-<div id="delivery-location-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-10rem)] max-h-full">
+<div id="delivery-location-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-hidden overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-10rem)] max-h-full">
 
   <div class="relative p-4 w-full max-w-md max-h-full">
     <!-- Modal content -->
@@ -32,8 +30,9 @@
 
           <!-- Starting Location -->
           <label for="starting-location" class="block mb-2 text-sm font-medium text-buttonBg">Starting Location:</label>
-          <div class="container flex flex-row gap-1 items-center">
-            <input type="text" name="starting-location" id="starting-location" class="flex bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-buttonBg w-full p-2.5" placeholder="Starting location" />
+          <div class="container flex flex-row gap-1 items-center overflow-x-clip">
+            <!-- <input type="text" name="starting-location" id="starting-location" class="flex bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-buttonBg w-full p-2.5" placeholder="Starting location" /> -->
+            <div id="starting-location" class="start-geocoder"></div>
 
             <!-- Location picker button -->
             <button class="flex bg-buttonBg p-2 rounded-lg" onclick="geolocation()">
@@ -52,7 +51,8 @@
           <!-- Destination -->
           <label for="destination" class="block mb-2 text-sm font-medium text-buttonBg">Destination:</label>
           <div class="container flex flex-row gap-1 items-center">
-            <input type="text" name="destination" id="destination" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-buttonBg w-full p-2.5" placeholder="Destination" />
+            <!-- <input type="text" name="destination" id="destination" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-buttonBg w-full p-2.5" placeholder="Destination" /> -->
+            <div id="destination" class="end-geocoder"></div>
 
             <!-- Location picker button -->
             <button class="flex bg-buttonBg p-2 rounded-lg">
