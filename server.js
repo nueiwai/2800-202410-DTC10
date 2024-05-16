@@ -65,17 +65,29 @@ app.get('/login', (req, res) => {
   res.render("login")
 })
 
+// Package size route
 app.get('/packagesize', (req, res) => {
   res.render("packagesize")
 })
 
+// Available route route
 app.get('/availableroute', (req, res) => {
   res.render("availableroute")
+})
+
+// Available battery route
+app.get('/availablebattery', (req, res) => {
+  res.render("availablebattery")
 })
 
 // Forget ID route
 app.get('/forgetid', (req, res) => {
   res.render('forgetid')
+})
+
+// Select payment route
+app.get('/selectpayment', (req, res) => {
+  res.render("selectpayment")
 })
 
 // Reset password route
