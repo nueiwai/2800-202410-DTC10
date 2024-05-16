@@ -44,9 +44,10 @@
     <div id="drawer-swipe"
         class="fixed z-40 w-full overflow-y-auto bg-cardBg border-t border-gray-200 rounded-t-lg dark:border-gray-700 dark:bg-gray-800 transition-transform bottom-0 left-0 right-0 translate-y-full bottom-[60px]"
         tabindex="-1" aria-labelledby="drawer-swipe-label">
-        <div class="p-4 cursor-pointer " data-drawer-toggle="drawer-swipe">
-            <span
-                class="absolute w-8 h-1 -translate-x-1/2 bg-gray-300 rounded-lg top-3 left-1/2 dark:bg-gray-600"></span>
+        <div class="p-4 cursor-pointer flex flex-col items-center" data-drawer-toggle="drawer-swipe">
+            <span class="absolute w-8 h-1 -translate-x-1/2 bg-gray-300 rounded-lg top-3 left-1/2 dark:bg-gray-600">
+            </span>
+            <p class="font-bold py-2">Choose package size</p>
         </div>
         <div class="grid grid-cols-1 grid-rows-3 gap-4 p-4">
             <div class="p-4 rounded-lg cursor-pointer bg-buttonBg ">
@@ -63,7 +64,7 @@
                         <path d="M12 12l-8 -4.5" />
                     </svg>
                 </div>
-                <div class="font-medium text-center text-gray-500 dark:text-gray-400">S (Under 3kg)</div>
+                <div class="font-medium text-center text-gray-200 dark:text-gray-400">S (Under 3kg)</div>
             </div>
             <div class="p-4 rounded-lg cursor-pointer bg-buttonBg ">
                 <div
@@ -77,7 +78,7 @@
                             fill="white" />
                     </svg>
                 </div>
-                <div class="font-medium text-center text-gray-500 dark:text-gray-400">M (3kg - 5kg)</div>
+                <div class="font-medium text-center text-gray-200 dark:text-gray-400">M (3kg - 5kg)</div>
             </div>
             <div class="p-4 rounded-lg cursor-pointer bg-buttonBg ">
                 <div
@@ -97,7 +98,7 @@
                         <path d="M12 8l5 -3" />
                     </svg>
                 </div>
-                <div class="font-medium text-center text-gray-500 dark:text-gray-400">L (5kg - 10kg)</div>
+                <div class="font-medium text-center text-gray-200 dark:text-gray-400">L (5kg - 10kg)</div>
             </div>
             <div class="flex justify-center">
                 <div class="flex space-x-2 w-64">
