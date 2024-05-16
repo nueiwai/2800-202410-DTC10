@@ -57,7 +57,7 @@ app.get('/', async (req, res) => {
 
 // Map testing routes:
 // Main map
-app.get('/map', async(req, res) => {
+app.get('/map', async (req, res) => {
   res.render("map")
 })
 
@@ -190,4 +190,3 @@ app.post('/update', async (req, res) => {
 })
 
 //ToDo: Add 404 route
-
