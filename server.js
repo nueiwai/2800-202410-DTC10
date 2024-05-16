@@ -77,6 +77,11 @@ app.get('/availablebattery', (req, res) => {
   res.render("availablebattery")
 } )
 
+// Select payment route
+app.get('/selectpayment', (req, res) => {
+  res.render("selectpayment")
+})
+
 // Forgot ID route
 app.get('/resetpassword', (req, res) => {
   res.render('resetpassword')
