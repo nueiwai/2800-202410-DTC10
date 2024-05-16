@@ -7,6 +7,7 @@ const ejs = require('ejs');
 const userModel = require('./users')
 const MongoStore = require('connect-mongo');
 const cors = require('cors')
+const user = require('./users')
 require('dotenv').config();
 
 /* secret information section */
@@ -108,6 +109,7 @@ app.get('/account', (req, res) => {
 // Profile Edit route
 app.get('/profile_edit', (req, res) => {
   res.render("profile_edit")
+  // console.log(req.session.userid)
 })
 
 // Payment Edit route
