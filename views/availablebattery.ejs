@@ -1,4 +1,33 @@
-<%- include('templates/header') %>
+<%- include('templates/map_header') %>
+    <!-- the account icon to the right of the search bar -->
+    <div class="account-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-circle" width="44" height="44"
+            viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+            <path d="M12 10m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+            <path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855" />
+        </svg>
+    </div>
+
+    <!-- the home icon to the left of the search bar -->
+    <div class="home-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home-2" width="44" height="44"
+            viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
+            <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+            <path d="M10 12h4v4h-4z" />
+        </svg>
+    </div>
+
+    <!-- the map -->
+    <div id='map'></div>
+    <!-- the geocoder search bar -->
+    <div class="geocoder" id="geocoder"></div>
+
     <!-- drawer init and toggle -->
     <div class="text-center">
         <button
@@ -12,17 +41,17 @@
 
     <!-- drawer component -->
     <div id="drawer-swipe"
-        class="fixed z-40 w-full overflow-y-auto bg-white border-t border-gray-200 rounded-t-lg dark:border-gray-700 dark:bg-gray-800 transition-transform bottom-0 left-0 right-0 translate-y-full bottom-[60px]"
+        class="fixed z-40 w-full overflow-y-auto bg-cardBg border-t border-gray-200 rounded-t-lg dark:border-gray-700 dark:bg-gray-800 transition-transform bottom-0 left-0 right-0 translate-y-full bottom-[60px]"
         tabindex="-1" aria-labelledby="drawer-swipe-label">
-        <div class="p-4 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700" data-drawer-toggle="drawer-swipe">
-            <span
-                class="absolute w-8 h-1 -translate-x-1/2 bg-gray-300 rounded-lg top-3 left-1/2 dark:bg-gray-600"></span>
+        <div class="p-4 cursor-pointer flex flex-col items-center" data-drawer-toggle="drawer-swipe">
+            <span class="absolute w-8 h-1 -translate-x-1/2 bg-gray-300 rounded-lg top-3 left-1/2 dark:bg-gray-600">
+            </span>
+            <p class="font-bold py-2">Available Batteries</p>
         </div>
         <div class="grid grid-cols-1 grid-rows-3 gap-4 p-4">
-            <div
-                class="p-4 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 dark:hover:bg-gray-600 dark:bg-gray-700">
+            <div class="p-4 rounded-lg cursor-pointer bg-buttonBg">
                 <div
-                    class="flex justify-center items-center p-2 mx-auto mb-2 bg-gray-200 dark:bg-gray-600 rounded-full w-[48px] h-[48px] max-w-[48px] max-h-[48px]">
+                    class="flex justify-center items-center p-2 mx-auto mb-2  dark:bg-gray-600 rounded-full w-[48px] h-[48px] max-w-[48px] max-h-[48px]">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-drone" width="36"
                         height="36" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none"
                         stroke-linecap="round" stroke-linejoin="round">
@@ -38,12 +67,11 @@
                         <path d="M6 14.04a3.5 3.5 0 1 0 3.96 3.96" />
                     </svg>
                 </div>
-                <div class="font-medium text-center text-gray-500 dark:text-gray-400">EWT: 15mins</div>
+                <div class="font-medium text-center text-gray-200 dark:text-gray-400">EWT: 15mins</div>
             </div>
-            <div
-                class="p-4 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 dark:hover:bg-gray-600 dark:bg-gray-700">
+            <div class="p-4 rounded-lg cursor-pointer bg-buttonBg">
                 <div
-                    class="flex justify-center items-center p-2 mx-auto mb-2 bg-gray-200 dark:bg-gray-600 rounded-full w-[48px] h-[48px] max-w-[48px] max-h-[48px]">
+                    class="flex justify-center items-center p-2 mx-auto mb-2  w-[48px] h-[48px] max-w-[48px] max-h-[48px]">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-drone" width="36"
                         height="36" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none"
                         stroke-linecap="round" stroke-linejoin="round">
@@ -59,12 +87,11 @@
                         <path d="M6 14.04a3.5 3.5 0 1 0 3.96 3.96" />
                     </svg>
                 </div>
-                <div class="font-medium text-center text-gray-500 dark:text-gray-400">EWT: 45mins</div>
+                <div class="font-medium text-center text-gray-200 dark:text-gray-400">EWT: 45mins</div>
             </div>
-            <div
-                class="p-4 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 dark:hover:bg-gray-600 dark:bg-gray-700">
+            <div class="p-4 rounded-lg cursor-pointer bg-buttonBg ">
                 <div
-                    class="flex justify-center items-center p-2 mx-auto mb-2 bg-gray-200 dark:bg-gray-600 rounded-full w-[48px] h-[48px] max-w-[48px] max-h-[48px]">
+                    class="flex justify-center items-center p-2 mx-auto mb-2  dark:bg-gray-600 rounded-full w-[48px] h-[48px] max-w-[48px] max-h-[48px]">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-drone" width="36"
                         height="36" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none"
                         stroke-linecap="round" stroke-linejoin="round">
@@ -80,8 +107,70 @@
                         <path d="M6 14.04a3.5 3.5 0 1 0 3.96 3.96" />
                     </svg>
                 </div>
-                <div class="font-medium text-center text-gray-500 dark:text-gray-400">EWT: 1hr</div>
+                <div class="font-medium text-center text-gray-200 dark:text-gray-400">EWT: 1hr</div>
+            </div>
+            <div class="flex justify-center">
+                <div class="flex space-x-2 w-64">
+                    <button class="bg-white text-black py-2 px-4 rounded-lg text-lg flex-1">Cancel</button>
+                    <button class="bg-black text-white py-2 px-4 rounded-lg text-lg flex-1">Next</button>
+                </div>
             </div>
         </div>
     </div>
+
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1Ijoic3ByaW5nYyIsImEiOiJjbHRnOGc4dW8wd2o2MmxvNmN2NzRubnI3In0.njs3h0TJg9FhtoClPB9ovQ';
+
+        var map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center: [-123.112755, 49.241722], // Central Vancouver
+            zoom: 10.7
+        });
+
+        var geocoder = new MapboxGeocoder({
+            // Initialize the geocoder
+            accessToken: mapboxgl.accessToken,
+            mapboxgl: mapboxgl,
+            marker: false,
+            placeholder: 'Search address', // Placeholder text for the search bar
+            bbox: [-123.2460, 49.1666, -122.9086, 49.3200], // Loose boundary for Metro Vancouver (west to UBC, east to Burnaby Mountain)
+            proximity: {
+                longitude: -123.1207,
+                latitude: 49.2827
+            } // Coordinates of Central Vancouver
+        });
+
+        // Add the geocoder to the map
+        document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
+
+        // After the map style has loaded on the page,
+        // add a source layer and default styling for a single point
+        map.on('load', () => {
+            map.addSource('single-point', {
+                type: 'geojson',
+                data: {
+                    type: 'FeatureCollection',
+                    features: []
+                }
+            });
+
+            map.addLayer({
+                id: 'point',
+                source: 'single-point',
+                type: 'circle',
+                paint: {
+                    'circle-radius': 10,
+                    'circle-color': '#40E0D0'
+                }
+            });
+
+            // Listen for the result event from the Geocoder
+            // result event is triggered when a user makes a selection
+            // Add a marker at the result's coordinates
+            geocoder.on('result', (event) => {
+                map.getSource('single-point').setData(event.result.geometry);
+            });
+        });
+    </script>
     <%- include('templates/footer') %>
