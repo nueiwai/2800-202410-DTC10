@@ -1,5 +1,5 @@
 
-const geolocation = () => {
+const getCurrentLocation = () => {
   if ('geolocation' in navigator) {
     navigator.geolocation.getCurrentPosition(showLocation, showError);
   } else {
