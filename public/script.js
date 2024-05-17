@@ -1,9 +1,25 @@
+// set the drawer menu element
+const $targetEl = document.getElementById('main-menu-drawer');
+
+// instance options object
+const instanceOptions = {
+    id: 'main-menu-drawer',
+    backdrop: false,
+    override: true,
+    edge: true,
+    placement: "bottom",
+    bodyScrolling: false,
+    onShow: () => {
+
+    }
+};
+
+const drawer = new Drawer($targetEl, instanceOptions)
+
 // Toggles visibility of account information in the #menu element found in postlogin.ejs
-async function toggelAccountMenu() {
-    document.getElementById("main-menu-drawer").classList.toggle("hidden")
-    droneShareBtn.classList.toggle("hidden")
-    directDeliveryBtn.classList.toggle("hidden")
-    roadsideAssistanceBtn.classList.toggle("hidden")
+async function toggleAccountMenu() {
+    drawer.show()
+    document.getElementById("account-container").classList.toggle("hidden")
     const user = await getUserInfo()
     document.getElementById("name").value = user.name
     username.value = user.username
@@ -49,3 +65,5 @@ document.querySelectorAll("#saveBtn").forEach(async (button) => {
             })
     })
 })
+
+

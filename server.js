@@ -74,14 +74,10 @@ app.get('/availableroute', (req, res) => {
 })
 
 // Forget ID route
-app.get('/forgetid', (req, res) => {
-  res.render('forgetid')
+app.get('/forgotpassword', (req, res) => {
+  res.render('forgotpassword')
 })
 
-// Reset password route
-app.get('/resetpassword', (req, res) => {
-  res.render('resetpassword')
-})
 
 // Post login route
 app.get('/postlogin', (req, res) => {
@@ -131,6 +127,7 @@ app.post('/signup', async (req, res) => {
   res.redirect("postlogin")
 })
 
+
 // Checks the login information and redirects to landing page if successful, otherwise redirect to index 
 app.post('/login', async (req, res) => {
   const user = await userModel.findOne({ username: req.body.username })
@@ -166,5 +163,29 @@ app.post('/update', async (req, res) => {
     })
 })
 
-//ToDo: Add 404 route
+// Reset password route
+app.post('/checkAccountExists', async (req, res) => {
+  const userExists = await userModel.exists({ email: req.body.email })
+  if (userExists) {
+    const user = await userModel.find({ email: req.body.email })
+    res.render('resetpassword', { userEmail: req.body.email, renderErrorMessage: false })
+  }
+  else {
+    res.render('forgotpassword', { userEmail: req.body.email, renderErrorMessage: true })
+  }
+})
 
+// Updates the user with the given information in the req.body 
+app.post('/changePassword', async (req, res) => {
+  const newHashedPassword = await bcrypt.hash(req.body.password, 10)
+  await userModel.findOneAndUpdate({ email: req.body.email }, { password: newHashedPassword })
+    .then(() => {
+      console.log(`${req.body.password} hashed to ${newHashedPassword}`)
+      res.redirect("login")
+    })
+    .catch(error => {
+      console.log(error)
+    })
+})
+
+//ToDo: Add 404 route
