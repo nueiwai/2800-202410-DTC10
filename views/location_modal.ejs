@@ -71,3 +71,22 @@
     </div>
   </div>
 </div>
+
+<script>
+  const mapbox_access_token = '<%= process.env.MAPBOX_ACCESS_TOKEN %>';
+  mapboxgl.accessToken = mapbox_access_token;
+
+  var startGeocoder = new MapboxGeocoder({
+    accessToken: mapboxgl.accessToken,
+    mapboxgl: mapboxgl,
+    placeholder: 'Enter start location'
+  });
+  startGeocoder.addTo('#starting-location');
+
+  var endGeocoder = new MapboxGeocoder({
+    accessToken: mapboxgl.accessToken,
+    mapboxgl: mapboxgl,
+    placeholder: 'Enter destination'
+  });
+  endGeocoder.addTo('#destination');
+</script>
