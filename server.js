@@ -37,7 +37,7 @@ app.use(express.static("public/videos"));
 // Configure sessions
 app.use(session({
   secret: bcrypt.hashSync(`${mongodb_session_secret}`, 10),
-  resave: false,
+  resave: true,
   saveUninitialized: false,
   store: db,
   credentials: 'include',
@@ -167,7 +167,6 @@ app.post('/update', async (req, res) => {
 app.post('/checkAccountExists', async (req, res) => {
   const userExists = await userModel.exists({ email: req.body.email })
   if (userExists) {
-    const user = await userModel.find({ email: req.body.email })
     res.render('resetpassword', { userEmail: req.body.email, renderErrorMessage: false })
   }
   else {
@@ -178,14 +177,14 @@ app.post('/checkAccountExists', async (req, res) => {
 // Updates the user with the given information in the req.body 
 app.post('/changePassword', async (req, res) => {
   const newHashedPassword = await bcrypt.hash(req.body.password, 10)
-  await userModel.findOneAndUpdate({ email: req.body.email }, { password: newHashedPassword })
-    .then(() => {
-      console.log(`${req.body.password} hashed to ${newHashedPassword}`)
-      res.redirect("login")
-    })
-    .catch(error => {
-      console.log(error)
-    })
-})
-
+  console.log(req.body.email)
+  try {
+    await userModel.findOneAndUpdate({ email: req.body.email }, { password: newHashedPassword }, { new: true })
+  } catch (error) {
+    console.log(error)
+  }
+  console.log("Password hashed to: " + newHashedPassword)
+  res.redirect('/login')
+}
+)
 //ToDo: Add 404 route
