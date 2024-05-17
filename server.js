@@ -97,8 +97,8 @@ app.get('/selectpayment', (req, res) => {
 })
 
 // Forget ID route
-app.get('/forgetid', (req, res) => {
-  res.render('forgetid')
+app.get('/forgotpassword', (req, res) => {
+  res.render('forgotpassword')
 })
 
 // Reset password route
@@ -169,7 +169,10 @@ app.post('/login', async (req, res) => {
   }
 })
 
-// Returns user info of session owner
+// *** Below are functions that DO NOT redirect to page, but rather change data on the backend in some way. Use a fetch request on the front end to retrieve data using these end points ***
+
+
+// Returns user info of session owner. Must be logged in to work.
 app.get('/getInfo', async (req, res) => {
   const userID = req.session.userid
   const userInfo = await userModel.findById({ _id: userID })
@@ -177,7 +180,7 @@ app.get('/getInfo', async (req, res) => {
   res.send(userInfo)
 })
 
-// Updates the user with the given information in the req.body 
+// Updates the users information on the backend
 app.post('/update', async (req, res) => {
   const user = await userModel.findById(req.body.userID)
   console.log(req.body.query)
@@ -193,11 +196,35 @@ app.post('/update', async (req, res) => {
 // Get geojson data for battery stations
 app.get('/battery_stations', async (req, res) => {
   let battery_stations = await batteryStationModel.find({}, { _id: 0 })
-  const geojsonData = {
+  let geojsonData = {
     type: "FeatureCollection",
     features: battery_stations
   }
   res.render("battery_station_map", { stations: JSON.stringify(geojsonData) })
 })
 
+// Checks the backend if the given email exists. If so, redirect user to reset password, else redirect to the same page with error message
+app.post('/checkAccountExists', async (req, res) => {
+  const userExists = await userModel.exists({ email: req.body.email })
+  if (userExists) {
+    res.render('resetpassword', { userEmail: req.body.email, renderErrorMessage: false })
+  }
+  else {
+    res.render('forgotpassword', { userEmail: req.body.email, renderErrorMessage: true })
+  }
+})
+
+// Changes password for user 
+app.post('/changePassword', async (req, res) => {
+  const newHashedPassword = await bcrypt.hash(req.body.password, 10)
+  console.log(req.body.email)
+  try {
+    await userModel.findOneAndUpdate({ email: req.body.email }, { password: newHashedPassword }, { new: true })
+  } catch (error) {
+    console.log(error)
+  }
+  console.log("Password hashed to: " + newHashedPassword)
+  res.redirect('/login')
+}
+)
 //ToDo: Add 404 route

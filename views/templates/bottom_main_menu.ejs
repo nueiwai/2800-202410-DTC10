@@ -1,5 +1,10 @@
 <!-- Start drawer component -->
-<div id="main-menu-drawer" class="fixed z-50 w-full overflow-y-auto bg-cardBg border-t border-gray-200 rounded-t-xl shadow-xl transition-transform bottom-0 left-0 right-0 translate-y-full bottom-[60px]" tabindex="-1" aria-labelledby="main-menu-drawer-label">
+<div
+  id="main-menu-drawer"
+  class="fixed z-50 w-full overflow-y-auto bg-cardBg border-t border-gray-200 rounded-t-xl shadow-xl transition-transform bottom-0 left-0 right-0 translate-y-full bottom-[60px]"
+  tabindex="-1"
+  aria-labelledby="main-menu-drawer-label"
+>
   <!-- swipe/click button for the menu -->
   <!-- data-drawer-edge-offset="bottom-[0px]" -->
   <div class="p-7 hover:bg-cardBgHover" data-drawer-toggle="main-menu-drawer" data-drawer-target="main-menu-drawer" data-drawer-placement="bottom" data-drawer-edge="true" aria-controls="main-menu-drawer" data-drawer-backdrop="false">
@@ -9,19 +14,19 @@
   <!-- menu card body -->
   <div id="mainMenuCard" class="grid grid-cols-3 gap-4 p-4">
     <!-- Drone-share option -->
-    <div id="droneShareBtn" class="p-1 rounded-lg hover:bg-cardBgHover hidden">
+    <div id="droneShareBtn" class="p-1 rounded-lg hover:bg-cardBgHover">
       <img src="images/core_feature_icon1.svg" class="rounded-lg w-[50px] mx-auto focus:ring-2 focus:ring-white" alt="drone-share" tabindex="0" />
       <div class="mt-2 font-medium text-center text-buttonBg leading-tight">Drone-share</div>
     </div>
 
     <!-- Direct delivery option -->
-    <div id="directDeliveryBtn" class="p-1 rounded-lg hover:bg-cardBgHover hidden">
+    <div id="directDeliveryBtn" class="p-1 rounded-lg hover:bg-cardBgHover">
       <img src="images/core_feature_icon3.svg" class="rounded-lg w-[50px] mx-auto focus:ring-2 focus:ring-white" alt="direct-delivery" tabindex="0" />
       <div class="mt-2 font-medium text-center text-buttonBg leading-tight">Direct Delivery</div>
     </div>
 
     <!-- Roadside assistance option -->
-    <div id="roadsideAssistanceBtn" class="p-1 rounded-lg hover:bg-cardBgHover hidden">
+    <div id="roadsideAssistanceBtn" class="p-1 rounded-lg hover:bg-cardBgHover">
       <img src="images/core_feature_icon2.svg" class="rounded-lg w-[50px] mx-auto focus:ring-2 focus:ring-white" alt="roadside-assistance" tabindex="0" />
       <div class="mt-2 font-medium text-center text-buttonBg leading-tight">Roadside Assistance</div>
     </div>
