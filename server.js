@@ -5,6 +5,7 @@ const session = require('express-session')
 const bcrypt = require('bcrypt')
 const ejs = require('ejs');
 const userModel = require('./users')
+const batteryStationModel = require('./battery_stations')
 const MongoStore = require('connect-mongo');
 const cors = require('cors')
 const user = require('./users')
@@ -187,6 +188,16 @@ app.post('/update', async (req, res) => {
     .catch(error => {
       console.log(error)
     })
+})
+
+// Get geojson data for battery stations
+app.get('/battery_stations', async (req, res) => {
+  let battery_stations = await batteryStationModel.find({}, { _id: 0 })
+  const geojsonData = {
+    type: "FeatureCollection",
+    features: battery_stations
+  }
+  res.render("battery_station_map", { stations: JSON.stringify(geojsonData) })
 })
 
 //ToDo: Add 404 route

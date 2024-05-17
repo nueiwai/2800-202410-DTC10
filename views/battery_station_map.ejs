@@ -1,0 +1,100 @@
+<%- include('templates/map_header') %>
+<!-- the account icon to the right of the search bar -->
+<div class="account-icon">
+  <a href="/account">
+    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="44" height="44" viewBox="0 0 64 64" id="Account">
+      <path d="M32,2A30.034,30.034,0,0,0,2,32a29.6307,29.6307,0,0,0,1.1387,8.1758,1,1,0,1,0,1.9218-.5518A27.64,27.64,0,0,1,4,32a28,28,0,0,1,56,0,27.64,27.64,0,0,1-1.06,7.624,1,1,0,1,0,1.9218.5518A29.6307,29.6307,0,0,0,62,32,30.034,30.034,0,0,0,32,2Z" fill="#cbcbcb" class="color000000 svgShape"></path>
+      <path d="M37.8383,35.5991a13,13,0,1,0-11.6766,0,28.89,28.89,0,0,0-16.5474,9.97,5.0514,5.0514,0,0,0,.1484,6.564,29.9923,29.9923,0,0,0,44.4746,0,5.0514,5.0514,0,0,0,.1484-6.564A28.89,28.89,0,0,0,37.8383,35.5991Z" fill="#cbcbcb" class="color000000 svgShape"></path>
+    </svg>
+  </a>
+</div>
+
+<!-- the home icon to the left of the search bar -->
+<div class="home-icon">
+  <a href="/postlogin">
+    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="44" height="44" viewBox="0 0 48 48" style="fill:#cbcbcb;">
+      <path d="M39.5,43h-9c-1.381,0-2.5-1.119-2.5-2.5v-9c0-1.105-0.895-2-2-2h-4c-1.105,0-2,0.895-2,2v9c0,1.381-1.119,2.5-2.5,2.5h-9	C7.119,43,6,41.881,6,40.5V21.413c0-2.299,1.054-4.471,2.859-5.893L23.071,4.321c0.545-0.428,1.313-0.428,1.857,0L39.142,15.52	C40.947,16.942,42,19.113,42,21.411V40.5C42,41.881,40.881,43,39.5,43z">
+      </path>
+    </svg>
+  </a>
+</div>
+
+<!-- the map -->
+<div id='map'></div>
+<!-- the geocoder search bar -->
+<div class="geocoder" id="geocoder"></div>
+
+<%- include('templates/bottom_main_menu') %>
+
+<script>
+  const mapbox_access_token = '<%= process.env.MAPBOX_ACCESS_TOKEN %>';
+  mapboxgl.accessToken = mapbox_access_token;
+
+  var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/dark-v11',
+    center: [-123.112755, 49.241722], // Central Vancouver
+    zoom: 10.7,
+    pitch: 44 // Controls the slantedness of the map view
+  });
+
+  var geocoder = new MapboxGeocoder({
+    // Initialize the geocoder
+    accessToken: mapboxgl.accessToken,
+    mapboxgl: mapboxgl,
+    marker: false,
+    placeholder: 'Search address', // Placeholder text for the search bar
+    bbox: [-123.2460, 49.1666, -122.9086, 49.3200], // Loose boundary for Metro Vancouver (west to UBC, east to Burnaby Mountain)
+    proximity: {
+      longitude: -123.1207,
+      latitude: 49.2827
+    } // Coordinates of Central Vancouver
+  });
+
+  // Add the geocoder to the map
+  document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
+
+  // After the map style has loaded on the page,
+  // add a source layer and default styling for a single point
+  map.on('load', () => {
+    map.addSource('single-point', {
+      type: 'geojson',
+      data: {
+        type: 'FeatureCollection',
+        features: []
+      }
+    });
+
+    let geojson = JSON.parse('<%- stations %>')
+    // console.log(geojson);
+
+    console.log('<%- stations %>')
+    // add markers to map
+    for (const feature of geojson.features) {
+      // create a HTML element for each feature
+      const el = document.createElement('div');
+      el.className = 'marker';
+
+      // make a marker for each feature and add to the map
+      new mapboxgl.Marker(el).setLngLat(feature.location.coordinates).addTo(map);
+    }
+
+    map.addLayer({
+      id: 'point',
+      source: 'single-point',
+      type: 'circle',
+      paint: {
+        'circle-radius': 10,
+        'circle-color': '#40E0D0'
+      }
+    });
+
+    // Listen for the result event from the Geocoder
+    // result event is triggered when a user makes a selection
+    // Add a marker at the result's coordinates
+    geocoder.on('result', (event) => {
+      map.getSource('single-point').setData(event.result.geometry);
+    });
+  });
+</script>
+<%- include('templates/footer') %>
