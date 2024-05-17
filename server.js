@@ -96,6 +96,11 @@ app.get('/selectpayment', (req, res) => {
   res.render("selectpayment")
 })
 
+// Confirmation route
+app.get('/confirmation', (req, res) => {
+  res.render("confirmation")
+})
+
 // Forget ID route
 app.get('/forgetid', (req, res) => {
   res.render('forgetid')
