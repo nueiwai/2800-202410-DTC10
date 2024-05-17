@@ -20,7 +20,10 @@ const mongodb_session_secret = process.env.MONGODB_SESSION_SECRET;
 
 // Create database connection to use as the store option in the session object below
 const db = MongoStore.create({
-  mongoUrl: `mongodb+srv://${mongodb_user}:${mongodb_password}@${mongodb_host}/${mongodb_database}`
+  mongoUrl: `mongodb+srv://${mongodb_user}:${mongodb_password}@${mongodb_host}/${mongodb_database}`,
+  crypto: {
+    secret: mongodb_session_secret
+  }
 })
 
 // Express application setup
@@ -35,10 +38,11 @@ app.use(express.static("videos"));
 app.use(express.static(__dirname + "/public"));
 app.use(express.static("public/images"));
 app.use(express.static("public/videos"));
+
 // Configure sessions
 app.use(session({
   secret: bcrypt.hashSync(`${mongodb_session_secret}`, 10),
-  resave: false,
+  resave: true,
   saveUninitialized: false,
   store: db,
   credentials: 'include',
