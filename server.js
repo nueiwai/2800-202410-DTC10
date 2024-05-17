@@ -5,6 +5,7 @@ const session = require('express-session')
 const bcrypt = require('bcrypt')
 const ejs = require('ejs');
 const userModel = require('./users')
+const batteryStationModel = require('./battery_stations')
 const MongoStore = require('connect-mongo');
 const cors = require('cors')
 require('dotenv').config();
@@ -19,7 +20,10 @@ const mongodb_session_secret = process.env.MONGODB_SESSION_SECRET;
 
 // Create database connection to use as the store option in the session object below
 const db = MongoStore.create({
-  mongoUrl: `mongodb+srv://${mongodb_user}:${mongodb_password}@${mongodb_host}/${mongodb_database}`
+  mongoUrl: `mongodb+srv://${mongodb_user}:${mongodb_password}@${mongodb_host}/${mongodb_database}`,
+  crypto: {
+    secret: mongodb_session_secret
+  }
 })
 
 // Express application setup
@@ -34,10 +38,11 @@ app.use(express.static("videos"));
 app.use(express.static(__dirname + "/public"));
 app.use(express.static("public/images"));
 app.use(express.static("public/videos"));
+
 // Configure sessions
 app.use(session({
   secret: bcrypt.hashSync(`${mongodb_session_secret}`, 10),
-  resave: false,
+  resave: true,
   saveUninitialized: false,
   store: db,
   credentials: 'include',
@@ -108,6 +113,7 @@ app.get('/account', (req, res) => {
 // Profile Edit route
 app.get('/profile_edit', (req, res) => {
   res.render("profile_edit")
+  // console.log(req.session.userid)
 })
 
 // Payment Edit route
@@ -176,6 +182,16 @@ app.post('/update', async (req, res) => {
     .catch(error => {
       console.log(error)
     })
+})
+
+// Get geojson data for battery stations
+app.get('/battery_stations', async (req, res) => {
+  let battery_stations = await batteryStationModel.find({}, { _id: 0 })
+  const geojsonData = {
+    type: "FeatureCollection",
+    features: battery_stations
+  }
+  res.render("battery_station_map", { stations: JSON.stringify(geojsonData) })
 })
 
 //ToDo: Add 404 route

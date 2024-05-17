@@ -18,11 +18,9 @@
   <script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
 
   <!-- import geocoder plugins for search bar from Mapbox -->
-  <script
-    src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
-  <link rel="stylesheet"
-    href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css">
-  
+  <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
+  <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css">
+
   <script>
     tailwind.config = {
       theme: {
@@ -42,46 +40,11 @@
     }
   </script>
 
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-    }
-
-    #map {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      width: 100%;
-    }
-
-    .geocoder {
-      position: absolute;
-      z-index: 1;
-      width: 60%;
-      left: 40%;
-      margin-left: -20%;
-      top: 20px;
-    }
-
-    .mapboxgl-ctrl-geocoder {
-      min-width: 100%;
-    }
-
-    .account-icon {
-      position: absolute;
-      top: 24px;
-      right: 5%;
-      z-index: 1;
-    }
-
-    .home-icon {
-      position: absolute;
-      top: 24px;
-      left: 5%;
-      z-index: 1;
-    }
-  </style>
+  <% if (typeof stations !== 'undefined') { %>
+  <link rel="stylesheet" href="/styles/battery_stations_map.css">
+  <% } else { %>
+  <link rel="stylesheet" href="/styles/style.css">
+  <% } %>
 </head>
 
 <body>
