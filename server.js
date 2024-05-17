@@ -55,6 +55,11 @@ app.get('/', async (req, res) => {
   res.render("landing_page")
 })
 
+// Map testing route: routing
+app.get('/routing', async (req, res) => {
+  res.render("routing")
+})
+
 // Signup route
 app.get('/signup', (req, res) => {
   res.render("signup")
