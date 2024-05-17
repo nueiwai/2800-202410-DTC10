@@ -1,21 +1,17 @@
-
-const getCurrentLocation = () => {
-  if ('geolocation' in navigator) {
-    navigator.geolocation.getCurrentPosition(showLocation, showError);
+function getCurrentLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
   } else {
-    alert('Browser does not support geolocation');
+    alert("Geolocation is not supported by this browser.");
   }
 }
 
-const showLocation = (position) => {
-  const latitude = position.coords.latitude;
-  const longitude = position.coords.longitude;
-  const location = { latitude, longitude };
-  console.log(location);
+function showPosition(position) {
+  var lat = position.coords.latitude;
+  var lng = position.coords.longitude;
+  // post coordinates to server
+  $.post('/get_address', { latitude: lat, longitude: lng }, function (data) {
+    console.log(data)
+    $("#location").val(data)
+  })
 }
-
-const showError = (error) => {
-  console.log(error);
-}
-
-// `https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?access_token=${accessToken}`

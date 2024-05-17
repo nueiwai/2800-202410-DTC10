@@ -17,6 +17,7 @@ const mongodb_user = process.env.MONGODB_USER;
 const mongodb_password = process.env.MONGODB_PASSWORD;
 const mongodb_database = process.env.MONGODB_DATABASE;
 const mongodb_session_secret = process.env.MONGODB_SESSION_SECRET;
+const mapbox_token = process.env.MAPBOX_TOKEN;
 /* END secret section */
 
 // Create database connection to use as the store option in the session object below
@@ -193,11 +194,17 @@ app.post('/update', async (req, res) => {
 // Get geojson data for battery stations
 app.get('/battery_stations', async (req, res) => {
   let battery_stations = await batteryStationModel.find({}, { _id: 0 })
-  const geojsonData = {
+  let geojsonData = {
     type: "FeatureCollection",
     features: battery_stations
   }
   res.render("battery_station_map", { stations: JSON.stringify(geojsonData) })
+})
+
+// Get address from coordinates
+app.post('/get_address', async (req, res) => {
+  let location = await fetch(`https://api.mapbox.com/search/geocode/v6/reverse?longitude=${longitude}&latitude=${latitude}&access_token=${mapbox_token}&country=CA&types=address&limit=1`)
+  res.send(location)
 })
 
 //ToDo: Add 404 route
