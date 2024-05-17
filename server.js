@@ -142,7 +142,10 @@ app.post('/login', async (req, res) => {
   }
 })
 
-// Returns user info of session owner
+// *** Below are functions that DO NOT redirect to page, but rather change data on the backend in some way. Use a fetch request on the front end to retrieve data using these end points ***
+
+
+// Returns user info of session owner. Must be logged in to work.
 app.get('/getInfo', async (req, res) => {
   const userID = req.session.userid
   const userInfo = await userModel.findById({ _id: userID })
@@ -150,7 +153,7 @@ app.get('/getInfo', async (req, res) => {
   res.send(userInfo)
 })
 
-// Updates the user with the given information in the req.body 
+// Updates the users information on the backend
 app.post('/update', async (req, res) => {
   const user = await userModel.findById(req.body.userID)
   console.log(req.body.query)
@@ -163,11 +166,10 @@ app.post('/update', async (req, res) => {
     })
 })
 
-// Reset password route
+// Checks the backend if the given email exists. If so, redirect user to reset password, else redirect to the same page with error message
 app.post('/checkAccountExists', async (req, res) => {
   const userExists = await userModel.exists({ email: req.body.email })
   if (userExists) {
-    const user = await userModel.find({ email: req.body.email })
     res.render('resetpassword', { userEmail: req.body.email, renderErrorMessage: false })
   }
   else {
@@ -175,17 +177,16 @@ app.post('/checkAccountExists', async (req, res) => {
   }
 })
 
-// Updates the user with the given information in the req.body 
+// Changes password for user 
 app.post('/changePassword', async (req, res) => {
-  const newHashedPassword = await bcrypt.hash(req.body.password, 10)
-  await userModel.findOneAndUpdate({ email: req.body.email }, { password: newHashedPassword })
-    .then(() => {
-      console.log(`${req.body.password} hashed to ${newHashedPassword}`)
-      res.redirect("login")
-    })
-    .catch(error => {
-      console.log(error)
-    })
+  const newHashedPassword = bcrypt.hashSync(req.body.password, 10)
+  const user = await userModel.find({ email: req.body.email })
+  await user.update({ password: newHashedPassword }).then(() => {
+    // console.log(`Password ${req.body.password} hashed to ${newHashedPassword}`)
+    res.redirect("login")
+  }).catch(error => {
+    res.send(error)
+  })
 })
 
 //ToDo: Add 404 route
