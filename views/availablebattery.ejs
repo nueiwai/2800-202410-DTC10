@@ -1,0 +1,97 @@
+<%- include('templates/map_header') %>
+
+    <div id="map-container">
+        <%- include('map') %>
+    </div>
+
+    <!-- drawer init and toggle -->
+    <div class="text-center">
+        <button
+            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+            type="button" data-drawer-target="drawer-swipe" data-drawer-show="drawer-swipe"
+            data-drawer-placement="bottom" data-drawer-edge="true" data-drawer-edge-offset="bottom-[60px]"
+            aria-controls="drawer-swipe">
+            Show swipeable drawer
+        </button>
+    </div>
+
+    <!-- drawer component -->
+    <div id="drawer-swipe"
+        class="fixed z-40 w-full overflow-y-auto bg-cardBg border-t border-gray-200 rounded-t-lg dark:border-gray-700 dark:bg-gray-800 transition-transform bottom-0 left-0 right-0 translate-y-full bottom-[60px]"
+        tabindex="-1" aria-labelledby="drawer-swipe-label">
+        <div class="p-4 cursor-pointer flex flex-col items-center" data-drawer-toggle="drawer-swipe">
+            <span class="absolute w-8 h-1 -translate-x-1/2 bg-gray-300 rounded-lg top-3 left-1/2 dark:bg-gray-600">
+            </span>
+            <p class="font-bold py-2">Available Batteries</p>
+        </div>
+        <div class="grid grid-cols-1 grid-rows-3 gap-4 p-4">
+            <div class="p-4 rounded-lg cursor-pointer bg-buttonBg">
+                <div
+                    class="flex justify-center items-center p-2 mx-auto mb-2  dark:bg-gray-600 rounded-full w-[48px] h-[48px] max-w-[48px] max-h-[48px]">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-drone" width="36"
+                        height="36" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M10 10h4v4h-4z" />
+                        <path d="M10 10l-3.5 -3.5" />
+                        <path d="M9.96 6a3.5 3.5 0 1 0 -3.96 3.96" />
+                        <path d="M14 10l3.5 -3.5" />
+                        <path d="M18 9.96a3.5 3.5 0 1 0 -3.96 -3.96" />
+                        <path d="M14 14l3.5 3.5" />
+                        <path d="M14.04 18a3.5 3.5 0 1 0 3.96 -3.96" />
+                        <path d="M10 14l-3.5 3.5" />
+                        <path d="M6 14.04a3.5 3.5 0 1 0 3.96 3.96" />
+                    </svg>
+                </div>
+                <div class="font-medium text-center text-gray-200 dark:text-gray-400">EWT: 15mins</div>
+            </div>
+            <div class="p-4 rounded-lg cursor-pointer bg-buttonBg">
+                <div
+                    class="flex justify-center items-center p-2 mx-auto mb-2  w-[48px] h-[48px] max-w-[48px] max-h-[48px]">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-drone" width="36"
+                        height="36" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M10 10h4v4h-4z" />
+                        <path d="M10 10l-3.5 -3.5" />
+                        <path d="M9.96 6a3.5 3.5 0 1 0 -3.96 3.96" />
+                        <path d="M14 10l3.5 -3.5" />
+                        <path d="M18 9.96a3.5 3.5 0 1 0 -3.96 -3.96" />
+                        <path d="M14 14l3.5 3.5" />
+                        <path d="M14.04 18a3.5 3.5 0 1 0 3.96 -3.96" />
+                        <path d="M10 14l-3.5 3.5" />
+                        <path d="M6 14.04a3.5 3.5 0 1 0 3.96 3.96" />
+                    </svg>
+                </div>
+                <div class="font-medium text-center text-gray-200 dark:text-gray-400">EWT: 45mins</div>
+            </div>
+            <div class="p-4 rounded-lg cursor-pointer bg-buttonBg ">
+                <div
+                    class="flex justify-center items-center p-2 mx-auto mb-2  dark:bg-gray-600 rounded-full w-[48px] h-[48px] max-w-[48px] max-h-[48px]">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-drone" width="36"
+                        height="36" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M10 10h4v4h-4z" />
+                        <path d="M10 10l-3.5 -3.5" />
+                        <path d="M9.96 6a3.5 3.5 0 1 0 -3.96 3.96" />
+                        <path d="M14 10l3.5 -3.5" />
+                        <path d="M18 9.96a3.5 3.5 0 1 0 -3.96 -3.96" />
+                        <path d="M14 14l3.5 3.5" />
+                        <path d="M14.04 18a3.5 3.5 0 1 0 3.96 -3.96" />
+                        <path d="M10 14l-3.5 3.5" />
+                        <path d="M6 14.04a3.5 3.5 0 1 0 3.96 3.96" />
+                    </svg>
+                </div>
+                <div class="font-medium text-center text-gray-200 dark:text-gray-400">EWT: 1hr</div>
+            </div>
+            <div class="flex justify-center">
+                <div class="flex space-x-2 w-64">
+                    <button class="bg-white text-black py-2 px-4 rounded-lg text-lg flex-1">Cancel</button>
+                    <button class="bg-black text-white py-2 px-4 rounded-lg text-lg flex-1">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%- include('templates/footer') %>

@@ -1,0 +1,124 @@
+   #map {
+     position: absolute;
+     top: 0;
+     bottom: 0;
+     width: 100%;
+   }
+
+   .marker {
+     background-image: url('/images/battery_marker.svg');
+     background-size: cover;
+     width: 50px;
+     height: 50px;
+     border-radius: 50%;
+     cursor: pointer;
+   }
+
+   .geocoder {
+     position: absolute;
+     z-index: 1;
+     width: 60%;
+     left: 40%;
+     margin-left: -20%;
+     top: 20px;
+   }
+
+   .mapboxgl-ctrl-geocoder {
+     min-width: 100%;
+   }
+
+   .account-icon {
+     position: absolute;
+     top: 24px;
+     right: 5%;
+     z-index: 1;
+   }
+
+   .home-icon {
+     position: absolute;
+     top: 24px;
+     left: 5%;
+     z-index: 1;
+   }
+
+   .start-geocoder {
+     position: relative;
+     z-index: 0;
+     width: 100%;
+   }
+
+   .start-geocoder>.mapboxgl-ctrl-geocoder {
+     min-width: 100%;
+   }
+
+   .start-geocoder>.mapboxgl-ctrl-geocoder>.mapboxgl-ctrl-geocoder--input {
+     position: relative;
+     z-index: 0;
+     max-width: 100%;
+     background-color: white;
+     border-radius: 12px;
+   }
+
+   .start-geocoder>.mapboxgl-ctrl-geocoder>.mapboxgl-ctrl-geocoder--input:focus {
+     border: 3px solid #074464;
+   }
+
+   .start-geocoder>.mapboxgl-ctrl-geocoder>.mapboxgl-ctrl-geocoder--icon-search {
+     display: inline;
+     z-index: 1;
+   }
+
+   .start-geocoder>.mapboxgl-ctrl-geocoder>.suggestions-wrapper {
+     position: sticky;
+     max-width: 100%;
+   }
+
+   .start-geocoder>.mapboxgl-ctrl-geocoder>.suggestions-wrapper>.suggestions {
+     position: sticky;
+     text-wrap: balance;
+     z-index: 1;
+     top: 20px;
+     max-width: 100%;
+     max-height: 120px;
+   }
+
+   .end-geocoder {
+     position: relative;
+     z-index: 0;
+     width: 100%;
+   }
+
+   .end-geocoder>.mapboxgl-ctrl-geocoder {
+     min-width: 100%;
+   }
+
+   .end-geocoder>.mapboxgl-ctrl-geocoder>.mapboxgl-ctrl-geocoder--input {
+     position: relative;
+     z-index: 0;
+     max-width: 100%;
+     background-color: white;
+     border-radius: 12px;
+   }
+
+   .end-geocoder>.mapboxgl-ctrl-geocoder>.mapboxgl-ctrl-geocoder--input:focus {
+     border: 3px solid #074464;
+   }
+
+   .end-geocoder>.mapboxgl-ctrl-geocoder>.mapboxgl-ctrl-geocoder--icon-search {
+     display: inline;
+     z-index: 1;
+   }
+
+   .end-geocoder>.mapboxgl-ctrl-geocoder>.suggestions-wrapper {
+     position: sticky;
+     max-width: 100%;
+   }
+
+   .end-geocoder>.mapboxgl-ctrl-geocoder>.suggestions-wrapper>.suggestions {
+     position: sticky;
+     text-wrap: balance;
+     z-index: 1;
+     top: 20px;
+     max-width: 100%;
+     max-height: 120px;
+   }

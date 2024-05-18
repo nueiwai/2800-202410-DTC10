@@ -1,0 +1,56 @@
+<%- include('templates/map_header') %>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            background: '#1E429F',
+            process_button: '#074464',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .height-3-5-screen {
+      height: 60vh;
+    }
+  </style>
+
+  <div id="map-container">
+    <%- include('map') %>
+  </div>
+
+  <div
+    class="w-full border border-gray-200 rounded-t-xl shadow dark:bg-gray-800 dark:border-gray-700 height-3-5-screen  fixed bottom-0 left-1/2 transform -translate-x-1/2"
+    style="background-color: #31b6c0;">
+
+    <div class="flex flex-col items-center" style="transform: translateY(-80px)">
+      <img class="w-40 h-40 mb-3 rounded-full shadow-lg" src="profile.png" alt="Profile image" />
+      <div class="flex items-center">
+        <h5 class="m-4 text-xl font-medium text-gray-900 dark:text-white">Bonnie Green</h5>
+      </div>
+
+      <div class="flex flex-col items-center space-y-6 mt-6">
+        <input type="text"
+          class="w-3/4 py-2 px-6 text-sm font-medium text-center text-gray-900 bg-white border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
+          placeholder="Card Number">
+        <input type="text"
+          class="w-3/4 py-2 px-6 text-sm font-medium text-center text-gray-900 bg-white border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
+          placeholder="CVV">
+        <input type="text"
+          class="w-3/4 py-2 px-6 text-sm font-medium text-center text-gray-900 bg-white border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
+          placeholder="Expiry Date">
+      </div>
+
+    </div>
+
+    <div class="flex justify-center mt-[-50px]">
+      <button onclick="window.location.href='/payment_list'"
+        class="py-2 px-8 mt-2 mx-4 text-md font-medium text-center text-white bg-red-500 rounded-xl hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Save</button>
+      <button onclick="window.location.href='/payment_list'"
+        class="py-2 px-8 mt-2 mx-4 text-md font-medium text-center text-white bg-red-500 rounded-xl hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Cancel</button>
+    </div>
+  </div>
+  <%- include('templates/footer') %>
