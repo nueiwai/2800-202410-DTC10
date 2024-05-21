@@ -46,3 +46,15 @@ document.querySelectorAll("#saveBtn").forEach(async (button) => {
             })
     })
 })
+
+document.getElementById("directDeliveryBtn").addEventListener("click", (event) =>{
+    // document.getElementById("mainMenuCard").classList.toggle("hidden")
+    document.getElementById("delivery-location-modal").classList.toggle("hidden")
+    document.getElementById("delivery-location-modal").style.top = "80px"
+})
+
+document.getElementById("locationModalConfirmBtn").addEventListener("click", (event)=> {
+    document.getElementById("delivery-location-modal").classList.toggle("hidden")
+    document.getElementById("mainMenuCard").classList.toggle("hidden")
+    document.getElementById("selectSizeMenu").classList.toggle("hidden")
+})

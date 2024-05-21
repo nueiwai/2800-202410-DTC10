@@ -31,6 +31,7 @@
       <div class="mt-2 font-medium text-center text-buttonBg leading-tight">Roadside Assistance</div>
     </div>
 
+    <!-- Account information container -->
     <div id="account-container" class="flex flex-col absolute z-50 hidden">
       <div class="flex">
         <input id="username" type="text" placeholder="Name" />
@@ -57,6 +58,46 @@
       </form>
     </div>
   </div>
+
+  <div id="selectSizeMenu" class="hidden flex flex-col items-center px-[30px] pb-[30px] gap-4">
+    <h1 class="font-bold text-2xl pb-4">Please select an option</h1>
+    <div class="flex gap-2 border rounded-md p-4 items-center w-[100%]">
+      <img src="package.png" alt="" class="w-[15%]">
+      <div>
+        <p class="font-bold">Small: (Under 3kg)</p>
+        <p>Pilot: Johnny Appleseed</p>
+      </div>
+      <div class="ml-auto">
+        $20.00
+      </div>
+    </div>
+    <div class="flex gap-2 border rounded-md p-4 items-center w-[100%]">
+      <img src="package.png" alt="" class="w-[15%]">
+      <div class="flex flex-col">
+        <p class="font-bold">Medium: (3kg - 5kg)</p>
+        <p>Pilot: Johnny Appleseed</p>
+      </div>
+      <div class="ml-auto">
+        $30.00
+      </div>
+    </div>
+    <div class="flex gap-2 border rounded-md p-4 items-center w-[100%]">
+      <img src="package.png" alt="" class="w-[15%]">
+      <div>
+        <p class="font-bold">Large: (5 kg - 10kg)</p>
+        <p>Pilot: Johnny Appleseed</p>
+      </div>
+      <div class="ml-auto">
+        $40.00
+      </div>
+    </div>
+    <div class="flex gap-2 w-full">
+      <button class="w-[100%] border rounded-md p-[10px]">Cancel</button>
+      <button class="w-[100%] border rounded-md bg-blue-500 p-[10px]">Next</button>
+    </div>
+  </div>
+
 </div>
+
 
 <!-- End of drawer component -->
