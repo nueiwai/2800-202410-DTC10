@@ -1,6 +1,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 <script type="text/javascript" src="/script.js"></script>
 <script src="/scripts/location_picker.js"></script>
+
 <script>
   const mapbox_access_token = '<%= process.env.MAPBOX_ACCESS_TOKEN %>';
   mapboxgl.accessToken = mapbox_access_token;
@@ -12,8 +13,10 @@
     zoom: 10.7,
     pitch: 44 // Controls the slantedness of the map view
   });
+</script>
 
-
+<% if (typeof pageName !== 'undefined') { %>
+<script>
   var minimap = new mapboxgl.Map({
     container: 'mini_map',
     style: 'mapbox://styles/mapbox/dark-v11',
@@ -21,7 +24,10 @@
     zoom: 8.7,
   });
   // minimap.addTo('#mini_map');
-
+</script>
+<% } 
+%>
+<script>
   var geocoder = new MapboxGeocoder({
     // Initialize the geocoder
     accessToken: mapboxgl.accessToken,

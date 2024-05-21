@@ -99,7 +99,7 @@ app.get('/selectpayment', (req, res) => {
 
 // Confirmation route
 app.get('/confirmation', (req, res) => {
-  res.render("confirmation")
+  res.render("confirmation", { pageName: "confirmation" })
 })
 
 // Forget ID route
