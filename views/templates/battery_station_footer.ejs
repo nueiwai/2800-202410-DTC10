@@ -1,0 +1,107 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+<script type="text/javascript" src="/script.js"></script>
+<script src="/scripts/location_picker.js"></script>
+<script>
+  const mapbox_access_token = '<%= process.env.MAPBOX_ACCESS_TOKEN %>';
+  mapboxgl.accessToken = mapbox_access_token;
+
+  var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/dark-v11',
+    center: [-123.112755, 49.241722], // Central Vancouver
+    zoom: 10.7,
+    pitch: 44 // Controls the slantedness of the map view
+  });
+
+  var geocoder = new MapboxGeocoder({
+    // Initialize the geocoder
+    accessToken: mapboxgl.accessToken,
+    mapboxgl: mapboxgl,
+    marker: false,
+    placeholder: 'Search address', // Placeholder text for the search bar
+    bbox: [-123.2460, 49.1666, -122.9086, 49.3200], // Loose boundary for Metro Vancouver (west to UBC, east to Burnaby Mountain)
+    proximity: {
+      longitude: -123.1207,
+      latitude: 49.2827
+    } // Coordinates of Central Vancouver
+  });
+  geocoder.addTo('#geocoder');
+
+  // Add the geocoder to the map
+  // document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
+
+  var startGeocoder = new MapboxGeocoder({
+    // Initialize the geocoder
+    accessToken: mapboxgl.accessToken,
+    mapboxgl: mapboxgl,
+    marker: false,
+    placeholder: 'Enter Starting Location', // Placeholder text for the search bar
+    bbox: [-123.2460, 49.1666, -122.9086, 49.3200], // Loose boundary for Metro Vancouver (west to UBC, east to Burnaby Mountain)
+    proximity: {
+      longitude: -123.1207,
+      latitude: 49.2827
+    } // Coordinates of Central Vancouver
+  });
+  startGeocoder.addTo('#starting-location');
+
+  var endGeocoder = new MapboxGeocoder({
+    // Initialize the geocoder
+    accessToken: mapboxgl.accessToken,
+    mapboxgl: mapboxgl,
+    marker: false,
+    placeholder: 'Enter Destination', // Placeholder text for the search bar
+    bbox: [-123.2460, 49.1666, -122.9086, 49.3200], // Loose boundary for Metro Vancouver (west to UBC, east to Burnaby Mountain)
+    proximity: {
+      longitude: -123.1207,
+      latitude: 49.2827
+    } // Coordinates of Central Vancouver
+  });
+  endGeocoder.addTo('#destination');
+
+
+  let geojson = JSON.parse('<%- stations %>')
+  // console.log(geojson);
+
+  console.log('<%- stations %>')
+  // add markers to map
+  for (const feature of geojson.features) {
+    // create a HTML element for each feature
+    const el = document.createElement('div');
+    el.className = 'marker';
+
+    // make a marker for each feature and add to the map
+    new mapboxgl.Marker(el).setLngLat(feature.location.coordinates).addTo(map);
+  }
+
+  // After the map style has loaded on the page,
+  // add a source layer and default styling for a single point
+  map.on('load', () => {
+    map.addSource('single-point', {
+      type: 'geojson',
+      data: {
+        type: 'FeatureCollection',
+        features: []
+      }
+    });
+
+    map.addLayer({
+      id: 'point',
+      source: 'single-point',
+      type: 'circle',
+      paint: {
+        'circle-radius': 10,
+        'circle-color': '#40E0D0'
+      }
+    });
+
+    // Listen for the result event from the Geocoder
+    // result event is triggered when a user makes a selection
+    // Add a marker at the result's coordinates
+    geocoder.on('result', (event) => {
+      map.getSource('single-point').setData(event.result.geometry);
+    });
+  });
+</script>
+</body>
+
+</html>
