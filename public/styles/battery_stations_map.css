@@ -5,6 +5,17 @@
      width: 100%;
    }
 
+   #mini_map {
+     position: absolute;
+     border: 2px solid white;
+     border-radius: 10px;
+     top: 65%;
+     right: 57%;
+     width: 36%;
+     height: 30%;
+     z-index: 1;
+   }
+
    .marker {
      background-image: url('/images/battery_marker.svg');
      background-size: cover;

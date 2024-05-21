@@ -13,6 +13,15 @@
     pitch: 44 // Controls the slantedness of the map view
   });
 
+
+  var minimap = new mapboxgl.Map({
+    container: 'mini_map',
+    style: 'mapbox://styles/mapbox/dark-v11',
+    center: [-123.112755, 49.241722], // Central Vancouver
+    zoom: 8.7,
+  });
+  // minimap.addTo('#mini_map');
+
   var geocoder = new MapboxGeocoder({
     // Initialize the geocoder
     accessToken: mapboxgl.accessToken,
