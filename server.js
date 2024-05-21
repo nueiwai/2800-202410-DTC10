@@ -17,6 +17,7 @@ const mongodb_user = process.env.MONGODB_USER;
 const mongodb_password = process.env.MONGODB_PASSWORD;
 const mongodb_database = process.env.MONGODB_DATABASE;
 const mongodb_session_secret = process.env.MONGODB_SESSION_SECRET;
+const mapbox_token = process.env.MAPBOX_TOKEN;
 /* END secret section */
 
 // Create database connection to use as the store option in the session object below
@@ -96,11 +97,6 @@ app.get('/selectpayment', (req, res) => {
   res.render("selectpayment")
 })
 
-// Confirmation route
-app.get('/confirmation', (req, res) => {
-  res.render("confirmation")
-})
-
 // Forget ID route
 app.get('/forgotpassword', (req, res) => {
   res.render('forgotpassword')
@@ -174,10 +170,7 @@ app.post('/login', async (req, res) => {
   }
 })
 
-// *** Below are functions that DO NOT redirect to page, but rather change data on the backend in some way. Use a fetch request on the front end to retrieve data using these end points ***
-
-
-// Returns user info of session owner. Must be logged in to work.
+// Returns user info of session owner
 app.get('/getInfo', async (req, res) => {
   const userID = req.session.userid
   const userInfo = await userModel.findById({ _id: userID })
@@ -185,7 +178,7 @@ app.get('/getInfo', async (req, res) => {
   res.send(userInfo)
 })
 
-// Updates the users information on the backend
+// Updates the user with the given information in the req.body 
 app.post('/update', async (req, res) => {
   const user = await userModel.findById(req.body.userID)
   console.log(req.body.query)
@@ -198,6 +191,7 @@ app.post('/update', async (req, res) => {
     })
 })
 
+
 // Get geojson data for battery stations
 app.get('/battery_stations', async (req, res) => {
   let battery_stations = await batteryStationModel.find({}, { _id: 0 })
@@ -208,7 +202,7 @@ app.get('/battery_stations', async (req, res) => {
   res.render("battery_station_map", { stations: JSON.stringify(geojsonData) })
 })
 
-// Checks the backend if the given email exists. If so, redirect user to reset password, else redirect to the same page with error message
+// Reset password route
 app.post('/checkAccountExists', async (req, res) => {
   const userExists = await userModel.exists({ email: req.body.email })
   if (userExists) {
@@ -219,7 +213,7 @@ app.post('/checkAccountExists', async (req, res) => {
   }
 })
 
-// Changes password for user 
+// Updates the user with the given information in the req.body 
 app.post('/changePassword', async (req, res) => {
   const newHashedPassword = await bcrypt.hash(req.body.password, 10)
   console.log(req.body.email)

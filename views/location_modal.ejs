@@ -76,17 +76,41 @@
   const mapbox_access_token = '<%= process.env.MAPBOX_ACCESS_TOKEN %>';
   mapboxgl.accessToken = mapbox_access_token;
 
+  var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/dark-v11',
+    center: [-123.112755, 49.241722], // Central Vancouver
+    zoom: 10.7,
+    pitch: 44 // Controls the slantedness of the map view
+  });
+
   var startGeocoder = new MapboxGeocoder({
+    // Initialize the geocoder
     accessToken: mapboxgl.accessToken,
     mapboxgl: mapboxgl,
-    placeholder: 'Enter start location'
+    marker: false,
+    placeholder: 'Enter Starting Location', // Placeholder text for the search bar
+    bbox: [-123.2460, 49.1666, -122.9086, 49.3200], // Loose boundary for Metro Vancouver (west to UBC, east to Burnaby Mountain)
+    proximity: {
+      longitude: -123.1207,
+      latitude: 49.2827
+    } // Coordinates of Central Vancouver
   });
-  startGeocoder.addTo('#starting-location');
+  let startLocationContainer = document.getElementById('starting-location');
+  startLocationContainer.appendChild(startGeocoder.onAdd(map));
 
   var endGeocoder = new MapboxGeocoder({
+    // Initialize the geocoder
     accessToken: mapboxgl.accessToken,
     mapboxgl: mapboxgl,
-    placeholder: 'Enter destination'
+    marker: false,
+    placeholder: 'Enter Destination', // Placeholder text for the search bar
+    bbox: [-123.2460, 49.1666, -122.9086, 49.3200], // Loose boundary for Metro Vancouver (west to UBC, east to Burnaby Mountain)
+    proximity: {
+      longitude: -123.1207,
+      latitude: 49.2827
+    } // Coordinates of Central Vancouver
   });
-  endGeocoder.addTo('#destination');
+  let endLocationContainer = document.getElementById('destination');
+  endLocationContainer.appendChild(endGeocoder.onAdd(map));
 </script>
