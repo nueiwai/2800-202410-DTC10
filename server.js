@@ -227,4 +227,8 @@ app.post('/changePassword', async (req, res) => {
   res.redirect('/login')
 }
 )
-//ToDo: Add 404 route
+
+app.get("*", (req, res) => {
+  res.status(404);
+  res.render("404");
+})
