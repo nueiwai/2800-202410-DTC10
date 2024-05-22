@@ -8,7 +8,7 @@
 
   var map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/mapbox/dark-v11',
+    style: 'mapbox://styles/mapbox/streets-v11',
     center: [-123.112755, 49.241722], // Central Vancouver
     zoom: 10.7,
     pitch: 44 // Controls the slantedness of the map view
@@ -19,7 +19,7 @@
 <script>
   var minimap = new mapboxgl.Map({
     container: 'mini_map',
-    style: 'mapbox://styles/mapbox/dark-v11',
+    style: 'mapbox://styles/mapbox/streets-v11',
     center: [-123.112755, 49.241722], // Central Vancouver
     zoom: 8.7,
   });
@@ -101,6 +101,175 @@
       map.getSource('single-point').setData(event.result.geometry);
     });
   });
+
+  startGeocoder.on('result', function(e) {
+    startLocation = e.result.geometry.coordinates;
+  });
+
+  endGeocoder.on('result', function(e) {
+    endLocation = e.result.geometry.coordinates;
+  });
+
+  /**
+   * Draw the route on the map
+   * @param {Array} start - The start location coordinates
+   * @param {Array} end - The end location coordinates
+   */
+  function drawRoute() {
+    if (startLocation && endLocation) {
+      // Plot the points on the map
+      plotPoints(startLocation, endLocation);
+      // Draw the curved arc
+      drawArc(startLocation, endLocation);
+      // Draw the straight line with shadow
+      drawShadow(startLocation, endLocation);
+    } else {
+      console.alert('Please enter a starting location and destination.');
+    }
+  }
+
+  /**
+   * Plot the start and end location points on the map
+   * @param {Array} start - The start location coordinates
+   * @param {Array} end - The end location coordinates
+   */
+  function plotPoints(start, end) {
+    const pointsGeojson = {
+      type: 'FeatureCollection',
+      features: [{
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: start
+          },
+          properties: {}
+        },
+        {
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: end
+          },
+          properties: {}
+        }
+      ]
+    };
+
+    if (map.getSource('points')) {
+      map.getSource('points').setData(pointsGeojson);
+    } else {
+      map.addSource('points', {
+        type: 'geojson',
+        data: pointsGeojson
+      });
+      map.addLayer({
+        id: 'points',
+        type: 'circle',
+        source: 'points',
+        paint: {
+          'circle-radius': 6,
+          'circle-color': '#CD3434' // Sign out button colour
+        }
+      });
+    }
+  }
+
+  /**
+   * Draw a curved arc between the start and end location points
+   * @param {Array} start - The start location coordinates
+   * @param {Array} end - The end location coordinates
+   *
+   * This line-arc block of code was adapted from code found here:
+   * source: https://www.youtube.com/watch?v=VNVmlWv4gdQ
+   */
+  function drawArc(start, end) {
+    // First calculate the distance between start and end location points
+    const distance = Math.sqrt(Math.pow(end[0] - start[0], 2) + Math.pow(end[1] - start[1], 2));
+
+    // Calculate the midpoint between the start and end location points
+    const midpoint = [(start[0] + end[0]) / 2, (start[1] + end[1]) / 2];
+
+    // Next, offset the midpoint to create a control point for the curve arc
+    // We need to adjust the offset proportionally to the distance to avoid steep curves for short distances
+    const controlPoint = [midpoint[0], midpoint[1] + 0.7 * distance]; // Set multiplier to 0.7
+
+    const steps = 100;
+    const arcCoordinates = [];
+
+    for (let i = 0; i <= steps; i++) {
+      const t = i / steps;
+      const x = (1 - t) * (1 - t) * start[0] + 2 * (1 - t) * t * controlPoint[0] + t * t * end[0];
+      const y = (1 - t) * (1 - t) * start[1] + 2 * (1 - t) * t * controlPoint[1] + t * t * end[1];
+      arcCoordinates.push([x, y]);
+    }
+    const arcGeojson = {
+      type: 'FeatureCollection',
+      features: [{
+        type: 'Feature',
+        geometry: {
+          type: 'LineString',
+          coordinates: arcCoordinates
+        }
+      }]
+    };
+    if (map.getSource('line-arc')) {
+      map.getSource('line-arc').setData(arcGeojson);
+    } else {
+      map.addSource('line-arc', {
+        type: 'geojson',
+        data: arcGeojson
+      });
+      map.addLayer({
+        id: 'line-arc',
+        type: 'line',
+        source: 'line-arc',
+        layout: {
+          'line-join': 'round',
+          'line-cap': 'round'
+        },
+        paint: {
+          'line-color': '#31B6C0',
+          'line-width': 4,
+          'line-dasharray': [2, 2]
+        }
+      });
+    }
+  } /** * Draw a straight line that simulates a shadow between the start and end location points * @param {Array} start - The start location coordinates * @param {Array} end - The end location coordinates */
+  function drawShadow(start, end) {
+    const lineGeojson = {
+      type: 'FeatureCollection',
+      features: [{
+        type: 'Feature',
+        geometry: {
+          type: 'LineString',
+          coordinates: [start, end]
+        }
+      }]
+    };
+    // Add the shadow 
+    if (map.getSource('line-shadow')) {
+      map.getSource('line-shadow').setData(lineGeojson);
+    } else {
+      map.addSource('line-shadow', {
+        type: 'geojson',
+        data: lineGeojson
+      });
+      map.addLayer({
+        id: 'line-shadow',
+        type: 'line',
+        source: 'line-shadow',
+        layout: {
+          'line-join': 'round',
+          'line-cap': 'round'
+        },
+        paint: {
+          'line-color': '#929090', // Shadow colour 
+          'line-width': 6, // Shadow width 
+          'line-opacity': 0.5 // Shadow opacity 
+        }
+      });
+    }
+  }
 </script>
 </body>
 
