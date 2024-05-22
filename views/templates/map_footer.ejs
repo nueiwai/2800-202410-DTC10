@@ -117,14 +117,33 @@
    */
   function drawRoute() {
     if (startLocation && endLocation) {
-      // Plot the points on the map
       plotPoints(startLocation, endLocation);
-      // Draw the curved arc
-      drawArc(startLocation, endLocation);
-      // Draw the straight line with shadow
-      drawShadow(startLocation, endLocation);
+      setTimeout(() => {
+        map.flyTo({
+          center: startLocation,
+          zoom: 18,
+        });
+
+        setTimeout(() => {
+          map.flyTo({
+            center: endLocation,
+            zoom: 18,
+          });
+
+          setTimeout(() => {
+            drawArc(startLocation, endLocation);
+            map.flyTo({
+              center: [(startLocation[0] + endLocation[0]) / 2, (startLocation[1] + endLocation[1]) / 2],
+              zoom: ((startLocation[0] + endLocation[0]) / 2, (startLocation[1] + endLocation[1]) / 2) * 0.22,
+            });
+
+
+            drawShadow(startLocation, endLocation);
+          }, 1600);
+        }, 1300);
+      }, 500)
     } else {
-      console.alert('Please enter a starting location and destination.');
+      console.alert("Please enter a starting location and destination.");
     }
   }
 
