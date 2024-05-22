@@ -63,15 +63,14 @@
 
   console.log('<%- stations %>')
 
-  const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
-    '<div class="text-lg"><a href="/availablebattery">Select this station</a></div>'
-  );
-
   // add markers to map
   for (const feature of geojson.features) {
     // create a HTML element for each feature
     const el = document.createElement('div');
     el.className = 'marker';
+    const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
+      '<div class="text-lg"><a href="/availablebattery">Select this station</a></div>'
+    );
 
     // make a marker for each feature and add to the map
     new mapboxgl.Marker(el).setLngLat(feature.location.coordinates)
