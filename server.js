@@ -4,7 +4,7 @@ const port = 3000
 const session = require('express-session')
 const bcrypt = require('bcrypt')
 const ejs = require('ejs');
-const userModel = require('./users')
+const { user: userModel, payment: paymentModel } = require('./users');
 const batteryStationModel = require('./battery_stations')
 const MongoStore = require('connect-mongo');
 const cors = require('cors')
@@ -175,6 +175,26 @@ app.get('/payment_edit', async (req, res) => {
     res.render("payment_edit", { user: null, error: 'Fail to get the user name' });
   }
 })
+
+app.post('/payment_edit', async (req, res) => {
+  const { cardType, cardNumber, cvv, expiryDate } = req.body;
+  const userID = req.session.userid;
+
+  try {
+    const newPayment = new paymentModel({
+      userId: userID,
+      cardType,
+      cardNumber,
+      cvv,
+      expiryDate
+    });
+    await newPayment.save();
+    res.json({ success: true, message: "Payment information saved successfully!" });
+  } catch (error) {
+    console.error("Error saving payment information:", error);
+    res.status(500).json({ success: false, message: "Failed to save payment information" });
+  }
+});
 
 // Payment List route
 app.get('/payment_list', async (req, res) => {
