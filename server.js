@@ -198,15 +198,16 @@ app.post('/payment_edit', async (req, res) => {
 
 // Payment List route
 app.get('/payment_list', async (req, res) => {
-  const userID = req.session.userid;  // get user ID from session
+  const userID = req.session.userid;  // Get user ID from session
   try {
-    const user = await userModel.findById(userID);  // check the user information based on the user ID
-    res.render("payment_list", { user: user });
+    const user = await userModel.findById(userID);  // Retrieve user information based on the user ID
+    const payments = await paymentModel.find({ userId: userID });  // Retrieve payment information for the user
+    res.render("payment_list", { user: user, payments: payments });
   } catch (error) {
-    console.error("Failed to fetch user payment list:", error);
-    res.render("payment_list", { user: null, error: 'Fail to get the user payment list' });
+    console.error("Failed to fetch user or payment list:", error);
+    res.render("payment_list", { user: null, payments: null, error: 'Failed to get the user or payment list' });
   }
-})
+});
 
 // Logout route
 app.get('/logout', (req, res) => {
