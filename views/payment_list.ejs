@@ -90,7 +90,7 @@
                     <path d="M13.5 6.5l4 4" />
                   </svg>
                 </button>
-                <button class="ml-2 rounded-full hover:bg-gray-200">
+                <button class="ml-2 rounded-full hover:bg-gray-200 delete-btn" data-id="<%= payment._id %>">
                   <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="35"
                     height="35" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none"
                     stroke-linecap="round" stroke-linejoin="round">
@@ -115,4 +115,23 @@
                       class="py-2 px-8 mx-4 mt-6 text-md font-medium text-center text-white bg-red-500 rounded-xl hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Cancel</button>
                   </div>
       </div>
+
+      <script>
+        document.querySelectorAll('.delete-btn').forEach(button => {
+          button.addEventListener('click', function () {
+            const paymentId = this.getAttribute('data-id');
+            fetch(`/delete_payment/${paymentId}`, { method: 'DELETE' })
+              .then(response => response.json())
+              .then(data => {
+                if (data.success) {
+                  window.location.reload(); // reload the page to reflect the changes
+                } else {
+                  alert('Failed to delete the payment information.');
+                }
+              })
+              .catch(err => alert('Error deleting payment information'));
+          });
+        });
+      </script>
+
       <%- include('templates/footer') %>
