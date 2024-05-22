@@ -44,7 +44,7 @@ app.use(express.static("public/videos"));
 // Configure sessions
 app.use(session({
   secret: bcrypt.hashSync(`${mongodb_session_secret}`, 10),
-  resave: true,
+  resave: false,
   saveUninitialized: false,
   store: db,
   credentials: 'include',
@@ -123,9 +123,16 @@ app.get('/account', (req, res) => {
 })
 
 // Profile Edit route
-app.get('/profile_edit', (req, res) => {
-  res.render("profile_edit")
-  // console.log(req.session.userid)
+app.get('/profile_edit', async (req, res) => {
+
+  const userID = req.session.userid;  // get user ID from session
+  try {
+    const user = await userModel.findById(userID);  // check the user information based on the user ID
+    res.render("profile_edit", { user: user });
+  } catch (error) {
+    console.error("Failed to fetch user profile:", error);
+    res.render("profile_edit", { user: null, error: 'Fail to get the user data' });
+  }
 })
 
 app.post('/profile_edit', async (req, res) => {
