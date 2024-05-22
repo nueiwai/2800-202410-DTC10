@@ -1,3 +1,33 @@
+const $menuCard = document.getElementById('main-menu-drawer');
+
+// options with default values
+const options = {
+    placement: 'bottom',
+    backdrop: true,
+    bodyScrolling: false,
+    edge: true,
+    edgeOffset: '',
+    backdropClasses:
+        'bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-30',
+    onHide: () => {
+        console.log('drawer is hidden');
+    },
+    onShow: () => {
+        console.log('drawer is shown');
+    },
+    onToggle: () => {
+        console.log('drawer has been toggled');
+    }
+};
+
+// instance options object
+const instanceOptions = {
+    id: 'main-menu-drawer',
+    override: true
+  };
+
+  const menuCard = new Drawer($menuCard, options, instanceOptions);
+
 // Toggles visibility of account information in the #menu element found in postlogin.ejs
 async function toggleMenu() {
     // document.getElementById("menu").classList.toggle("invisible")
@@ -54,7 +84,20 @@ document.getElementById("directDeliveryBtn").addEventListener("click", (event) =
 })
 
 document.getElementById("locationModalConfirmBtn").addEventListener("click", (event)=> {
+    menuCard.toggle()
     document.getElementById("delivery-location-modal").classList.toggle("hidden")
-    document.getElementById("mainMenuCard").classList.toggle("hidden")
+    // document.getElementById("mainMenuCard").classList.toggle("hidden")
     document.getElementById("selectSizeMenu").classList.toggle("hidden")
 })
+
+document.getElementById("selectSizeNextBtn").addEventListener("click", (event)=> {
+    document.getElementById("selectSizeMenu").classList.toggle("hidden")
+    document.getElementById("paymentMethodContainer").classList.toggle("hidden")
+})
+
+
+
+
+
+
+
