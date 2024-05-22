@@ -17,7 +17,7 @@ const mongodb_user = process.env.MONGODB_USER;
 const mongodb_password = process.env.MONGODB_PASSWORD;
 const mongodb_database = process.env.MONGODB_DATABASE;
 const mongodb_session_secret = process.env.MONGODB_SESSION_SECRET;
-const mapbox_token = process.env.MAPBOX_TOKEN;
+const mapbox_token = process.env.MAPBOX_ACCESS_TOKEN;
 /* END secret section */
 
 // Create database connection to use as the store option in the session object below
@@ -98,8 +98,8 @@ app.get('/selectpayment', (req, res) => {
 })
 
 // Forget ID route
-app.get('/forgetid', (req, res) => {
-  res.render('forgetid')
+app.get('/forgotpassword', (req, res) => {
+  res.render('forgotpassword')
 })
 
 // Reset password route
@@ -191,6 +191,7 @@ app.post('/update', async (req, res) => {
     })
 })
 
+
 // Get geojson data for battery stations
 app.get('/battery_stations', async (req, res) => {
   let battery_stations = await batteryStationModel.find({}, { _id: 0 })
@@ -201,10 +202,40 @@ app.get('/battery_stations', async (req, res) => {
   res.render("battery_station_map", { stations: JSON.stringify(geojsonData) })
 })
 
-// Get address from coordinates
-app.post('/get_address', async (req, res) => {
-  let location = await fetch(`https://api.mapbox.com/search/geocode/v6/reverse?longitude=${longitude}&latitude=${latitude}&access_token=${mapbox_token}&country=CA&types=address&limit=1`)
-  res.send(location)
+// Get address from mapbox corresponding to the given coordinates
+app.post('/getAddress', async (req, res) => {
+  let latitude = req.body.lat
+  let longitude = req.body.lng
+  let url = `https://api.mapbox.com/search/geocode/v6/reverse?longitude=${longitude}&latitude=${latitude}&access_token=${mapbox_token}&country=CA&types=place&limit=1`
+  let response = await fetch(url)
+  let data = await response.json()
+  res.send(data)
 })
 
+// Reset password route
+app.post('/checkAccountExists', async (req, res) => {
+  const userExists = await userModel.exists({ email: req.body.email })
+  if (userExists) {
+    res.render('resetpassword', { userEmail: req.body.email, renderErrorMessage: false })
+  }
+  else {
+    res.render('forgotpassword', { userEmail: req.body.email, renderErrorMessage: true })
+  }
+})
+
+// Updates the user with the given information in the req.body 
+app.post('/changePassword', async (req, res) => {
+  const newHashedPassword = await bcrypt.hash(req.body.password, 10)
+  console.log(req.body.email)
+  try {
+    await userModel.findOneAndUpdate({ email: req.body.email }, { password: newHashedPassword }, { new: true })
+  } catch (error) {
+    console.log(error)
+  }
+  console.log("Password hashed to: " + newHashedPassword)
+  res.redirect('/login')
+}
+)
+
+//
 //ToDo: Add 404 route

@@ -1,3 +1,4 @@
+
 function getCurrentLocation() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition);
@@ -7,11 +8,11 @@ function getCurrentLocation() {
 }
 
 function showPosition(position) {
-  var lat = position.coords.latitude;
-  var lng = position.coords.longitude;
-  // post coordinates to server
-  $.post('/get_address', { latitude: lat, longitude: lng }, function (data) {
+  let latitude = position.coords.latitude;
+  let longitude = position.coords.longitude;
+  $.post('getAddress', { lat: latitude, lng: longitude }, function (data) {
     console.log(data)
-    $("#location").val(data)
+  }).fail(function () {
+    console.log("error")
   })
 }
