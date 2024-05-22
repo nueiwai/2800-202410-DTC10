@@ -43,6 +43,15 @@
      z-index: 1;
    }
 
+   .flying-drone {
+     background-image: url('/images/Dronify_Favicon.png');
+     background-size: cover;
+     width: 50px;
+     height: 50px;
+     border-radius: 50%;
+     cursor: pointer;
+   }
+
    .start-geocoder {
      position: relative;
      z-index: 0;
