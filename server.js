@@ -188,14 +188,15 @@ app.post('/login', async (req, res) => {
   }
 
   // If user is found, compare password given by user and user password in db
-  const isAuth = await bcrypt.compare(req.body.password, user.password)
+  const loggedIn = await bcrypt.compare(req.body.password, user.password)
     .catch(error => {
       console.log(error)
-      return res.render('login', { errorMessage: "Incorrect password" })
+      return res.render('login', { errorMessage: "error" })
     })
   // If passwords match, redirect to postlogin screen, else redirect to login with error
-  if (isAuth == true) {
-    res.render("postlogin")
+  if (loggedIn) {
+    req.session.email = user.email
+    res.redirect("postlogin")
   } else {
     return res.render('login', { errorMessage: "Incorrect password" })
   }
