@@ -206,7 +206,7 @@ app.get('/battery_stations', async (req, res) => {
 app.post('/getAddress', async (req, res) => {
   let latitude = req.body.lat
   let longitude = req.body.lng
-  let url = `https://api.mapbox.com/search/geocode/v6/reverse?longitude=${longitude}&latitude=${latitude}&access_token=${mapbox_token}&country=CA&types=place&limit=1`
+  let url = `https://api.mapbox.com/search/geocode/v6/reverse?longitude=${longitude}&latitude=${latitude}&access_token=${mapbox_token}&country=CA&region=BC&types=place&limit=1`
   let response = await fetch(url)
   let data = await response.json()
   res.send(data)
