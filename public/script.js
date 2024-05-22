@@ -17,6 +17,7 @@ const options = {
     },
     onToggle: () => {
         console.log('drawer has been toggled');
+        console.log(document.getElementById("main-menu-drawer").children)
     }
 };
 
@@ -24,9 +25,9 @@ const options = {
 const instanceOptions = {
     id: 'main-menu-drawer',
     override: true
-  };
+};
 
-  const menuCard = new Drawer($menuCard, options, instanceOptions);
+const menuCard = new Drawer($menuCard, options, instanceOptions);
 
 // Toggles visibility of account information in the #menu element found in postlogin.ejs
 async function toggleMenu() {
@@ -77,22 +78,31 @@ document.querySelectorAll("#saveBtn").forEach(async (button) => {
     })
 })
 
-document.getElementById("directDeliveryBtn").addEventListener("click", (event) =>{
+// When direct delivery button is clicked, show delivery location modal
+document.getElementById("directDeliveryBtn").addEventListener("click", (event) => {
     // document.getElementById("mainMenuCard").classList.toggle("hidden")
     document.getElementById("delivery-location-modal").classList.toggle("hidden")
     document.getElementById("delivery-location-modal").style.top = "80px"
 })
 
-document.getElementById("locationModalConfirmBtn").addEventListener("click", (event)=> {
-    menuCard.toggle()
+// When delivery location is confirmed, hide delivery-location-modal, main-menu-card, and show sizeSelectionMenu container
+document.getElementById("locationModalConfirmBtn").addEventListener("click", (event) => {
+    // menuCard.toggle()
     document.getElementById("delivery-location-modal").classList.toggle("hidden")
-    // document.getElementById("mainMenuCard").classList.toggle("hidden")
+    document.getElementById("mainMenuCard").classList.toggle("hidden")
     document.getElementById("selectSizeMenu").classList.toggle("hidden")
 })
 
-document.getElementById("selectSizeNextBtn").addEventListener("click", (event)=> {
+// When next button is clicked in selectSizeMenu, hide sizeSelectMenu and show paymentMethodContainer
+document.getElementById("selectSizeNextBtn").addEventListener("click", (event) => {
     document.getElementById("selectSizeMenu").classList.toggle("hidden")
     document.getElementById("paymentMethodContainer").classList.toggle("hidden")
+})
+
+// When payment method is confirmed, show confirmation page
+document.getElementById("paymentMethodNextBtn").addEventListener("click", (event) => {
+    document.getElementById("paymentMethodContainer").classList.toggle("hidden")
+    document.getElementById("confirmationMenuContainer").classList.toggle("hidden")
 })
 
 
