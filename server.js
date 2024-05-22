@@ -51,6 +51,17 @@ app.use(session({
   cookie: { secure: false, maxAge: 3600000 }
 }))
 
+const isAuth = async (req, res, next) => {
+  const user = await userModel.findOne({ email: req.session.email })
+  if (user) {
+    next();
+  }
+  else {
+    res.status(403)
+    return res.render("login", { errorMessage: "Please login first." })
+  }
+}
+
 // Start application
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
@@ -112,8 +123,10 @@ app.get('/resetpassword', (req, res) => {
 })
 
 // Post login route
-app.get('/postlogin', (req, res) => {
-  res.render("postlogin")
+app.get('/postlogin', isAuth, (req, res) => {
+  if (isAuth) {
+    res.render("postlogin")
+  }
 })
 
 // Account route
@@ -162,15 +175,29 @@ app.post('/signup', async (req, res) => {
 
 // Checks the login information and redirects to landing page if successful, otherwise redirect to index 
 app.post('/login', async (req, res) => {
+  // Find user in db
   const user = await userModel.findOne({ username: req.body.username })
-  try {
-    const isAuth = await bcrypt.compare(req.body.password, user.password)
-    if (isAuth) {
-      return res.redirect("/postlogin")
-    }
-  } catch (error) {
-    console.log(error)
-    return res.render("login", { errorMessage: "Incorrect password" })
+    .catch(error => {
+      console.log(error)
+      return res.render("login", { errorMessage: "Cannot find account" })
+    })
+
+  // if user is not found, redirect with error
+  if (!user) {
+    return res.render("login", { errorMessage: "Cannot find account" })
+  }
+
+  // If user is found, compare password given by user and user password in db
+  const isAuth = await bcrypt.compare(req.body.password, user.password)
+    .catch(error => {
+      console.log(error)
+      return res.render('login', { errorMessage: "Incorrect password" })
+    })
+  // If passwords match, redirect to postlogin screen, else redirect to login with error
+  if (isAuth == true) {
+    res.render("postlogin")
+  } else {
+    return res.render('login', { errorMessage: "Incorrect password" })
   }
 })
 
