@@ -14,6 +14,7 @@ function showPosition(position) {
   console.log(longitude)
   $.post('getAddress', { lat: latitude, lng: longitude }, function (data) {
     let address = data.features[0].properties.full_address
+    console.log(address)
     document.getElementById("starting-location").value = address
   }).fail(function () {
     console.log("error")
@@ -36,6 +37,7 @@ function showPosition(position) {
   console.log(longitude)
   $.post('getAddress', { lat: latitude, lng: longitude }, function (data) {
     let address = data.features[0].properties.full_address
+    console.log(address)
     document.getElementById("destination").value = address
   }).fail(function () {
     console.log("error")
@@ -48,7 +50,7 @@ function showPosition(position) {
 //     let options = {
 //       enableHighAccuracy: true,
 //       timeout: 5000,
-//       maximumAge: 10000
+//       maximumAge: 0
 //     };
 
 //     let successCallback = (position) => {
