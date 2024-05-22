@@ -170,8 +170,15 @@ app.get('/payment_edit', (req, res) => {
 })
 
 // Payment List route
-app.get('/payment_list', (req, res) => {
-  res.render("payment_list")
+app.get('/payment_list', async (req, res) => {
+  const userID = req.session.userid;  // get user ID from session
+  try {
+    const user = await userModel.findById(userID);  // check the user information based on the user ID
+    res.render("payment_list", { user: user });
+  } catch (error) {
+    console.error("Failed to fetch user payment list:", error);
+    res.render("payment_list", { user: null, error: 'Fail to get the user payment list' });
+  }
 })
 
 // Logout route
