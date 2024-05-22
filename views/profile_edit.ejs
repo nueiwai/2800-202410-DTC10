@@ -17,7 +17,6 @@
       height: 100vh;
     }
   </style>
-
   <!-- the account icon to the right of the search bar -->
   <div class="account-icon">
     <a href="/account">
@@ -59,57 +58,109 @@
           <input id="username" type="text"
             class="w-3/4 py-2 px-8 text-sm font-medium text-center text-gray-900 bg-white border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
             placeholder="User ID">
-          <button id="saveBtn" class="border p-2 rounded-md hover:bg-blue-500 hover:text-slate-200"
-            type="submit">Save</button>
+          <!-- <button id="saveBtn" class="border p-2 rounded-md hover:bg-blue-500 hover:text-slate-200"
+            type="submit">Save</button> -->
         </div>
 
         <div class="flex items-center space-x-2">
           <input id="email" type="text"
             class="w-3/4 py-2 px-8 text-sm font-medium text-center text-gray-900 bg-white border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
             placeholder="Email">
-          <button id="saveBtn" class="border p-2 rounded-md hover:bg-blue-500 hover:text-slate-200"
-            type="submit">Save</button>
+          <!-- <button id="saveBtn" class="border p-2 rounded-md hover:bg-blue-500 hover:text-slate-200"
+            type="submit">Save</button> -->
         </div>
 
         <div class="flex items-center space-x-2">
           <input id="phonenumber" type="text"
             class="w-3/4 py-2 px-8 text-sm font-medium text-center text-gray-900 bg-white border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
             placeholder="Phone Number">
-          <button id="saveBtn" class="border p-2 rounded-md hover:bg-blue-500 hover:text-slate-200"
-            type="submit">Save</button>
+          <!-- <button id="saveBtn" class="border p-2 rounded-md hover:bg-blue-500 hover:text-slate-200"
+            type="submit">Save</button> -->
         </div>
 
         <div class="flex items-center space-x-2">
           <input id="street" type="text"
             class="w-3/4 py-2 px-8 text-sm font-medium text-center text-gray-900 bg-white border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
             placeholder="Street">
-          <button id="saveBtn" class="border p-2 rounded-md hover:bg-blue-500 hover:text-slate-200"
-            type="submit">Save</button>
+          <!-- <button id="saveBtn" class="border p-2 rounded-md hover:bg-blue-500 hover:text-slate-200"
+            type="submit">Save</button> -->
         </div>
 
         <div class="flex items-center space-x-2">
           <input id="city" type="text"
             class="w-3/4 py-2 px-8 text-sm font-medium text-center text-gray-900 bg-white border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
             placeholder="City">
-          <button id="saveBtn" class="border p-2 rounded-md hover:bg-blue-500 hover:text-slate-200"
-            type="submit">Save</button>
+          <!-- <button id="saveBtn" class="border p-2 rounded-md hover:bg-blue-500 hover:text-slate-200"
+            type="submit">Save</button> -->
         </div>
 
         <div class="flex items-center space-x-2">
           <input id="postal" type="text"
             class="w-3/4 py-2 px-8 text-sm font-medium text-center text-gray-900 bg-white border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
             placeholder="Postal Code">
-          <button id="saveBtn" class="border p-2 rounded-md hover:bg-blue-500 hover:text-slate-200" type="submit">Save
-          </button>
+          <!-- <button id="saveBtn" class="border p-2 rounded-md hover:bg-blue-500 hover:text-slate-200" type="submit">Save
+          </button> -->
         </div>
 
       </div>
     </div>
 
     <div class="flex justify-center  mt-[-70px]">
+      <button id="saveBtn"
+        class="py-2 px-8 mx-4 text-md font-medium text-center text-white bg-red-600 rounded-xl hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300">save</button>
 
       <button onclick="window.location.href='/account'"
         class="py-2 px-8 mx-4 text-md font-medium text-center text-white bg-red-600 rounded-xl hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300">Cancel</button>
     </div>
   </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const ids = ['username', 'email', 'phonenumber', 'street', 'city', 'postal'];
+      ids.forEach(id => {
+        if (!document.getElementById(id)) {
+          console.error(`Element with ID ${id} not found.`);
+        }
+      });
+
+      const saveBtn = document.getElementById("saveBtn");
+      if (!saveBtn) {
+        console.error("Save button not found.");
+        return;
+      }
+      saveBtn.addEventListener("click", async () => {
+        const userInfo = ids.reduce((acc, id) => {
+          const elem = document.getElementById(id);
+          if (elem) {
+            acc[id] = elem.value;
+          }
+          return acc;
+        }, {});
+
+        console.log(userInfo);  // Debug: log userInfo to ensure all data is collected
+
+        try {
+          const response = await fetch("/profile_edit", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json; charset=UTF-8"
+            },
+            body: JSON.stringify(userInfo)
+          });
+
+          const result = await response.json();
+          if (result.success) {
+            console.log("Profile updated successfully!");
+          } else {
+            console.error("Error updating profile:", result.error);
+          }
+        } catch (error) {
+          console.error("Failed to send request:", error);
+        }
+      });
+    });
+
+
+  </script>
+
   <%- include('templates/map_footer') %>

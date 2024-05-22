@@ -128,6 +128,27 @@ app.get('/profile_edit', (req, res) => {
   // console.log(req.session.userid)
 })
 
+app.post('/profile_edit', async (req, res) => {
+  const { username, email, phonenumber, street, city, postal } = req.body;
+  const userID = req.session.userid;
+  console.log("User ID:", userID)
+
+  try {
+    await userModel.findByIdAndUpdate(userID, {
+      username,
+      email,
+      phonenumber,
+      street,
+      city,
+      postal
+    });
+    res.json({ success: true });
+  } catch (error) {
+    console.error("Failed to update user profile:", error);
+    res.json({ success: false, error: error.message });
+  }
+});
+
 // Payment Edit route
 app.get('/payment_edit', (req, res) => {
   res.render("payment_edit")
