@@ -165,8 +165,15 @@ app.post('/profile_edit', async (req, res) => {
 });
 
 // Payment Edit route
-app.get('/payment_edit', (req, res) => {
-  res.render("payment_edit")
+app.get('/payment_edit', async (req, res) => {
+  const userID = req.session.userid;  // get user ID from session
+  try {
+    const user = await userModel.findById(userID);  // check the user information based on the user ID
+    res.render("payment_edit", { user: user });
+  } catch (error) {
+    console.error("Failed to fetch user name:", error);
+    res.render("payment_edit", { user: null, error: 'Fail to get the user name' });
+  }
 })
 
 // Payment List route
