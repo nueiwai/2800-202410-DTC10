@@ -3,10 +3,10 @@ const $menuCard = document.getElementById('main-menu-drawer');
 // options with default values
 const options = {
     placement: 'bottom',
-    backdrop: true,
+    backdrop: false,
     bodyScrolling: false,
     edge: true,
-    edgeOffset: '',
+    edgeOffset: 'bottom-[60px]',
     backdropClasses:
         'bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-30',
     onHide: () => {
@@ -17,7 +17,6 @@ const options = {
     },
     onToggle: () => {
         console.log('drawer has been toggled');
-        console.log(document.getElementById("main-menu-drawer").children)
     }
 };
 
@@ -28,21 +27,22 @@ const instanceOptions = {
 };
 
 const menuCard = new Drawer($menuCard, options, instanceOptions);
+menuCard.hide()
 
-// Toggles visibility of account information in the #menu element found in postlogin.ejs
-async function toggleMenu() {
-    // document.getElementById("menu").classList.toggle("invisible")
-    const user = await getUserInfo()
-    document.getElementById("name").value = user.name
-    username.value = user.username
-    email.value = user.email
-    if (user.address) {
-        email.value = user.address
-    }
-    if (user.phonenumber) {
-        email.value = user.phonenumber
-    }
-}
+// // Toggles visibility of account information in the #menu element found in postlogin.ejs
+// async function toggleMenu() {
+//     // document.getElementById("menu").classList.toggle("invisible")
+//     const user = await getUserInfo()
+//     document.getElementById("name").value = user.name
+//     username.value = user.username
+//     email.value = user.email
+//     if (user.address) {
+//         email.value = user.address
+//     }
+//     if (user.phonenumber) {
+//         email.value = user.phonenumber
+//     }
+// }
 
 // Returns the logged in users information. Only works if you are logged in! wont work after saving unless logging in again!
 async function getUserInfo() {
@@ -51,36 +51,37 @@ async function getUserInfo() {
     return user
 }
 
-// Updates the user information
-// ToDo: Handle errors when not logged in or else will crash
-document.querySelectorAll("#saveBtn").forEach(async (button) => {
-    button.addEventListener("click", async (e) => {
-        const updatedField = e.target.previousElementSibling.id
-        const updatedValue = e.target.previousElementSibling.value
-        const user = await getUserInfo()
-        const uid = user._id
-        const response = await fetch("/update", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json; charset=UTF-8"
-            },
-            body: JSON.stringify({
-                userID: uid,
-                query: {
-                    [updatedField]: updatedValue
-                }
-            }),
-        })
-        await response.json()
-            .catch(error => {
-                console.log(error)
-            })
-    })
-})
+// // Updates the user information
+// document.querySelectorAll("#saveBtn").forEach(async (button) => {
+//     button.addEventListener("click", async (e) => {
+//         const updatedField = e.target.previousElementSibling.id
+//         const updatedValue = e.target.previousElementSibling.value
+//         const user = await getUserInfo()
+//         const uid = user._id
+//         const response = await fetch("/update", {
+//             method: "POST",
+//             headers: {
+//                 "Content-Type": "application/json; charset=UTF-8"
+//             },
+//             body: JSON.stringify({
+//                 userID: uid,
+//                 query: {
+//                     [updatedField]: updatedValue
+//                 }
+//             }),
+//         })
+//         await response.json()
+//             .catch(error => {
+//                 console.log(error)
+//             })
+//     })
+// })
+
 
 // When direct delivery button is clicked, show delivery location modal
 document.getElementById("directDeliveryBtn").addEventListener("click", (event) => {
     // document.getElementById("mainMenuCard").classList.toggle("hidden")
+    // document.getElementById("selectSizeMenu").classList.toggle("hidden")
     document.getElementById("delivery-location-modal").classList.toggle("hidden")
     document.getElementById("delivery-location-modal").style.top = "80px"
 })
@@ -90,7 +91,7 @@ document.getElementById("locationModalConfirmBtn").addEventListener("click", (ev
     // menuCard.toggle()
     document.getElementById("delivery-location-modal").classList.toggle("hidden")
     document.getElementById("mainMenuCard").classList.toggle("hidden")
-    document.getElementById("selectSizeMenu").classList.toggle("hidden")
+    document.getElementById("selectSizeMenu").classList.toggle("absolute")
 })
 
 // When next button is clicked in selectSizeMenu, hide sizeSelectMenu and show paymentMethodContainer
