@@ -163,14 +163,14 @@ app.post('/signup', async (req, res) => {
 // Checks the login information and redirects to landing page if successful, otherwise redirect to index 
 app.post('/login', async (req, res) => {
   const user = await userModel.findOne({ username: req.body.username })
-  const isAuth = await bcrypt.compare(req.body.password, user.password)
-
-  if (isAuth) {
-    req.session.userid = user.id
-    return res.redirect("postlogin")
-  }
-  else {
-    res.redirect("/")
+  try {
+    const isAuth = await bcrypt.compare(req.body.password, user.password)
+    if (isAuth) {
+      return res.redirect("/postlogin")
+    }
+  } catch (error) {
+    console.log(error)
+    return res.render("login", { errorMessage: "Incorrect password" })
   }
 })
 
