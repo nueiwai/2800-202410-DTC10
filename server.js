@@ -209,6 +209,19 @@ app.get('/payment_list', async (req, res) => {
   }
 });
 
+
+// Payment Delete route
+app.delete('/delete_payment/:paymentId', async (req, res) => {
+  try {
+    const { paymentId } = req.params;
+    await paymentModel.findByIdAndDelete(paymentId);
+    res.json({ success: true, message: "Payment information deleted successfully!" });
+  } catch (error) {
+    console.error("Failed to delete payment information:", error);
+    res.status(500).json({ success: false, message: "Failed to delete payment information" });
+  }
+});
+
 // Logout route
 app.get('/logout', (req, res) => {
   req.session.destroy()
