@@ -8,7 +8,7 @@
   var map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/streets-v11',
-    center: [-123.112755, 49.241722], // Central Vancouver
+    center: [-123.061111, 49.254444], // Trout Lake (one of the EV stations)
     zoom: 10.7,
     pitch: 44 // Controls the slantedness of the map view
   });
@@ -58,11 +58,15 @@
   });
   endGeocoder.addTo('#destination');
 
-
   let geojson = JSON.parse('<%- stations %>')
   // console.log(geojson);
 
   console.log('<%- stations %>')
+
+  const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
+    '<div class="text-lg"><a href="/availablebattery">Select this station</a></div>'
+  );
+
   // add markers to map
   for (const feature of geojson.features) {
     // create a HTML element for each feature
@@ -70,7 +74,9 @@
     el.className = 'marker';
 
     // make a marker for each feature and add to the map
-    new mapboxgl.Marker(el).setLngLat(feature.location.coordinates).addTo(map);
+    new mapboxgl.Marker(el).setLngLat(feature.location.coordinates)
+      .setPopup(popup) // set a popup on this marker
+      .addTo(map);
   }
 
   // After the map style has loaded on the page,
