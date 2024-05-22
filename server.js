@@ -118,8 +118,16 @@ app.get('/postlogin', (req, res) => {
 })
 
 // Account route
-app.get('/account', (req, res) => {
-  res.render("account")
+app.get('/account', async (req, res) => {
+  const userID = req.session.userid;  // get user ID from session
+  console.log("User ID:", userID)
+  try {
+    const user = await userModel.findById(userID);  // check the user information based on the user ID
+    res.render("account", { user: user });
+  } catch (error) {
+    console.error("Failed to fetch user name:", error);
+    res.render("account", { user: null, error: 'Fail to get the user name' });
+  }
 })
 
 // Profile Edit route
