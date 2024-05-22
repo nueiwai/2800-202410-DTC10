@@ -50,22 +50,31 @@ const userSchema = new mongoose.Schema({
   }
 });
 
-// // protect email field from being modified
-// userSchema.pre('save', function (next) {
-//   if (this.isModified('email')) {
-//     return next(new Error('Cannot modify email'));
-//   }
-//   next();
-// });
-
-// userSchema.pre('findOneAndUpdate', function (next) {
-//   const update = this.getUpdate();
-//   if (update.email) {
-//     return next(new Error('Cannot modify email'));
-//   }
-//   next();
-// })
-
 const user = mongoose.model('User', userSchema);
 
-module.exports = user
+const paymentSchema = new mongoose.Schema({
+  cardType: {
+    type: String,
+    required: true
+  },
+  cardNumber: {
+    type: String,
+    required: true
+  },
+  cvv: {
+    type: String,
+    required: true
+  },
+  expiryDate: {
+    type: String,
+    required: true
+  },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }
+});
+
+const payment = mongoose.model('Payment', paymentSchema);
+
+module.exports = { user, payment };
