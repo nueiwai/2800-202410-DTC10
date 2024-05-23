@@ -49,28 +49,32 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    const homeButton = document.querySelector('.home-icon a'); // Ensure this selector targets your home button correctly
+    const homeButton = document.querySelector('.home-icon a');
     const catIcon = document.querySelector('.icon-tabler-cat');
     let touchTimer;
+    let longPressActivated = false;
 
     homeButton.addEventListener('touchstart', function (e) {
-      // Prevent default long press behavior if needed
-      e.preventDefault();
       touchTimer = setTimeout(() => {
-        // Show cat icon
+        longPressActivated = true;
         catIcon.classList.remove('hidden');
         catIcon.classList.add('visible');
-      }, 500); // Adjust time threshold to your preference
+        e.preventDefault();
+      }, 500);
     });
 
     homeButton.addEventListener('touchend', function () {
-      // Clear the timer if touch ends before the threshold
       clearTimeout(touchTimer);
+      if (!longPressActivated) {
+        window.location.href = this.href;
+      }
+      longPressActivated = false;
     });
 
     homeButton.addEventListener('touchcancel', function () {
-      // Also clear the timer if the touch is canceled
       clearTimeout(touchTimer);
+      longPressActivated = false;
     });
   });
+
 </script>
