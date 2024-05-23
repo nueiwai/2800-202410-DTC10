@@ -74,7 +74,8 @@
               <path d="M15 11v.01" />
             </svg>
             <h3 class="text-lg font-bold mb-2">Today's Weather</h3>
-            <img id="weather-icon" src="" alt="Weather Icon" style="width: 50px; height: 50px;">
+            <img id="weather-icon" src="" alt="Weather Icon"
+              style="width: 100px; height: 100px; border: 2px solid #31B6C0; border-radius: 25px; background: #31B6C0;">
             <p id="weather-info"></p>
             <button class="mt-4 px-4 py-2 bg-buttonBg text-white rounded hover:bg-blue-700"
               onclick="closeWeatherDialog()">Close</button>
@@ -145,7 +146,7 @@
           } else if (description.includes('rain')) {
             return `It's raining cats and dogs in ${city}—perfect weather to catch up on some indoor hobbies unless you prefer splashing around.`;
           } else {
-            return `With ${description} and ${temp}°C, it's a typical day in ${city}. Why not enjoy a nice walk outside? Just kidding, stay in bed.`;
+            return `With ${description} and ${temp}°C, it's a typical day in ${city}. Why not enjoy a nice walk outside?`;
           }
         }
 
