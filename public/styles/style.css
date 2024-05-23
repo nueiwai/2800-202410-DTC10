@@ -52,6 +52,17 @@
      cursor: pointer;
    }
 
+   .navbar {
+     position: absolute;
+     top: 0;
+     left: 0;
+     right: 0;
+     height: 80px;
+     padding: 1em;
+     z-index: 1;
+     backdrop-filter: blur(2px);
+   }
+
    .start-geocoder {
      position: relative;
      z-index: 0;
