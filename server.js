@@ -10,6 +10,7 @@ const MongoStore = require('connect-mongo');
 const cors = require('cors')
 const user = require('./users')
 require('dotenv').config();
+const mongoose = require('mongoose');
 
 /* secret information section */
 const mongodb_host = process.env.MONGODB_HOST;
@@ -164,7 +165,7 @@ app.post('/profile_edit', async (req, res) => {
   }
 });
 
-// Payment Edit route
+// Add new payments route
 app.get('/payment_edit', async (req, res) => {
   const userID = req.session.userid;  // get user ID from session
   try {
@@ -196,6 +197,56 @@ app.post('/payment_edit', async (req, res) => {
   }
 });
 
+// Edit existing payment route
+app.get('/old_payment_edit', async (req, res) => {
+  const userID = req.session.userid;  // get user ID from session
+  try {
+    const user = await userModel.findById(userID);  // check the user information based on the user ID
+    res.render("old_payment_edit", { user: user });
+  } catch (error) {
+    console.error("Failed to fetch user name:", error);
+    res.render("payment_edit", { user: null, error: 'Fail to get the user name' });
+  }
+})
+
+app.get('/old_payment_edit/:paymentId', async (req, res) => {
+  const { paymentId } = req.params;
+
+  // Check if the payment ID is a valid MongoDB ID
+  if (!mongoose.Types.ObjectId.isValid(paymentId)) {
+    return res.status(400).send('Invalid ID format');
+  }
+
+  try {
+    const user = await userModel.findById(req.session.userid);
+    const payment = await paymentModel.findById(paymentId);
+    if (!user) {
+      return res.status(401).send("User not found");
+    }
+    if (!payment) {
+      return res.status(404).send('Payment not found');
+    }
+    res.render("old_payment_edit", { user: user, payment: payment });
+  } catch (error) {
+    console.error("Error fetching details:", error);
+    res.status(500).send("Server error");
+  }
+});
+
+app.post('/update_payment/:paymentId', async (req, res) => {
+  const { paymentId } = req.params;
+  const { cardType, cardNumber, cvv, expiryDate } = req.body;
+  try {
+    await paymentModel.findByIdAndUpdate(paymentId, {
+      cardType, cardNumber, cvv, expiryDate
+    });
+    res.redirect('/payment_list');  // redirect to payment list page
+  } catch (error) {
+    console.error("Failed to update payment information:", error);
+    res.status(500).send("Error updating payment information");
+  }
+});
+
 // Payment List route
 app.get('/payment_list', async (req, res) => {
   const userID = req.session.userid;  // Get user ID from session
@@ -208,7 +259,6 @@ app.get('/payment_list', async (req, res) => {
     res.render("payment_list", { user: null, payments: null, error: 'Failed to get the user or payment list' });
   }
 });
-
 
 // Payment Delete route
 app.delete('/delete_payment/:paymentId', async (req, res) => {
@@ -279,7 +329,6 @@ app.post('/update', async (req, res) => {
       console.log(error)
     })
 })
-
 
 // Get geojson data for battery stations
 app.get('/battery_stations', async (req, res) => {
