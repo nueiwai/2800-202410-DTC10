@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <style>
+        #result {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            width: 250px;
+            margin: 20px auto;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            display: none;
+            /* Initially hide the card */
+        }
+
+        #weather-icon {
+            cursor: pointer;
+        }
+
+        #weather-icon img {
+            width: 100px;
+            height: auto;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="weather-icon" onclick="toggleCardVisibility()">
+        <img src="https://openweathermap.org/img/wn/01d@2x.png" alt="weather-icon"> <!-- Default icon -->
+    </div>
+    <div id="result">
+        <h5 id="city-name"></h5>
+        <h5 id="temperature"></h5>
+        <h5 id="description"></h5>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            fetchWeather();
+        });
+
+        function fetchWeather() {
+            fetch(`https://comp1537-lab9-backend-ga1b.onrender.com/getWeatherOfACityByName?cname=Vancouver`)
+                .then((resp) => resp.json())
+                .then((data) => {
+                    document.getElementById('city-name').textContent = data.name;
+                    document.getElementById('temperature').textContent = `${data.main.temp} °C`;
+                    document.getElementById('description').textContent = `${data.weather[0].description}`;
+                    document.querySelector('#weather-icon img').src = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+                })
+                .catch(error => console.error('Error fetching weather:', error));
+        }
+
+        function toggleCardVisibility() {
+            const result = document.getElementById('result');
+            result.style.display = result.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+</body>
+
+</html>
