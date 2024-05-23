@@ -2,7 +2,7 @@
   .cat {
     position: absolute;
     top: 100px;
-    left: 5%;
+    left: 3%;
     z-index: 1;
   }
 
@@ -12,6 +12,33 @@
 
   .visible {
     display: block;
+    animation: bounce-diagonal 8s linear infinite;
+  }
+
+  @keyframes bounce-diagonal {
+    0% {
+      transform: translate(0, 0);
+    }
+
+    25% {
+      transform: translate(75vw, 25vh);
+      /* Move to the bottom-right corner */
+    }
+
+    50% {
+      transform: translate(0, 50vh);
+      /* Move to the middle-left */
+    }
+
+    75% {
+      transform: translate(100vw, 75vh);
+      /* Move to the bottom-right again */
+    }
+
+    100% {
+      transform: translate(0, 100vh);
+      /* Move to the bottom-left */
+    }
   }
 
   #weather-dialog {
@@ -125,7 +152,7 @@
     <path d="M9 11v.01" />
     <path d="M15 11v.01" />
   </svg> -->
-  <img class="icon icon-tabler icon-tabler-cat hidden rounded-full w-16 h-16" src="/images/profile.png" alt="">
+  <img class="icon icon-tabler icon-tabler-cat hidden w-20 h-20 " src="/images/catmeme.png" alt="">
 </div>
 
 <div id="weather-dialog" class="hidden">
