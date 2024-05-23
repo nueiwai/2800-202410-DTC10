@@ -1,29 +1,165 @@
 <%- include('templates/map_header') %>
-<style>
-  .height-3-5-screen {
-    height: 60vh;
-  }
-</style>
+  <style>
+    #weather-dialog {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background-color: rgba(75, 85, 99, 0.5);
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+    }
 
-<%- include('templates/map') %>
+    #weather-dialog.visible {
+      display: flex;
+      animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.320, 1.275) forwards;
+    }
 
-<div class="w-full border bg-cardBg rounded-t-xl shadow height-3-5-screen  fixed bottom-0 left-1/2 transform -translate-x-1/2">
+    .dialog-content {
+      background: white;
+      border: 2px solid black;
+      padding: 20px;
+      border-radius: 10px;
+      position: relative;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+      text-align: center;
+    }
 
-  <div class="flex flex-col items-center mb-16" style="transform: translateY(-80px)">
-    <img class="w-40 h-40 mb-3 rounded-full shadow-lg" src="profile.png" alt="Profile image" />
-    <div class="flex items-center">
-      <h5 class="m-4 text-xl font-medium text-gray-900 dark:text-white">Michael</h5>
+    @keyframes popIn {
+      0% {
+        transform: scale(0);
+        opacity: 0;
+      }
+
+      70% {
+        transform: scale(1.2);
+        opacity: 1;
+      }
+
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .dialog-content {
+      background: linear-gradient(135deg, #fafafa 50%, #f6f6f6 50%);
+      border: 4px solid #074464;
+
+      color: #2a2a2a;
+    }
+  </style>
+
+  <%- include('templates/map') %>
+
+    <div
+      class="w-full border bg-cardBg rounded-t-xl shadow height-3-5-screen  fixed bottom-0 left-1/2 transform -translate-x-1/2">
+
+      <div class="flex flex-col items-center mb-16" style="transform: translateY(-80px)">
+        <img id="profile-pic" class="w-40 h-40 mb-3 rounded-full shadow-lg" src="profile.png" alt="Profile image" />
+
+        <div id="weather-dialog" class="hidden">
+          <div class="dialog-content">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-cat" width="36" height="36"
+              viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round"
+              stroke-linejoin="round">
+
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path
+                d="M20 3v10a8 8 0 1 1 -16 0v-10l3.432 3.432a7.963 7.963 0 0 1 4.568 -1.432c1.769 0 3.403 .574 4.728 1.546l3.272 -3.546z" />
+              <path d="M2 16h5l-4 4" />
+              <path d="M22 16h-5l4 4" />
+              <path d="M12 16m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+              <path d="M9 11v.01" />
+              <path d="M15 11v.01" />
+            </svg>
+            <h3 class="text-lg font-bold mb-2">Today's Weather</h3>
+            <img id="weather-icon" src="" alt="Weather Icon" style="width: 50px; height: 50px;">
+            <p id="weather-info"></p>
+            <button class="mt-4 px-4 py-2 bg-buttonBg text-white rounded hover:bg-blue-700"
+              onclick="closeWeatherDialog()">Close</button>
+          </div>
+
+        </div>
+
+
+        <div class="flex items-center">
+          <h5 class="m-4 text-xl font-medium text-gray-900 dark:text-white">Michael</h5>
+        </div>
+
+        <div class="flex flex-col items-center space-y-4 mt-10">
+          <button onclick="window.location.href='/profile_edit'"
+            class="w-full py-3 px-8 text-md font-medium text-center text-white bg-buttonBg rounded-xl hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">Edit
+            Profile</button>
+          <button onclick="window.location.href='/payment_list'"
+            class="w-full py-3 px-8 text-md font-medium text-center text-white bg-buttonBg rounded-xl hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">Manage
+            Payment</button>
+        </div>
+        <div>
+          <button onclick="window.location.href='/logout'"
+            class="w-full py-3 px-8 mt-14 text-md font-medium text-center text-white bg-red-600 rounded-xl hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300">Sign
+            Out</button>
+        </div>
+      </div>
     </div>
 
-    <div class="flex flex-col items-center space-y-4 mt-10">
-      <button onclick="window.location.href='/profile_edit'" class="w-full py-3 px-8 text-md font-medium text-center text-white bg-buttonBg rounded-xl hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">Edit Profile</button>
-      <button onclick="window.location.href='/payment_list'" class="w-full py-3 px-8 text-md font-medium text-center text-white bg-buttonBg rounded-xl hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">Manage
-        Payment</button>
-    </div>
-    <div>
-      <button onclick="window.location.href='/logout'" class="w-full py-3 px-8 mt-14 text-md font-medium text-center text-white bg-red-600 rounded-xl hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300">Sign
-        Out</button>
-    </div>
-  </div>
-</div>
-<%- include('templates/map_footer') %>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const profilePic = document.getElementById('profile-pic');
+        const weatherDialog = document.getElementById('weather-dialog');
+        const weatherInfo = document.getElementById('weather-info');
+        const weatherIcon = document.getElementById('weather-icon');
+
+        profilePic.addEventListener('click', function () {
+          fetchWeather();
+        });
+
+        function fetchWeather() {
+          const cityName = 'Vancouver';
+          fetch(`/weather?cityName=${cityName}`)
+            .then(response => response.json())
+            .then(data => {
+              const iconCode = data.weather[0].icon;
+              const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+              weatherIcon.src = iconUrl;  // Set the weather icon
+
+              // Using a function to generate a funny and engaging message
+              const message = getFunnyWeatherMessage(data);
+              weatherInfo.textContent = message;
+
+              showWeatherDialog();
+            })
+            .catch(error => {
+              console.error('Error fetching weather:', error);
+              weatherInfo.textContent = 'Failed to fetch weather data. It might be cloudy with a chance of data loss.';
+            });
+        }
+
+        function getFunnyWeatherMessage(data) {
+          const temp = data.main.temp;
+          const description = data.weather[0].description.toLowerCase();
+          const city = data.name;
+
+          if (temp < 0) {
+            return `It's colder than a polar bear's toenail in ${city} at a freezing ${temp}°C! Stay inside unless you're a penguin.`;
+          } else if (description.includes('rain')) {
+            return `It's raining cats and dogs in ${city}—perfect weather to catch up on some indoor hobbies unless you prefer splashing around.`;
+          } else {
+            return `With ${description} and ${temp}°C, it's a typical day in ${city}. Why not enjoy a nice walk outside? Just kidding, stay in bed.`;
+          }
+        }
+
+        function showWeatherDialog() {
+          weatherDialog.classList.add('visible');
+          weatherDialog.style.display = 'flex';  // Make sure the dialog is visible
+        }
+
+        window.closeWeatherDialog = function () {
+          weatherDialog.classList.remove('visible');
+          setTimeout(() => { weatherDialog.style.display = 'none'; }, 500);  // Hide the dialog smoothly
+        }
+      });
+    </script>
+
+
+    <%- include('templates/map_footer') %>
