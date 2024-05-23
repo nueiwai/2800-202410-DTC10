@@ -42,10 +42,7 @@
           latitude: 49.2827
         } // Coordinates of Central Vancouver
       });
-      geocoder.addTo('#geocoder');
-
-      // Add the geocoder to the map
-      // document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
+      document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
 
       var startGeocoder = new MapboxGeocoder({
         // Initialize the geocoder
