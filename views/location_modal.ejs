@@ -45,6 +45,7 @@
             </button>
           </div>
           <div id="starting-location" class="start-geocoder"></div>
+          <input id="current-starting-location" class="hidden"></input>
 
           <!-- Destination -->
           <div class="flex container justify-between items-center w-full">
@@ -63,6 +64,7 @@
             </button>
           </div>
           <div id="destination" class="end-geocoder"></div>
+          <input id="current-destination" class="hidden"></input>
 
           <button id="confirmBtn" class="w-full text-white bg-buttonBg focus:ring-white focus:ring-4 font-medium rounded-lg text-lg px-5 py-2.5 text-center" data-modal-hide="delivery-location-modal">Confirm</button>
 
@@ -76,11 +78,7 @@
   let confirmBtn = document.getElementById('confirmBtn');
   if (confirmBtn) {
     confirmBtn.addEventListener('click', function() {
-      if (startLocation && endLocation) {
-        drawRoute(startLocation, endLocation);
-      } else {
-        console.log('There is no confirm button on this page.')
-      }
+      drawRoute();
     });
   }
 </script>
