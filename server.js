@@ -191,7 +191,6 @@ app.post('/update', async (req, res) => {
     })
 })
 
-
 // Get geojson data for battery stations
 app.get('/battery_stations', async (req, res) => {
   let battery_stations = await batteryStationModel.find({}, { _id: 0 })
@@ -200,16 +199,6 @@ app.get('/battery_stations', async (req, res) => {
     features: battery_stations
   }
   res.render("battery_station_map", { stations: JSON.stringify(geojsonData) })
-})
-
-// Get address from mapbox corresponding to the given coordinates
-app.post('/getAddress', async (req, res) => {
-  let latitude = req.body.lat
-  let longitude = req.body.lng
-  let url = `https://api.mapbox.com/search/geocode/v6/reverse?longitude=${longitude}&latitude=${latitude}&access_token=${mapbox_token}&country=CA&region=BC&types=place&limit=1`
-  let response = await fetch(url)
-  let data = await response.json()
-  res.send(data)
 })
 
 // Reset password route

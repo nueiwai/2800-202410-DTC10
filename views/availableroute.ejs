@@ -1,13 +1,13 @@
 <%- include('templates/map_header') %>
-<%- include('map') %>
+<%- include('templates/map') %>
 
 <!-- drawer component -->
 <div id="available-route-drawer" class="fixed z-40 w-full overflow-y-auto bg-cardBg border-t border-gray-200 rounded-t-lg transition-transform bottom-0 left-0 right-0 translate-y-full bottom-[60px]" tabindex="-1" aria-labelledby="available-route-drawer-label">
   <div class="p-7 hover:bg-cardBgHover" data-drawer-toggle="available-route-drawer" data-drawer-target="available-route-drawer" data-drawer-placement="bottom" data-drawer-edge="true" data-drawer-edge-offset="bottom-[60px]" aria-controls="available-route-drawer" data-drawer-backdrop="false">
     <span class="absolute w-36 h-1 -translate-x-1/2 bg-white rounded-lg top-2 left-1/2"></span>
   </div>
-  </span>
-  <p class="font-bold py-2">Available Routes</p>
+
+  <p class="font-bold text-center py-2">Available Routes</p>
 
   <div class="grid grid-cols-1 grid-rows-3 gap-4 p-4">
     <div class="p-4 rounded-lg cursor-pointer bg-buttonBg">

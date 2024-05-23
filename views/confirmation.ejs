@@ -1,115 +1,87 @@
 <%- include('templates/map_header') %>
+<%- include('templates/map') %>
 
-  <div id="map-container">
-    <%- include('map') %>
+<!-- drawer component -->
+<div id="confirmation-drawer" class="fixed z-40 w-full overflow-y-auto bg-cardBg border-t border-gray-200 rounded-t-lg dark:border-gray-700 dark:bg-gray-800 transition-transform bottom-0 left-0 right-0 translate-y-full bottom-[60px]" tabindex="-1" aria-labelledby="confirmation-drawer-label">
+  <div class="p-7 hover:bg-cardBgHover" data-drawer-toggle="confirmation-drawer" data-drawer-target="confirmation-drawer" data-drawer-placement="bottom" data-drawer-edge="true" data-drawer-edge-offset="bottom-[60px]" aria-controls="confirmation-drawer" data-drawer-backdrop="false">
+    <span class="absolute w-36 h-1 -translate-x-1/2 bg-white rounded-lg top-2 left-1/2"></span>
+  </div>
+  <p id="card-name" class="font-bold text-center py-2">Confirmation</p>
+  <div class="grid grid-cols-4 gap-2 p-3">
+    <!-- Step 1 -->
+    <div class="p-1">
+      <img src="confirmation_1.png" class="p-2 rounded-full w-[50px] mx-auto border-2 border-[#010204] bg-white" alt="request received" tabindex="0">
+      <div class="mt-2 font-medium text-center text-[#010204] leading-tight">Request Received</div>
+    </div>
+    <!-- Step 2 -->
+    <div class="p-1">
+      <img src="confirmation_2.png" class="p-2 rounded-full w-[50px] mx-auto border-2 border-[#074464] bg-[#CBCBCB]" alt="drone deployed" tabindex="0">
+      <div class="mt-2 font-medium text-center text-buttonBg leading-tight">Drone Deployed</div>
+    </div>
+    <!-- Step 3 -->
+    <div class="p-1">
+      <img src="confirmation_3.png" class="p-2 rounded-full w-[50px] mx-auto border-2 border-[#074464] bg-[#CBCBCB]" alt="drone arriving" tabindex="0">
+      <div class="mt-2 font-medium text-center text-buttonBg leading-tight">Drone Arriving</div>
+    </div>
+    <!-- Step 4 -->
+    <div class="p-1">
+      <img src="confirmation_4.png" class="p-2 rounded-full w-[50px] mx-auto border-2 border-[#074464] bg-[#CBCBCB]" alt="drone landed" tabindex="0">
+      <div class="mt-2 font-medium text-center text-buttonBg leading-tight">Drone Landed</div>
+    </div>
   </div>
 
-  <!-- drawer init and toggle -->
-  <div class="text-center">
-    <button
-      class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-      type="button" data-drawer-target="drawer-swipe" data-drawer-show="drawer-swipe" data-drawer-placement="bottom"
-      data-drawer-edge="true" data-drawer-edge-offset="bottom-[60px]" aria-controls="drawer-swipe">
-      Show swipeable drawer
-    </button>
+  <div>
+    <p class="font-medium p-4 py-2 text-[#010204] text-xl">Your delivery is arriving in:</p>
   </div>
 
-  <!-- drawer component -->
-  <div id="drawer-swipe"
-    class="fixed z-40 w-full overflow-y-auto bg-cardBg border-t border-gray-200 rounded-t-lg dark:border-gray-700 dark:bg-gray-800 transition-transform bottom-0 left-0 right-0 translate-y-full bottom-[60px]"
-    tabindex="-1" aria-labelledby="drawer-swipe-label">
-    <div class="p-4 cursor-pointer flex flex-col items-center" data-drawer-toggle="drawer-swipe">
-      <span class="absolute w-8 h-1 -translate-x-1/2 bg-gray-300 rounded-lg top-3 left-1/2 dark:bg-gray-600">
-      </span>
-      <p class="font-bold py-2">Confirmation</p>
-    </div>
-
-    <div class="grid grid-cols-4 gap-2 p-3">
-      <!-- Step 1 -->
-      <div class="p-1">
-        <img src="confirmation_1.png" class="p-2 rounded-full w-[50px] mx-auto border-2 border-[#010204] bg-white"
-          alt="request received" tabindex="0">
-        <div class="mt-2 font-medium text-center text-[#010204] leading-tight">Request Received</div>
-      </div>
-      <!-- Step 2 -->
-      <div class="p-1">
-        <img src="confirmation_2.png" class="p-2 rounded-full w-[50px] mx-auto border-2 border-[#074464] bg-[#CBCBCB]"
-          alt="drone deployed" tabindex="0">
-        <div class="mt-2 font-medium text-center text-buttonBg leading-tight">Drone Deployed</div>
-      </div>
-      <!-- Step 3 -->
-      <div class="p-1">
-        <img src="confirmation_3.png" class="p-2 rounded-full w-[50px] mx-auto border-2 border-[#074464] bg-[#CBCBCB]"
-          alt="drone arriving" tabindex="0">
-        <div class="mt-2 font-medium text-center text-buttonBg leading-tight">Drone Arriving</div>
-      </div>
-      <!-- Step 4 -->
-      <div class="p-1">
-        <img src="confirmation_4.png" class="p-2 rounded-full w-[50px] mx-auto border-2 border-[#074464] bg-[#CBCBCB]"
-          alt="drone landed" tabindex="0">
-        <div class="mt-2 font-medium text-center text-buttonBg leading-tight">Drone Landed</div>
-      </div>
-    </div>
-
-    <div>
-      <p class="font-medium p-4 py-2 text-[#010204] text-xl">Your delivery is arriving in:</p>
-    </div>
-
-    <div class="grid grid-cols-2 gap-1">
-      <div class="p-1">
-        <div>
-          <div class="flex items-center m-2 mt-4 mb-4">
-            <p class="w-full py-2 px-2 text-sm font-medium text-center text-white bg-[#010204] rounded-2xl">
-              10 minutes
-            </p>
-          </div>
+  <div class="grid grid-cols-2 gap-1">
+    <div class="p-1">
+      <div>
+        <div class="flex items-center m-2 mt-2 mb-4">
+          <p class="w-full py-2 px-2 text-sm font-medium text-center text-white bg-[#010204] rounded-2xl">
+            10 minutes
+          </p>
         </div>
-        <div>
-          <div class="flex items-center m-2">
-            <div class="w-full py-2 px-2">
-              <%- include('templates/mini_map') %>
-            </div>
+      </div>
+      <div>
+        <div class="flex items-center m-2">
+          <div class="w-full py-2 px-2">
+            <div id="mini_map"></div>
           </div>
         </div>
       </div>
-      <div class="p-1">
-        <div>
-          <div class="flex items-center m-2">
-            <p class="w-full py-2 px-2 text-sm text-center text-white bg-[#074464] border-[#074464] rounded-2xl">
-              Tracking: #583027015
-            </p>
-          </div>
+    </div>
+    <div class="p-1">
+      <div>
+        <div class="flex items-center m-2">
+          <p class="w-full py-2 px-2 text-sm text-center text-white bg-[#074464] border-[#074464] rounded-2xl">
+            Tracking: #583027015
+          </p>
         </div>
-        <div>
-          <div class="flex items-center m-2">
-            <p class="w-full py-2 px-2 text-sm text-center text-white bg-[#074464] border-[#074464] rounded-2xl">
-              From: 123 Road
-            </p>
-          </div>
+      </div>
+      <div>
+        <div class="flex items-center m-2">
+          <p class="w-full py-2 px-2 text-sm text-center text-white bg-[#074464] border-[#074464] rounded-2xl">
+            From: 123 Road
+          </p>
         </div>
-        <div>
-          <div class="flex items-center m-2">
-            <p class="w-full py-2 px-2 text-sm text-center text-white bg-[#074464] border-[#074464] rounded-2xl">
-              To: 345 Road
-            </p>
-          </div>
+      </div>
+      <div>
+        <div class="flex items-center m-2">
+          <p class="w-full py-2 px-2 text-sm text-center text-white bg-[#074464] border-[#074464] rounded-2xl">
+            To: 345 Road
+          </p>
         </div>
-        <div>
-          <div class="flex items-center m-2">
-            <p class="w-full py-2 px-2 text-sm text-center text-white bg-[#074464] border-[#074464] rounded-2xl">
-              ETA: 4:00 - 4:30 pm
-            </p>
-          </div>
-        </div>
-        <div>
-          <div class="flex items-center m-2 mb-3">
-            <p class="w-full py-2 px-2 text-sm text-center text-white bg-[#074464] border-[#074464] rounded-2xl">
-              Pilot: Johnny Appleseed
-            </p>
-          </div>
+      </div>
+      <div>
+        <div class="flex items-center m-2 mb-3">
+          <p class="w-full py-2 px-2 text-sm text-center text-white bg-[#074464] border-[#074464] rounded-2xl">
+            Pilot: Johnny Appleseed
+          </p>
         </div>
       </div>
     </div>
   </div>
+</div>
 
-  <%- include('templates/footer') %>
+<%- include('templates/map_footer') %>

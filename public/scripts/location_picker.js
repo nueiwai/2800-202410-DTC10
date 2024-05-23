@@ -11,13 +11,9 @@ function showPositionStart(position) {
   let longitude = position.coords.longitude;
   console.log(latitude)
   console.log(longitude)
-  $.post('getAddress', { lat: latitude, lng: longitude }, function (data) {
-    let address = data.features[0].properties.full_address
-    document.querySelector('.start-geocoder>.mapboxgl-ctrl-geocoder>.mapboxgl-ctrl-geocoder--input').setAttribute('value', 'Your Location');
-    console.log(address)
-  }).fail(function () {
-    console.log("error")
-  })
+  let currentStartLocation = [longitude, latitude]
+  sessionStorage.setItem('currentStartLocation', JSON.stringify(currentStartLocation));
+  document.querySelector('.start-geocoder>.mapboxgl-ctrl-geocoder>.mapboxgl-ctrl-geocoder--input').setAttribute('value', 'Your Location');
 }
 
 function getCurrentLocationEnd() {
@@ -33,11 +29,7 @@ function showPositionEnd(position) {
   let longitude = position.coords.longitude;
   console.log(latitude)
   console.log(longitude)
-  $.post('getAddress', { lat: latitude, lng: longitude }, function (data) {
-    let address = data.features[0].properties.full_address
-    document.querySelector('.end-geocoder>.mapboxgl-ctrl-geocoder>.mapboxgl-ctrl-geocoder--input').setAttribute('value', 'Your Location');
-    console.log(address)
-  }).fail(function () {
-    console.log("error")
-  })
+  let currentEndLocation = [longitude, latitude]
+  sessionStorage.setItem('currentEndLocation', JSON.stringify(currentEndLocation));
+  document.querySelector('.end-geocoder>.mapboxgl-ctrl-geocoder>.mapboxgl-ctrl-geocoder--input').setAttribute('value', 'Your Location');
 }
