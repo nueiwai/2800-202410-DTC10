@@ -69,7 +69,7 @@
     const el = document.createElement('div');
     el.className = 'marker';
     const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
-      '<div class="text-lg"><a href="/availablebattery">Select this station</a></div>'
+      '<div class="text-md p-4 bg-white rounded-lg shadow-md text-center text-gray-800"><a href="/availablebattery" class="inline-block px-4 py-2 bg-buttonBg text-white rounded-md transition-colors">Select this station</a>'
     );
 
     // make a marker for each feature and add to the map
