@@ -22,6 +22,8 @@
     align-items: center;
     justify-content: center;
     z-index: 10;
+    padding: 30px;
+    border-radius: 10px;
   }
 
   #weather-dialog.visible {
@@ -33,7 +35,7 @@
     background: white;
     border: 2px solid black;
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 30px;
     position: relative;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
     text-align: center;
@@ -71,7 +73,7 @@
 
   .dialog-content {
     background: linear-gradient(135deg, #fafafa 50%, #f6f6f6 50%);
-    border: 4px solid #074464;
+    border: 4px solid #31B6C0;
 
     color: #2a2a2a;
   }
@@ -112,7 +114,7 @@
 <!-- the weather (cat) icon in the left bottom of the search bar -->
 <div class="cat">
   <!-- Cat icon, initially hidden -->
-  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-cat hidden" width="44" height="44"
+  <!-- <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-cat hidden" width="44" height="44"
     viewBox="0 0 24 24" stroke-width="1.5" stroke="#ff9300" fill="none" stroke-linecap="round" stroke-linejoin="round">
     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
     <path
@@ -122,7 +124,8 @@
     <path d="M12 16m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
     <path d="M9 11v.01" />
     <path d="M15 11v.01" />
-  </svg>
+  </svg> -->
+  <img class="icon icon-tabler icon-tabler-cat hidden rounded-full w-16 h-16" src="/images/profile.png" alt="">
 </div>
 
 <div id="weather-dialog" class="hidden">
