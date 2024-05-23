@@ -17,7 +17,7 @@ const mongodb_user = process.env.MONGODB_USER;
 const mongodb_password = process.env.MONGODB_PASSWORD;
 const mongodb_database = process.env.MONGODB_DATABASE;
 const mongodb_session_secret = process.env.MONGODB_SESSION_SECRET;
-const mapbox_token = process.env.MAPBOX_TOKEN;
+const mapbox_token = process.env.MAPBOX_ACCESS_TOKEN;
 /* END secret section */
 
 // Create database connection to use as the store option in the session object below
@@ -231,4 +231,6 @@ app.post('/changePassword', async (req, res) => {
   res.redirect('/login')
 }
 )
+
+//
 //ToDo: Add 404 route
