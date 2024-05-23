@@ -1,4 +1,19 @@
 <style>
+  .cat {
+    position: absolute;
+    top: 100px;
+    left: 5%;
+    z-index: 1;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .visible {
+    display: block;
+  }
+
   #weather-dialog {
     display: none;
     position: fixed;
@@ -93,7 +108,7 @@
 
 <div id="weather-dialog" class="hidden">
   <div class="dialog-content">
-    <h3 class="text-lg font-bold mb-2">Today's Weather</h3>
+    <h3 class="text-lg font-bold mb-2">Today's Weather from Cat Reporter</h3>
     <img id="weather-icon" src="" alt="Weather Icon"
       style="width: 100px; height: 100px; border: 2px solid #31B6C0; border-radius: 25px; background: #31B6C0;">
     <p id="weather-info"></p>
@@ -151,7 +166,7 @@
         .then(data => {
           const iconCode = data.weather[0].icon;
           const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
-          weatherIcon.src = iconUrl;  // Set the weather icon
+          weatherIcon.src = iconUrl;
 
           const message = getFunnyWeatherMessage(data);
           weatherInfo.textContent = message;
@@ -180,12 +195,12 @@
 
     function showWeatherDialog() {
       weatherDialog.classList.add('visible');
-      weatherDialog.style.display = 'flex';  // Make sure the dialog is visible
+      weatherDialog.style.display = 'flex';
     }
 
     window.closeWeatherDialog = function () {
       weatherDialog.classList.remove('visible');
-      setTimeout(() => { weatherDialog.style.display = 'none'; }, 500);  // Hide the dialog smoothly
+      setTimeout(() => { weatherDialog.style.display = 'none'; }, 500);
     }
   });
 </script>

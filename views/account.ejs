@@ -108,9 +108,8 @@
             .then(data => {
               const iconCode = data.weather[0].icon;
               const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
-              weatherIcon.src = iconUrl;  // Set the weather icon
+              weatherIcon.src = iconUrl;
 
-              // Using a function to generate a funny and engaging message
               const message = getFunnyWeatherMessage(data);
               weatherInfo.textContent = message;
 
@@ -138,7 +137,7 @@
 
         function showWeatherDialog() {
           weatherDialog.classList.add('visible');
-          weatherDialog.style.display = 'flex';  // Make sure the dialog is visible
+          weatherDialog.style.display = 'flex';
         }
 
         window.closeWeatherDialog = function () {
