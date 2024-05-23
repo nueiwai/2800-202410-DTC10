@@ -1,4 +1,4 @@
-console.log(window.location)
+// console.log(window.location)
 
 const $menuCard = document.getElementById('main-menu-drawer');
 
@@ -94,12 +94,30 @@ document.getElementById("locationModalConfirmBtn").addEventListener("click", (ev
     document.getElementById("delivery-location-modal").classList.toggle("hidden")
     document.getElementById("mainMenuCard").classList.toggle("hidden")
     document.getElementById("selectSizeMenu").classList.toggle("absolute")
+    // -translate-x-[391px]
+    // -translate-x-[391]
+    document.getElementById("paymentMethodContainer").classList.toggle("hidden")
+    const elementWidth = paymentMethodContainer.offsetWidth
+    // const tailwindClassString = `-translate-x-[${elementWidth}px]`
+    // paymentMethodContainer.classList.add(`${tailwindClassString}`)
+    confirmationMenuContainer.classList.add(`-translate-x-[${elementWidth}px]`)
+    document.getElementById("paymentMethodContainer").classList.toggle("hidden")
 })
 
 // When next button is clicked in selectSizeMenu, hide sizeSelectMenu and show paymentMethodContainer
 document.getElementById("selectSizeNextBtn").addEventListener("click", (event) => {
+    // transform translate-x-0
     document.getElementById("selectSizeMenu").classList.toggle("hidden")
     document.getElementById("paymentMethodContainer").classList.toggle("hidden")
+    const paymentMethodContainerWidth = paymentMethodContainer.offsetWidth
+    paymentMethodContainer.style.transform = `translate(-${paymentMethodContainerWidth})`
+    // paymentMethodContainer.classList.add(`-translate-x-[${paymentMethodContainerWidth}px]`)
+    // paymentMethodContainer.classList.remove(`-translate-x-[${paymentMethodContainerWidth}px]`)
+    // paymentMethodContainer.classList.add(`transition-transform`)
+    // paymentMethodContainer.classList.add(`-translate-x-0`)
+    console.log("move")
+    // document.getElementById("paymentMethodContainer").classList.add("ease-in")
+    // document.getElementById("paymentMethodContainer").classList.add("translate-x-0")
 })
 
 // When payment method is confirmed, show confirmation page
@@ -107,7 +125,6 @@ document.getElementById("paymentMethodNextBtn").addEventListener("click", (event
     document.getElementById("paymentMethodContainer").classList.toggle("hidden")
     document.getElementById("confirmationMenuContainer").classList.toggle("hidden")
 })
-
 
 
 

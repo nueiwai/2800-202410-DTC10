@@ -6,12 +6,20 @@
     <span class="absolute w-36 h-1 -translate-x-1/2 bg-white rounded-lg top-2 left-1/2"></span>
   </div>
 
-  <!-- menu card body -->
+  <style>
+    .moveRight{
+      transition-property: transform;
+      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      transition-duration: 150ms;
+      left: 0;
+    }
+  </style>
+
+  <!-- Main menu card -->
   <div class="w-full">
     <!-- Drone-share option -->
-    <div id="mainMenuCard" class="flex flex gap-11 justify-center p-4">
-
-      <div class="flex flex-col w-[17%]">
+    <div id="mainMenuCard" class="flex flex gap-12 justify-center p-4">
+      <div class="flex flex-col w-[15%]">
         <button id="droneShareBtn" class="rounded-lg hover:bg-cardBgHover">
           <img src="images/core_feature_icon1.svg" class="rounded-lg mx-auto focus:ring-2 focus:ring-white" alt="drone-share" tabindex="0" />
         </button>
@@ -19,7 +27,7 @@
       </div>
       
       <!-- Direct delivery option -->
-      <div class="flex flex-col w-[17%]">
+      <div class="flex flex-col w-[15%]">
         <button id="directDeliveryBtn" class="rounded-lg hover:bg-cardBgHover">
           <img src="images/core_feature_icon3.svg" class="hover:bg-cardBgHover rounded-lg mx-auto focus:ring-2 focus:ring-white" alt="direct-delivery" tabindex="0" />
         </button>
@@ -27,13 +35,12 @@
       </div>
       
       <!-- Roadside assistance option -->
-      <div class="flex flex-col w-[17%]">
+      <div class="flex flex-col w-[15%]">
         <button id="roadsideAssistanceBtn" class="rounded-lg hover:bg-cardBgHover">
           <img src="images/core_feature_icon2.svg" class="rounded-lg mx-auto focus:ring-2 focus:ring-white" alt="roadside-assistance" tabindex="0" />
         </button>
         <div class="mt-2 font-medium text-center text-buttonBg leading-tight">Roadside Assistance</div>
       </div>
-
     </div>
 
     <!-- Account information container -->
@@ -67,6 +74,8 @@
   <!-- Selecting the size of the package/delivery -->
   <div id="selectSizeMenu" class="flex flex-col items-center px-[30px] pb-[30px] gap-4 absolute transition-transform translate-y-full bottom-0 left-0 right-0">
     <h1 class="font-bold text-2xl pb-4">Please select an option</h1>
+
+    <!-- Small option -->
     <button class="flex gap-2 border rounded-md p-4 items-center w-[100%] hover:bg-white focus:ring-2">
       <img src="package.png" alt="" class="w-[15%]" />
       <div class="flex flex-col items-start">
@@ -75,6 +84,8 @@
       </div>
       <div class="ml-auto">$20.00</div>
     </button>
+
+     <!-- Medium option -->
     <button class="flex gap-2 border rounded-md p-4 items-center w-[100%] hover:bg-white focus:ring-2">
       <img src="package.png" alt="" class="w-[15%]" />
       <div class="flex flex-col items-start">
@@ -83,6 +94,8 @@
       </div>
       <div class="ml-auto">$30.00</div>
     </button>
+
+    <!-- Large option -->
     <button class="flex gap-2 border rounded-md p-4 items-center w-[100%] hover:bg-white focus:ring-2">
       <img src="package.png" alt="" class="w-[15%]" />
       <div class="flex flex-col items-start">
@@ -91,14 +104,15 @@
       </div>
       <div class="ml-auto">$40.00</div>
     </button>
-    <div id="selectSizeNextBtn" class="flex gap-2 w-full">
+
+    <!-- Cancel and next buttons -->
+    <div class="flex gap-2 w-full">
       <button class="w-[100%] border rounded-md p-[10px]">Cancel</button>
-      <button class="w-[100%] border rounded-md bg-blue-500 p-[10px]">Next</button>
+      <button id="selectSizeNextBtn" class="w-[100%] border rounded-md bg-blue-500 p-[10px]">Next</button>
     </div>
   </div>
 
   <!-- Payment method container -->
-
   <div id="paymentMethodContainer" class="hidden flex flex-col gap-2 px-4 pb-4">
     <h1 class="text-center font-bold font-2xl">Select a payment method</h1>
     <button class="flex gap-2 border rounded-md p-4 items-center w-[100%]">Credit card</button>
