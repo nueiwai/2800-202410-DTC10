@@ -1,3 +1,5 @@
+console.log(window.location)
+
 const $menuCard = document.getElementById('main-menu-drawer');
 
 // options with default values

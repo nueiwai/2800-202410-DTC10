@@ -191,7 +191,7 @@ app.post('/login', async (req, res) => {
   const loggedIn = await bcrypt.compare(req.body.password, user.password)
     .catch(error => {
       console.log(error)
-      return res.render('login', { errorMessage: "error" })
+      return res.render('login', { errorMessage: error })
     })
   // If passwords match, redirect to postlogin screen, else redirect to login with error
   if (loggedIn) {
