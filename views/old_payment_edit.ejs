@@ -29,28 +29,27 @@
   <div class="w-full bg-cardBg h-full fixed bottom-0 left-1/2 transform -translate-x-1/2 pt-56">
 
     <div class="flex flex-col items-center" style="transform: translateY(-80px)">
-      <img class="w-40 h-40 mb-3 rounded-full shadow-lg" src="profile.png" alt="Profile image" />
+      <img class="w-40 h-40 mb-3 rounded-full shadow-lg" src="/profile.png" alt="Profile image" />
       <div class="flex items-center">
         <h5 class="m-4 text-xl font-medium text-gray-900 dark:text-white">
           <%= user && user.name ? user.name : 'Unknown User' %>
         </h5>
       </div>
 
-      <div class="flex flex-col items-center space-y-6 mt-6">
-        <input type="text" id="cardType"
+      <form id="paymentForm" class="flex flex-col items-center space-y-6 mt-6">
+        <input type="text" id="cardType" name="cardType" value="<%= payment.cardType %>"
           class="w-3/4 py-2 px-6 text-sm font-medium text-center text-gray-900 bg-white border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
           placeholder="Card Type">
-        <input type="text" id="cardNumber"
+        <input type="text" id="cardNumber" name="cardNumber" value="<%= payment.cardNumber %>"
           class="w-3/4 py-2 px-6 text-sm font-medium text-center text-gray-900 bg-white border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
           placeholder="Card Number">
-        <input type="text" id="cvv"
+        <input type="text" id="cvv" name="cvv" value="<%= payment.cvv %>"
           class="w-3/4 py-2 px-6 text-sm font-medium text-center text-gray-900 bg-white border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
           placeholder="CVV">
-        <input type="text" id="expiryDate"
+        <input type="text" id="expiryDate" name="expiryDate" value="<%= payment.expiryDate %>"
           class="w-3/4 py-2 px-6 text-sm font-medium text-center text-gray-900 bg-white border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
           placeholder="Expiry Date">
-      </div>
-
+      </form>
     </div>
 
     <div class="flex justify-center mt-[-50px]">
@@ -62,49 +61,34 @@
   </div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const ids = ['cardType', 'cardNumber', 'cvv', 'expiryDate'];
-      ids.forEach(id => {
-        if (!document.getElementById(id)) {
-          console.error(`Element with ID ${id} not found.`);
-        }
+    document.getElementById('savePaymentBtn').addEventListener('click', function () {
+      var form = document.getElementById('paymentForm');
+      var formData = new FormData(form);
+      var object = {};
+      formData.forEach(function (value, key) {
+        object[key] = value;
       });
+      var json = JSON.stringify(object);
 
-      const savePaymentBtn = document.getElementById("savePaymentBtn");
-      if (!savePaymentBtn) {
-        console.error("Save payment button not found.");
-        return;
-      }
-      savePaymentBtn.addEventListener("click", async () => {
-        const paymentInfo = ids.reduce((acc, id) => {
-          const elem = document.getElementById(id);
-          if (elem) {
-            acc[id] = elem.value;
-          }
-          return acc;
-        }, {});
-
-        console.log(paymentInfo);
-
-        try {
-          const response = await fetch("/payment_edit", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json; charset=UTF-8"
-            },
-            body: JSON.stringify(paymentInfo)
-          });
-
-          const result = await response.json();
-          if (result.success) {
-            console.log("Payment information updated successfully.");
+      fetch('/update_payment/<%= payment._id %>', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: json
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            alert('Payment updated successfully!');
+            window.location.href = '/payment_list';
           } else {
-            console.error("Error updating payment information:", result.error);
+            alert('Failed to update payment.');
           }
-        } catch (error) {
-          console.error("Failed to send request:", error);
-        }
-      });
+        })
+        .catch(error => {
+          alert('Error updating payment: ' + error);
+        });
     });
   </script>
 
