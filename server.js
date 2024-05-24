@@ -330,6 +330,7 @@ app.post('/login', async (req, res) => {
     })
   // If passwords match, redirect to postlogin screen, else redirect to login with error
   if (loggedIn) {
+    req.session.userid = user.id
     req.session.email = user.email
     res.redirect("postlogin")
   } else {
@@ -398,15 +399,15 @@ app.post('/changePassword', async (req, res) => {
 
 // Weather API
 app.get('/weather', (req, res) => {
-    const cityName = req.query.cityName; 
-    const apiKey = process.env.OPENWEATHER_API_KEY; 
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=metric`;
+  const cityName = req.query.cityName;
+  const apiKey = process.env.OPENWEATHER_API_KEY;
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=metric`;
 
-    fetch(url)
-        .then(response => response.json())
-        .then(data => res.send(data))
-        .catch(error => {
-            console.error('API request failed', error);
-            res.status(500).send('Failed to fetch weather data');
-        });
+  fetch(url)
+    .then(response => response.json())
+    .then(data => res.send(data))
+    .catch(error => {
+      console.error('API request failed', error);
+      res.status(500).send('Failed to fetch weather data');
+    });
 });
