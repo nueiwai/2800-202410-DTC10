@@ -29,22 +29,32 @@
   <link rel="stylesheet"
     href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css">
 
-  <script>
+  <!-- import external font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Raleway:ital@0;1&display=swap" rel="stylesheet">
+ 
+ <script>
     tailwind.config = {
       theme: {
-        colors: {
-          transparent: 'transparent',
-          current: 'currentColor',
-          'white': '#ffffff',
-          'black': '#000000',
-          'cardBg': '#31B6C0',
-          'cardBgHover': '#2A9AA2',
-          'buttonBg': '#074464',
-          'bluishGray': '#8FA3AD',
-          'yellowishGray': '#CBCBCB',
-          'darkestShade': '#010204',
-        },
-      },
+        extend: {
+          colors: {
+            transparent: 'transparent',
+            current: 'currentColor',
+            'white': '#ffffff',
+            'black': '#000000',
+            'cardBg': '#31B6C0',
+            'cardBgHover': '#2A9AA2',
+            'buttonBg': '#074464',
+            'bluishGray': '#8FA3AD',
+            'yellowishGray': '#CBCBCB',
+            'darkestShade': '#010204',
+          },
+          fontFamily: {
+            'Nunito': ['Nunito', 'sans-serif']
+          }
+        }
+      }
     }
   </script>
 
