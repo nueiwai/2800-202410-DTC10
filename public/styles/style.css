@@ -3,6 +3,7 @@
      top: 0;
      bottom: 0;
      width: 100%;
+     z-index: 0;
    }
 
    #mini_map {
@@ -13,7 +14,7 @@
      right: 56%;
      width: 38%;
      height: 25%;
-     z-index: 1;
+     z-index: 100;
    }
 
    .geocoder {
