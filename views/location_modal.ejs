@@ -78,7 +78,9 @@
   let confirmBtn = document.getElementById('confirmBtn');
   if (confirmBtn) {
     confirmBtn.addEventListener('click', function() {
-      drawRoute();
+      drawRoute().then(() => {
+        calculateDistance(startLocation, endLocation);
+      });
     });
-  }
+  };
 </script>
