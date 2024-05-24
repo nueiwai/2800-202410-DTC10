@@ -3,11 +3,14 @@
 
 <head>
   <meta charset='utf-8' />
-  <title>Document</title>
+  <title>Dronify</title>
   <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
   <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="/images/Dronify_Favicon.png">
+
+  <!-- JQuery -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
   <!-- Tailwind and Flowbite -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -21,8 +24,10 @@
   <script src="https://api.mapbox.com/mapbox.js/plugins/turf/v3.0.11/turf.min.js"></script>
 
   <!-- import geocoder plugins for search bar from Mapbox -->
-  <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
-  <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css">
+  <script
+    src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
+  <link rel="stylesheet"
+    href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css">
 
   <script>
     tailwind.config = {
@@ -43,11 +48,11 @@
     }
   </script>
 
-  <% if (typeof stations !== 'undefined') { %>
-  <link rel="stylesheet" href="/styles/battery_stations_map.css">
-  <% } else { %>
-  <link rel="stylesheet" href="/styles/style.css">
-  <% } %>
+  <% if (typeof stations !=='undefined' ) { %>
+    <link rel="stylesheet" href="/styles/battery_stations_map.css">
+    <% } else { %>
+      <link rel="stylesheet" href="/styles/style.css">
+      <% } %>
 </head>
 
 <body>
