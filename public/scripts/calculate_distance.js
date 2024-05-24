@@ -4,6 +4,7 @@ async function calculateDistance(start, end) {
   var to = turf.point(end);
   // var options = { units: 'kilometers' };
   var distance = turf.distance(from, to);
-  console.log(distance);
+  sessionStorage.setItem("distance", distance);
+  calculatePrices(distance);
   return distance;
 }

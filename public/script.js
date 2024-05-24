@@ -1,5 +1,6 @@
 let directDeliveryBtn = $("#directDeliveryBtn")
 let locationModal = $("#delivery-location-modal")
+let locationModalCloseBtn = $("#location-modal-close-btn")
 let confirmLocationBtn = $("#confirmBtn")
 let mainMenuCard = $("#mainMenuCard")
 let sizeSelectMenu = $("#selectSizeMenu")
@@ -13,6 +14,12 @@ directDeliveryBtn.click(() => {
     locationModal.removeClass("transform -translate-y-full")
     locationModal.addClass("transition-transform translate-y-[80px]")
 })
+
+locationModalCloseBtn.click(() => {
+    locationModal.removeClass("transform translate-y-[80px]")
+    locationModal.addClass("transition-transform -translate-y-full")
+});
+
 
 // Step 2: When user confirms location in #delivery-location-modal, animate transition to #sizeSelectMenu
 // ToDo: Adjust speed of transition
