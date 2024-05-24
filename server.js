@@ -330,6 +330,7 @@ app.post('/login', async (req, res) => {
     })
   // If passwords match, redirect to postlogin screen, else redirect to login with error
   if (loggedIn) {
+    req.session.userid = user.id
     req.session.email = user.email
     res.redirect("postlogin")
   } else {
