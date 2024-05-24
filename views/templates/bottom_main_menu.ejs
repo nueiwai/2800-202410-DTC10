@@ -1,31 +1,27 @@
 <!-- Start drawer component -->
-<div id="main-menu-drawer" class="fixed z-50 w-full bg-cardBg border-t border-gray-200 rounded-t-xl shadow-xl transition-transform left-0 right-0 translate-y-full" tabindex="-1" aria-labelledby="main-menu-drawer-label" data-drawer-body-scrolling="false">
+<div
+  id="main-menu-drawer"
+  class="fixed z-50 bottom-[60px] w-full bg-cardBg border-t border-gray-200 rounded-t-xl shadow-xl transition-transform left-0 right-0 translate-y-full"
+  tabindex="-1"
+  aria-labelledby="main-menu-drawer-label"
+  data-drawer-body-scrolling="false"
+>
   <!-- swipe/click button for the menu -->
-  <!-- data-drawer-edge-offset="bottom-[0px]" -->
-  <div id="aria" class="p-7 hover:cursor-pointer" data-drawer-toggle="main-menu-drawer" data-drawer-target="main-menu-drawer" data-drawer-placement="bottom" data-drawer-edge="true" aria-controls="main-menu-drawer"  data-drawer-backdrop="false">
+  <div id="aria" class="p-7 hover:cursor-pointer" data-drawer-toggle="main-menu-drawer" data-drawer-target="main-menu-drawer" data-drawer-placement="bottom" data-drawer-edge="true" aria-controls="main-menu-drawer" data-drawer-backdrop="false">
     <span class="absolute w-36 h-1 -translate-x-1/2 bg-white rounded-lg top-2 left-1/2"></span>
   </div>
 
-  <style>
-    .moveRight{
-      transition-property: transform;
-      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-      transition-duration: 150ms;
-      left: 0;
-    }
-  </style>
-
   <!-- Main menu card -->
-  <div class="w-full">
+  <div class="w-full relative">
     <!-- Drone-share option -->
-    <div id="mainMenuCard" class="flex flex gap-12 justify-center p-4">
+    <div id="mainMenuCard" class="flex gap-12 justify-center p-4">
       <div class="flex flex-col w-[15%]">
         <button id="droneShareBtn" class="rounded-lg hover:bg-cardBgHover">
           <img src="images/core_feature_icon1.svg" class="rounded-lg mx-auto focus:ring-2 focus:ring-white" alt="drone-share" tabindex="0" />
         </button>
         <div class="mt-2 font-medium text-center text-buttonBg leading-tight">Drone-share</div>
       </div>
-      
+
       <!-- Direct delivery option -->
       <div class="flex flex-col w-[15%]">
         <button id="directDeliveryBtn" class="rounded-lg hover:bg-cardBgHover">
@@ -33,7 +29,7 @@
         </button>
         <div class="mt-2 font-medium text-center text-buttonBg leading-tight">Direct Delivery</div>
       </div>
-      
+
       <!-- Roadside assistance option -->
       <div class="flex flex-col w-[15%]">
         <button id="roadsideAssistanceBtn" class="rounded-lg hover:bg-cardBgHover">
@@ -71,132 +67,135 @@
     </div>
   </div> -->
 
-  <!-- Selecting the size of the package/delivery -->
-  <div id="selectSizeMenu" class="flex flex-col items-center px-[30px] pb-[30px] gap-4 absolute transition-transform translate-y-full bottom-0 left-0 right-0">
-    <h1 class="font-bold text-2xl pb-4">Please select an option</h1>
+    <!-- Selecting the size of the package/delivery -->
+    <div id="selectSizeMenu" class="hidden flex flex-col items-center px-[30px] pb-[30px] gap-4 transform translate-x-full">
+      <h1 class="font-bold text-2xl pb-4 text-center">Please select an option</h1>
 
-    <!-- Small option -->
-    <button class="flex gap-2 border rounded-md p-4 items-center w-[100%] hover:bg-white focus:ring-2">
-      <img src="package.png" alt="" class="w-[15%]" />
-      <div class="flex flex-col items-start">
-        <p class="font-bold">Small: (Under 3kg)</p>
-        <p>Pilot: Johnny Appleseed</p>
+      <!-- Small option -->
+      <button class="flex gap-2 border rounded-md p-4 items-center w-[100%] hover:bg-white focus:ring-2">
+        <img src="package.png" alt="" class="w-[15%]" />
+        <div class="flex flex-col items-start">
+          <p class="font-bold">Small: (Under 3kg)</p>
+          <p>Pilot: Johnny Appleseed</p>
+        </div>
+        <div class="ml-auto">$20.00</div>
+      </button>
+
+      <!-- Medium option -->
+      <button class="flex gap-2 border rounded-md p-4 items-center w-[100%] hover:bg-white focus:ring-2">
+        <img src="package.png" alt="" class="w-[15%]" />
+        <div class="flex flex-col items-start">
+          <p class="font-bold">Medium: (3kg - 5kg)</p>
+          <p>Pilot: Johnny Appleseed</p>
+        </div>
+        <div class="ml-auto">$30.00</div>
+      </button>
+
+      <!-- Large option -->
+      <button class="flex gap-2 border rounded-md p-4 items-center w-[100%] hover:bg-white focus:ring-2">
+        <img src="package.png" alt="" class="w-[15%]" />
+        <div class="flex flex-col items-start">
+          <p class="font-bold">Large: (5 kg - 10kg)</p>
+          <p>Pilot: Johnny Appleseed</p>
+        </div>
+        <div class="ml-auto">$40.00</div>
+      </button>
+
+      <!-- Cancel and next buttons -->
+      <div class="flex gap-2 w-full">
+        <button class="w-[100%] border rounded-md p-[10px]">Cancel</button>
+        <button id="selectSizeNextBtn" class="w-[100%] border rounded-md bg-blue-500 p-[10px]">Next</button>
       </div>
-      <div class="ml-auto">$20.00</div>
-    </button>
+    </div>
 
-     <!-- Medium option -->
-    <button class="flex gap-2 border rounded-md p-4 items-center w-[100%] hover:bg-white focus:ring-2">
-      <img src="package.png" alt="" class="w-[15%]" />
-      <div class="flex flex-col items-start">
-        <p class="font-bold">Medium: (3kg - 5kg)</p>
-        <p>Pilot: Johnny Appleseed</p>
+    <!-- Payment method container -->
+    <div id="paymentMethodContainer" class="flex flex-col gap-2 px-4 pb-4 w-full absolute left-0 right-0 bottom-0 transform translate-x-full">
+      <h1 class="text-center font-bold font-2xl mt-[30px]">Select a payment method</h1>
+      <div class="flex flex-col gap-4 my-auto">
+        <button class="flex gap-2 border rounded-md p-4 items-center w-[100%]">Credit card</button>
+        <button class="flex gap-2 border rounded-md p-4 items-center w-[100%]">Debit card</button>
+        <button class="flex gap-2 border rounded-md p-4 items-center w-[100%]">Crypto Wallet</button>
       </div>
-      <div class="ml-auto">$30.00</div>
-    </button>
-
-    <!-- Large option -->
-    <button class="flex gap-2 border rounded-md p-4 items-center w-[100%] hover:bg-white focus:ring-2">
-      <img src="package.png" alt="" class="w-[15%]" />
-      <div class="flex flex-col items-start">
-        <p class="font-bold">Large: (5 kg - 10kg)</p>
-        <p>Pilot: Johnny Appleseed</p>
+      <div class="flex gap-2 w-full mt-auto">
+        <button class="w-[100%] border rounded-md p-[10px]">Cancel</button>
+        <button id="paymentMethodNextBtn" class="w-[100%] border rounded-md bg-blue-500 p-[10px]">Next</button>
       </div>
-      <div class="ml-auto">$40.00</div>
-    </button>
+    </div>
 
-    <!-- Cancel and next buttons -->
-    <div class="flex gap-2 w-full">
-      <button class="w-[100%] border rounded-md p-[10px]">Cancel</button>
-      <button id="selectSizeNextBtn" class="w-[100%] border rounded-md bg-blue-500 p-[10px]">Next</button>
+    <!-- Confirmation container -->
+    <div id="confirmationMenuContainer" class="absolute left-0 top-0 bottom-0 transform translate-x-full">
+      <h1 class="text-center font-bold font-2xl">Confirmation</h1>
+      <div class="grid grid-cols-4 gap-2 p-3">
+        <!-- Step 1 -->
+        <div class="p-1">
+          <img src="confirmation_1.png" class="p-2 rounded-full w-[50px] mx-auto border-2 border-[#010204] bg-white" alt="request received" tabindex="0" />
+          <div class="mt-2 font-medium text-center text-[#010204] leading-tight">Request Received</div>
+        </div>
+        <!-- Step 2 -->
+        <div class="p-1">
+          <img src="confirmation_2.png" class="p-2 rounded-full w-[50px] mx-auto border-2 border-[#074464] bg-[#CBCBCB]" alt="drone deployed" tabindex="0" />
+          <div class="mt-2 font-medium text-center text-buttonBg leading-tight">Drone Deployed</div>
+        </div>
+        <!-- Step 3 -->
+        <div class="p-1">
+          <img src="confirmation_3.png" class="p-2 rounded-full w-[50px] mx-auto border-2 border-[#074464] bg-[#CBCBCB]" alt="drone arriving" tabindex="0" />
+          <div class="mt-2 font-medium text-center text-buttonBg leading-tight">Drone Arriving</div>
+        </div>
+        <!-- Step 4 -->
+        <div class="p-1">
+          <img src="confirmation_4.png" class="p-2 rounded-full w-[50px] mx-auto border-2 border-[#074464] bg-[#CBCBCB]" alt="drone landed" tabindex="0" />
+          <div class="mt-2 font-medium text-center text-buttonBg leading-tight">Drone Landed</div>
+        </div>
+      </div>
+
+      <div>
+        <p class="font-medium p-4 py-2 text-[#010204] text-xl">Your delivery is arriving in:</p>
+      </div>
+
+      <div class="grid grid-cols-2 gap-1">
+        <div class="p-1">
+          <div>
+            <div class="flex items-center m-2 mt-4 mb-4">
+              <%- include("mini_map") %>
+              <p class="w-full py-2 px-2 text-sm font-medium text-center text-white bg-[#010204] rounded-2xl">10 minutes</p>
+            </div>
+          </div>
+          <div>
+            <div class="flex items-center m-2">
+              <div class="w-full py-2 px-2"></div>
+            </div>
+          </div>
+        </div>
+        <div class="p-1">
+          <div>
+            <div class="flex items-center m-2">
+              <p class="w-full py-2 px-2 text-sm text-center text-white bg-[#074464] border-[#074464] rounded-2xl">Tracking: #583027015</p>
+            </div>
+          </div>
+          <div>
+            <div class="flex items-center m-2">
+              <p class="w-full py-2 px-2 text-sm text-center text-white bg-[#074464] border-[#074464] rounded-2xl">From: 123 Road</p>
+            </div>
+          </div>
+          <div>
+            <div class="flex items-center m-2">
+              <p class="w-full py-2 px-2 text-sm text-center text-white bg-[#074464] border-[#074464] rounded-2xl">To: 345 Road</p>
+            </div>
+          </div>
+          <div>
+            <div class="flex items-center m-2">
+              <p class="w-full py-2 px-2 text-sm text-center text-white bg-[#074464] border-[#074464] rounded-2xl">ETA: 4:00 - 4:30 pm</p>
+            </div>
+          </div>
+          <div>
+            <div class="flex items-center m-2 mb-3">
+              <p class="w-full py-2 px-2 text-sm text-center text-white bg-[#074464] border-[#074464] rounded-2xl">Pilot: Johnny Appleseed</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- Payment method container -->
-  <div id="paymentMethodContainer" class="hidden flex flex-col gap-2 px-4 pb-4">
-    <h1 class="text-center font-bold font-2xl">Select a payment method</h1>
-    <button class="flex gap-2 border rounded-md p-4 items-center w-[100%]">Credit card</button>
-    <button class="flex gap-2 border rounded-md p-4 items-center w-[100%]">Debit card</button>
-    <button class="flex gap-2 border rounded-md p-4 items-center w-[100%]">Crypto Wallet</button>
-    <div class="flex gap-2 w-full">
-      <button class="w-[100%] border rounded-md p-[10px]">Cancel</button>
-      <button id="paymentMethodNextBtn" class="w-[100%] border rounded-md bg-blue-500 p-[10px]">Next</button>
-    </div>
-  </div>
-
-  <!-- Confirmation container -->
-  <div id="confirmationMenuContainer" class="hidden">
-    <h1 class="text-center font-bold font-2xl">Confirmation</h1>
-    <div class="grid grid-cols-4 gap-2 p-3">
-      <!-- Step 1 -->
-      <div class="p-1">
-        <img src="confirmation_1.png" class="p-2 rounded-full w-[50px] mx-auto border-2 border-[#010204] bg-white" alt="request received" tabindex="0" />
-        <div class="mt-2 font-medium text-center text-[#010204] leading-tight">Request Received</div>
-      </div>
-      <!-- Step 2 -->
-      <div class="p-1">
-        <img src="confirmation_2.png" class="p-2 rounded-full w-[50px] mx-auto border-2 border-[#074464] bg-[#CBCBCB]" alt="drone deployed" tabindex="0" />
-        <div class="mt-2 font-medium text-center text-buttonBg leading-tight">Drone Deployed</div>
-      </div>
-      <!-- Step 3 -->
-      <div class="p-1">
-        <img src="confirmation_3.png" class="p-2 rounded-full w-[50px] mx-auto border-2 border-[#074464] bg-[#CBCBCB]" alt="drone arriving" tabindex="0" />
-        <div class="mt-2 font-medium text-center text-buttonBg leading-tight">Drone Arriving</div>
-      </div>
-      <!-- Step 4 -->
-      <div class="p-1">
-        <img src="confirmation_4.png" class="p-2 rounded-full w-[50px] mx-auto border-2 border-[#074464] bg-[#CBCBCB]" alt="drone landed" tabindex="0" />
-        <div class="mt-2 font-medium text-center text-buttonBg leading-tight">Drone Landed</div>
-      </div>
-    </div>
-
-    <div>
-      <p class="font-medium p-4 py-2 text-[#010204] text-xl">Your delivery is arriving in:</p>
-    </div>
-
-    <div class="grid grid-cols-2 gap-1">
-      <div class="p-1">
-        <div>
-          <div class="flex items-center m-2 mt-4 mb-4">
-            <%- include("mini_map") %>
-            <p class="w-full py-2 px-2 text-sm font-medium text-center text-white bg-[#010204] rounded-2xl">10 minutes</p>
-          </div>
-        </div>
-        <div>
-          <div class="flex items-center m-2">
-            <div class="w-full py-2 px-2"></div>
-          </div>
-        </div>
-      </div>
-      <div class="p-1">
-        <div>
-          <div class="flex items-center m-2">
-            <p class="w-full py-2 px-2 text-sm text-center text-white bg-[#074464] border-[#074464] rounded-2xl">Tracking: #583027015</p>
-          </div>
-        </div>
-        <div>
-          <div class="flex items-center m-2">
-            <p class="w-full py-2 px-2 text-sm text-center text-white bg-[#074464] border-[#074464] rounded-2xl">From: 123 Road</p>
-          </div>
-        </div>
-        <div>
-          <div class="flex items-center m-2">
-            <p class="w-full py-2 px-2 text-sm text-center text-white bg-[#074464] border-[#074464] rounded-2xl">To: 345 Road</p>
-          </div>
-        </div>
-        <div>
-          <div class="flex items-center m-2">
-            <p class="w-full py-2 px-2 text-sm text-center text-white bg-[#074464] border-[#074464] rounded-2xl">ETA: 4:00 - 4:30 pm</p>
-          </div>
-        </div>
-        <div>
-          <div class="flex items-center m-2 mb-3">
-            <p class="w-full py-2 px-2 text-sm text-center text-white bg-[#074464] border-[#074464] rounded-2xl">Pilot: Johnny Appleseed</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- End of drawer component -->
 </div>
-
-<!-- End of drawer component -->

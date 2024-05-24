@@ -1,133 +1,63 @@
-// console.log(window.location)
+let directDeliveryBtn = $("#directDeliveryBtn")
+let locationModal = $("#delivery-location-modal")
+let confirmLocationBtn = $("#locationModalConfirmBtn")
+let mainMenuCard = $("#mainMenuCard")
+let sizeSelectMenu = $("#selectSizeMenu")
+let selectSizeNextBtn = $("#selectSizeNextBtn")
+let paymentMethodContainer = $("#paymentMethodContainer")
+let paymentMethodNextBtn = $("#paymentMethodNextBtn")
+let confirmationMenuContainer = $("#confirmationMenuContainer")
 
-const $menuCard = document.getElementById('main-menu-drawer');
-
-// options with default values
-const options = {
-    placement: 'bottom',
-    backdrop: false,
-    bodyScrolling: false,
-    edge: true,
-    edgeOffset: 'bottom-[60px]',
-    backdropClasses:
-        'bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-30',
-    onHide: () => {
-        console.log('drawer is hidden');
-    },
-    onShow: () => {
-        console.log('drawer is shown');
-    },
-    onToggle: () => {
-        console.log('drawer has been toggled');
-    }
-};
-
-// instance options object
-const instanceOptions = {
-    id: 'main-menu-drawer',
-    override: true
-};
-
-const menuCard = new Drawer($menuCard, options, instanceOptions);
-menuCard.hide()
-
-// // Toggles visibility of account information in the #menu element found in postlogin.ejs
-// async function toggleMenu() {
-//     // document.getElementById("menu").classList.toggle("invisible")
-//     const user = await getUserInfo()
-//     document.getElementById("name").value = user.name
-//     username.value = user.username
-//     email.value = user.email
-//     if (user.address) {
-//         email.value = user.address
-//     }
-//     if (user.phonenumber) {
-//         email.value = user.phonenumber
-//     }
-// }
-
-// Returns the logged in users information. Only works if you are logged in! wont work after saving unless logging in again!
-async function getUserInfo() {
-    const response = await fetch("/getInfo");
-    const user = await response.json();
-    return user
-}
-
-// // Updates the user information
-// document.querySelectorAll("#saveBtn").forEach(async (button) => {
-//     button.addEventListener("click", async (e) => {
-//         const updatedField = e.target.previousElementSibling.id
-//         const updatedValue = e.target.previousElementSibling.value
-//         const user = await getUserInfo()
-//         const uid = user._id
-//         const response = await fetch("/update", {
-//             method: "POST",
-//             headers: {
-//                 "Content-Type": "application/json; charset=UTF-8"
-//             },
-//             body: JSON.stringify({
-//                 userID: uid,
-//                 query: {
-//                     [updatedField]: updatedValue
-//                 }
-//             }),
-//         })
-//         await response.json()
-//             .catch(error => {
-//                 console.log(error)
-//             })
-//     })
-// })
-
-
-// When direct delivery button is clicked, show delivery location modal
-document.getElementById("directDeliveryBtn").addEventListener("click", (event) => {
-    // document.getElementById("mainMenuCard").classList.toggle("hidden")
-    // document.getElementById("selectSizeMenu").classList.toggle("hidden")
-    document.getElementById("delivery-location-modal").classList.toggle("hidden")
-    document.getElementById("delivery-location-modal").style.top = "80px"
+directDeliveryBtn.click(() => {
+    console.log("move location modal down")
+    locationModal.removeClass("transform -translate-y-full")
+    locationModal.addClass("transition-transform translate-y-[80px]")
 })
 
-// When delivery location is confirmed, hide delivery-location-modal, main-menu-card, and show sizeSelectionMenu container
-document.getElementById("locationModalConfirmBtn").addEventListener("click", (event) => {
-    // menuCard.toggle()
-    document.getElementById("delivery-location-modal").classList.toggle("hidden")
-    document.getElementById("mainMenuCard").classList.toggle("hidden")
-    document.getElementById("selectSizeMenu").classList.toggle("absolute")
-    // -translate-x-[391px]
-    // -translate-x-[391]
-    document.getElementById("paymentMethodContainer").classList.toggle("hidden")
-    const elementWidth = paymentMethodContainer.offsetWidth
-    // const tailwindClassString = `-translate-x-[${elementWidth}px]`
-    // paymentMethodContainer.classList.add(`${tailwindClassString}`)
-    confirmationMenuContainer.classList.add(`-translate-x-[${elementWidth}px]`)
-    document.getElementById("paymentMethodContainer").classList.toggle("hidden")
+// Step 2: When user confirms location in #delivery-location-modal, animate transition to #sizeSelectMenu
+// ToDo: Adjust speed of transition
+confirmLocationBtn.click(() => {
+    // Move location modal back up
+    locationModal.addClass("transition-transform -translate-y-full")
+
+    // Remove mainMenuCard 
+    mainMenuCard.addClass("transition-transform -translate-x-full")
+
+    // Show sizeSelectMenu
+    sizeSelectMenu.toggle()
+
+    // Hide mainMenuCard
+    mainMenuCard.toggle()
 })
 
-// When next button is clicked in selectSizeMenu, hide sizeSelectMenu and show paymentMethodContainer
-document.getElementById("selectSizeNextBtn").addEventListener("click", (event) => {
-    // transform translate-x-0
-    document.getElementById("selectSizeMenu").classList.toggle("hidden")
-    document.getElementById("paymentMethodContainer").classList.toggle("hidden")
-    const paymentMethodContainerWidth = paymentMethodContainer.offsetWidth
-    paymentMethodContainer.style.transform = `translate(-${paymentMethodContainerWidth})`
-    // paymentMethodContainer.classList.add(`-translate-x-[${paymentMethodContainerWidth}px]`)
-    // paymentMethodContainer.classList.remove(`-translate-x-[${paymentMethodContainerWidth}px]`)
-    // paymentMethodContainer.classList.add(`transition-transform`)
-    // paymentMethodContainer.classList.add(`-translate-x-0`)
-    console.log("move")
-    // document.getElementById("paymentMethodContainer").classList.add("ease-in")
-    // document.getElementById("paymentMethodContainer").classList.add("translate-x-0")
-})
+// Step 3: When user clicks next on #sizeSelectMenu, animate and transition to #paymentMethodContainer
+selectSizeNextBtn.click(() => {
+    const elementHeight = paymentMethodContainer.outerHeight() + 60
+    paymentMethodContainer.height(elementHeight)
+    sizeSelectMenu.removeClass("transform translate-x-full transition-transform bottom-0 left-0 right-0 transform-none")
+    sizeSelectMenu.addClass("transition-transform -translate-x-full")
 
-// When payment method is confirmed, show confirmation page
-document.getElementById("paymentMethodNextBtn").addEventListener("click", (event) => {
-    document.getElementById("paymentMethodContainer").classList.toggle("hidden")
-    document.getElementById("confirmationMenuContainer").classList.toggle("hidden")
+    setTimeout(() => {
+        paymentMethodContainer.removeClass("transform translate-x-full")
+        paymentMethodContainer.addClass("transition-transform -translate-x-0")
+    }, 150);
 })
 
 
+paymentMethodNextBtn.click(() => {
+    paymentMethodContainer.addClass("transition-none")
+    paymentMethodContainer.removeClass("transition-none")
+    paymentMethodContainer.addClass("transition-transform -translate-x-full")
 
+    setTimeout(() => {
+        paymentMethodContainer.toggle("hidden")
+        confirmationMenuContainer.removeClass("hidden")
+        confirmationMenuContainer.addClass("transform translate-x-full")
+        confirmationMenuContainer.removeClass("transform translate-x-full")
+    }, 150);
+
+    confirmationMenuContainer.addClass("transition-transform -translate-x-0")
+})
 
 
 
