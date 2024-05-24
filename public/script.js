@@ -24,6 +24,8 @@ locationModalCloseBtn.click(() => {
 // Step 2: When user confirms location in #delivery-location-modal, animate transition to #sizeSelectMenu
 // ToDo: Adjust speed of transition
 confirmLocationBtn.click(() => {
+
+    console.log("clicked")
     // Move location modal back up
     locationModal.addClass("transition-transform -translate-y-full")
 
