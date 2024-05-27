@@ -5,5 +5,13 @@ async function calculateDistance(start, end) {
   var distance = turf.distance(from, to);
   sessionStorage.setItem("distance", distance);
   calculatePrices(distance);
+  calculateTime();
   return distance;
+}
+
+async function calculateTime() {
+  var distance = sessionStorage.getItem("distance");
+  var time = distance / (55 / 60);
+  sessionStorage.setItem("estimatedDuration", time);
+  return time;
 }
