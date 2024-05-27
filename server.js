@@ -191,7 +191,6 @@ app.post('/profile_edit', async (req, res) => {
   try {
     await userModel.findByIdAndUpdate(userID, {
       username,
-      email,
       phonenumber,
       street,
       city,
