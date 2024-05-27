@@ -6,8 +6,8 @@
 <script src="/scripts/session_storage.js"></script>
 
 <script>
-  // const mapbox_access_token = '<%= process.env.MAPBOX_ACCESS_TOKEN %>';
-  // mapboxgl.accessToken = mapbox_access_token;
+  const mapbox_access_token = '<%= process.env.MAPBOX_ACCESS_TOKEN %>';
+  mapboxgl.accessToken = mapbox_access_token;
 
   var map = new mapboxgl.Map({
     container: 'map',
@@ -16,20 +16,16 @@
     zoom: 10.7,
     pitch: 44 // Controls the slantedness of the map view
   });
-</script>
 
-<% if (typeof pageName !=='undefined' ) { %>
-<script>
-  var minimap = new mapboxgl.Map({
-    container: 'mini_map',
-    style: 'mapbox://styles/mapbox/streets-v11',
-    center: [-123.112755, 49.241722], // Central Vancouver
-    zoom: 8.7,
-  });
-  // minimap.addTo('#mini_map');
-</script>
-<% } %>
-<script>
+  if (document.getElementById('cardTitle').innerText === 'Confirmation') {
+    var minimap = new mapboxgl.Map({
+      container: 'mini_map',
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [-123.112755, 49.241722], // Central Vancouver
+      zoom: 8.7,
+    });
+  }
+
   let startLocation;
   let endLocation;
 
