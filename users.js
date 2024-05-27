@@ -47,6 +47,9 @@ const userSchema = new mongoose.Schema({
   },
   postal: {
     type: String
+  },
+  profileImageUrl: {
+    type: String
   }
 });
 
