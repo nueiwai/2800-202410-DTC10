@@ -19,319 +19,359 @@
 </script>
 
 <% if (typeof pageName !=='undefined' ) { %>
-<script>
-  var minimap = new mapboxgl.Map({
-    container: 'mini_map',
-    style: 'mapbox://styles/mapbox/streets-v11',
-    center: [-123.112755, 49.241722], // Central Vancouver
-    zoom: 8.7,
-  });
-  // minimap.addTo('#mini_map');
-</script>
-<% } %>
-<script>
-  let startLocation;
-  let endLocation;
-
-  var geocoder = new MapboxGeocoder({
-    // Initialize the geocoder
-    accessToken: mapboxgl.accessToken,
-    mapboxgl: mapboxgl,
-    marker: false,
-    placeholder: 'Search address', // Placeholder text for the search bar
-    bbox: [-123.2460, 49.1666, -122.9086, 49.3200], // Loose boundary for Metro Vancouver (west to UBC, east to Burnaby Mountain)
-    proximity: {
-      longitude: -123.1207,
-      latitude: 49.2827
-    } // Coordinates of Central Vancouver
-  });
-  document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
-
-  var startGeocoder = new MapboxGeocoder({
-    // Initialize the geocoder
-    accessToken: mapboxgl.accessToken,
-    mapboxgl: mapboxgl,
-    marker: false,
-    placeholder: 'Enter Starting Location', // Placeholder text for the search bar
-    bbox: [-123.2460, 49.1666, -122.9086, 49.3200], // Loose boundary for Metro Vancouver (west to UBC, east to Burnaby Mountain)
-    proximity: {
-      longitude: -123.1207,
-      latitude: 49.2827
-    } // Coordinates of Central Vancouver
-  });
-  startGeocoder.addTo('#starting-location');
-
-  var endGeocoder = new MapboxGeocoder({
-    // Initialize the geocoder
-    accessToken: mapboxgl.accessToken,
-    mapboxgl: mapboxgl,
-    marker: false,
-    placeholder: 'Enter Destination', // Placeholder text for the search bar
-    bbox: [-123.2460, 49.1666, -122.9086, 49.3200], // Loose boundary for Metro Vancouver (west to UBC, east to Burnaby Mountain)
-    proximity: {
-      longitude: -123.1207,
-      latitude: 49.2827
-    } // Coordinates of Central Vancouver
-  });
-  endGeocoder.addTo('#destination');
-
-  // After the map style has loaded on the page,
-  // add a source layer and default styling for a single point
-  map.on('load', () => {
-    map.addSource('single-point', {
-      type: 'geojson',
-      data: {
-        type: 'FeatureCollection',
-        features: []
-      }
+  <script>
+    var minimap = new mapboxgl.Map({
+      container: 'mini_map',
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [-123.112755, 49.241722], // Central Vancouver
+      zoom: 8.7,
     });
+    // minimap.addTo('#mini_map');
+  </script>
+  <% } %>
+    <script>
+      let startLocation;
+      let endLocation;
+      let startAddress;
+      let endAddress;
 
-    map.addLayer({
-      id: 'point',
-      source: 'single-point',
-      type: 'circle',
-      paint: {
-        'circle-radius': 10,
-        'circle-color': '#40E0D0'
-      }
-    });
+      var geocoder = new MapboxGeocoder({
+        // Initialize the geocoder
+        accessToken: mapboxgl.accessToken,
+        mapboxgl: mapboxgl,
+        marker: false,
+        placeholder: 'Search address', // Placeholder text for the search bar
+        bbox: [-123.2460, 49.1666, -122.9086, 49.3200], // Loose boundary for Metro Vancouver (west to UBC, east to Burnaby Mountain)
+        proximity: {
+          longitude: -123.1207,
+          latitude: 49.2827
+        } // Coordinates of Central Vancouver
+      });
+      document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
 
-    // Listen for the result event from the Geocoder
-    // result event is triggered when a user makes a selection
-    // Add a marker at the result's coordinates
-    geocoder.on('result', (event) => {
-      map.getSource('single-point').setData(event.result.geometry);
-    });
-  });
+      var startGeocoder = new MapboxGeocoder({
+        // Initialize the geocoder
+        accessToken: mapboxgl.accessToken,
+        mapboxgl: mapboxgl,
+        marker: false,
+        placeholder: 'Enter Starting Location', // Placeholder text for the search bar
+        bbox: [-123.2460, 49.1666, -122.9086, 49.3200], // Loose boundary for Metro Vancouver (west to UBC, east to Burnaby Mountain)
+        proximity: {
+          longitude: -123.1207,
+          latitude: 49.2827
+        } // Coordinates of Central Vancouver
+      });
+      startGeocoder.addTo('#starting-location');
 
-  startGeocoder.on('result', function(e) {
-    startLocation = e.result.geometry.coordinates;
-  });
+      var endGeocoder = new MapboxGeocoder({
+        // Initialize the geocoder
+        accessToken: mapboxgl.accessToken,
+        mapboxgl: mapboxgl,
+        marker: false,
+        placeholder: 'Enter Destination', // Placeholder text for the search bar
+        bbox: [-123.2460, 49.1666, -122.9086, 49.3200], // Loose boundary for Metro Vancouver (west to UBC, east to Burnaby Mountain)
+        proximity: {
+          longitude: -123.1207,
+          latitude: 49.2827
+        } // Coordinates of Central Vancouver
+      });
+      endGeocoder.addTo('#destination');
 
-  endGeocoder.on('result', function(e) {
-    endLocation = e.result.geometry.coordinates;
-  });
-
-  /**
-   * Draw the route on the map
-   * @param {Array} start - The start location coordinates
-   * @param {Array} end - The end location coordinates
-   */
-  async function drawRoute() {
-    // If start and end locations are not defined, use the current location
-    if (typeof startLocation === 'undefined') {
-      let locationStr = document.getElementById('current-starting-location').value;
-      let locationArr = locationStr.split(',');
-      startLocation = [parseFloat(locationArr[0]), parseFloat(locationArr[1])];
-    }
-
-    if (typeof endLocation === 'undefined') {
-      let locationStr = document.getElementById('current-destination').value;
-      let locationArr = locationStr.split(',');
-      endLocation = [parseFloat(locationArr[0]), parseFloat(locationArr[1])];
-    }
-
-    // Check if start and end locations are defined, then plot the points
-    if (startLocation && endLocation) {
-      plotPoints(startLocation, endLocation);
-      setTimeout(() => {
-        map.flyTo({
-          center: startLocation,
-          zoom: 18,
+      // After the map style has loaded on the page,
+      // add a source layer and default styling for a single point
+      map.on('load', () => {
+        map.addSource('single-point', {
+          type: 'geojson',
+          data: {
+            type: 'FeatureCollection',
+            features: []
+          }
         });
 
-        setTimeout(() => {
-          map.flyTo({
-            center: endLocation,
-            zoom: 18,
-          });
+        map.addLayer({
+          id: 'point',
+          source: 'single-point',
+          type: 'circle',
+          paint: {
+            'circle-radius': 10,
+            'circle-color': '#40E0D0'
+          }
+        });
 
+        // Listen for the result event from the Geocoder
+        // result event is triggered when a user makes a selection
+        // Add a marker at the result's coordinates
+        geocoder.on('result', (event) => {
+          map.getSource('single-point').setData(event.result.geometry);
+        });
+      });
+
+      startGeocoder.on('result', function (e) {
+        startLocation = e.result.geometry.coordinates;
+        startAddress = e.result.place_name;
+      });
+
+      endGeocoder.on('result', function (e) {
+        endLocation = e.result.geometry.coordinates;
+        endAddress = e.result.place_name;
+      });
+    </script>
+
+    <!-- create a eavesdropping form to send intel to server.js -->
+    <form id="addressForm" action="/submitAddresses" method="POST" class="hidden">
+      <input type="hidden" id="starting-location" name="startAddress">
+      <input type="hidden" id="destination" name="endAddress">
+    </form>
+
+    <script>
+      let confirmBtn = document.getElementById('confirmBtn');
+      if (confirmBtn) {
+        confirmBtn.addEventListener('click', function () {
+          drawRoute();
+          onGeocoderSelectStart(startAddress)
+          onGeocoderSelectEnd(endAddress)
+        });
+      }
+
+      function onGeocoderSelectStart(startAddress) {
+        document.getElementById('starting-location').value = startAddress;
+        checkAndSubmitForm();
+      }
+
+      function onGeocoderSelectEnd(endAddress) {
+        document.getElementById('destination').value = endAddress;
+        checkAndSubmitForm();
+      }
+
+      function checkAndSubmitForm() {
+        const startAddress = document.getElementById('starting-location').value;
+        const endAddress = document.getElementById('destination').value;
+
+        if (startAddress && endAddress) {
+          document.getElementById('addressForm').submit();
+        }
+      }
+
+      /**
+       * Draw the route on the map
+       * @param {Array} start - The start location coordinates
+       * @param {Array} end - The end location coordinates
+       */
+      async function drawRoute() {
+        // If start and end locations are not defined, use the current location
+        if (typeof startLocation === 'undefined') {
+          let locationStr = document.getElementById('current-starting-location').value;
+          let locationArr = locationStr.split(',');
+          startLocation = [parseFloat(locationArr[0]), parseFloat(locationArr[1])];
+        }
+
+        if (typeof endLocation === 'undefined') {
+          let locationStr = document.getElementById('current-destination').value;
+          let locationArr = locationStr.split(',');
+          endLocation = [parseFloat(locationArr[0]), parseFloat(locationArr[1])];
+        }
+
+        // Check if start and end locations are defined, then plot the points
+        if (startLocation && endLocation) {
+          plotPoints(startLocation, endLocation);
           setTimeout(() => {
-            drawArc(startLocation, endLocation);
             map.flyTo({
-              center: [(startLocation[0] + endLocation[0]) / 2, (startLocation[1] + endLocation[1]) / 2],
-              zoom: ((startLocation[0] + endLocation[0]) / 2, (startLocation[1] + endLocation[1]) / 2) * 0.22,
+              center: startLocation,
+              zoom: 18,
             });
 
+            setTimeout(() => {
+              map.flyTo({
+                center: endLocation,
+                zoom: 18,
+              });
 
-            drawShadow(startLocation, endLocation);
-          }, 1600);
-        }, 1300);
-      }, 500)
-    } else {
-      console.alert("Please enter a starting location and destination.");
-    }
-  }
+              setTimeout(() => {
+                drawArc(startLocation, endLocation);
+                map.flyTo({
+                  center: [(startLocation[0] + endLocation[0]) / 2, (startLocation[1] + endLocation[1]) / 2],
+                  zoom: ((startLocation[0] + endLocation[0]) / 2, (startLocation[1] + endLocation[1]) / 2) * 0.22,
+                });
 
-  /**
-   * Calculate the distance between two points
-   * @param {Array} start - The start location coordinates
-   * @param {Array} end - The end location coordinates
-   */
-  if (startLocation && endLocation) {
-    let distance = calculateDistance(startLocation, endLocation);
-    console.log('distance:', distance);;
-  }
 
-  /**
-   * Plot the start and end location points on the map
-   * @param {Array} start - The start location coordinates
-   * @param {Array} end - The end location coordinates
-   */
-  function plotPoints(start, end) {
-    const pointsGeojson = {
-      type: 'FeatureCollection',
-      features: [{
-          type: 'Feature',
-          geometry: {
-            type: 'Point',
-            coordinates: start
+                drawShadow(startLocation, endLocation);
+              }, 1600);
+            }, 1300);
+          }, 500)
+        } else {
+          console.alert("Please enter a starting location and destination.");
+        }
+      }
+
+      /**
+       * Calculate the distance between two points
+       * @param {Array} start - The start location coordinates
+       * @param {Array} end - The end location coordinates
+       */
+      if (startLocation && endLocation) {
+        let distance = calculateDistance(startLocation, endLocation);
+        console.log('distance:', distance);;
+      }
+
+      /**
+       * Plot the start and end location points on the map
+       * @param {Array} start - The start location coordinates
+       * @param {Array} end - The end location coordinates
+       */
+      function plotPoints(start, end) {
+        const pointsGeojson = {
+          type: 'FeatureCollection',
+          features: [{
+            type: 'Feature',
+            geometry: {
+              type: 'Point',
+              coordinates: start
+            },
+            properties: {}
           },
-          properties: {}
-        },
-        {
-          type: 'Feature',
-          geometry: {
-            type: 'Point',
-            coordinates: end
-          },
-          properties: {}
+          {
+            type: 'Feature',
+            geometry: {
+              type: 'Point',
+              coordinates: end
+            },
+            properties: {}
+          }
+          ]
+        };
+
+        if (map.getSource('points')) {
+          map.getSource('points').setData(pointsGeojson);
+        } else {
+          map.addSource('points', {
+            type: 'geojson',
+            data: pointsGeojson
+          });
+          map.addLayer({
+            id: 'points',
+            type: 'circle',
+            source: 'points',
+            paint: {
+              'circle-radius': 6,
+              'circle-color': '#CD3434' // Sign out button colour
+            }
+          });
         }
-      ]
-    };
+      }
 
-    if (map.getSource('points')) {
-      map.getSource('points').setData(pointsGeojson);
-    } else {
-      map.addSource('points', {
-        type: 'geojson',
-        data: pointsGeojson
-      });
-      map.addLayer({
-        id: 'points',
-        type: 'circle',
-        source: 'points',
-        paint: {
-          'circle-radius': 6,
-          'circle-color': '#CD3434' // Sign out button colour
+      /**
+       * Draw a curved arc between the start and end location points
+       * @param {Array} start - The start location coordinates
+       * @param {Array} end - The end location coordinates
+       *
+       * This line-arc block of code was adapted from code found here:
+       * source: https://www.youtube.com/watch?v=VNVmlWv4gdQ
+       */
+      function drawArc(start, end) {
+        // First calculate the distance between start and end location points
+        const distance = Math.sqrt(Math.pow(end[0] - start[0], 2) + Math.pow(end[1] - start[1], 2));
+
+        // Calculate the midpoint between the start and end location points
+        const midpoint = [(start[0] + end[0]) / 2, (start[1] + end[1]) / 2];
+
+        // Next, offset the midpoint to create a control point for the curve arc
+        // We need to adjust the offset proportionally to the distance to avoid steep curves for short distances
+        const controlPoint = [midpoint[0], midpoint[1] + 0.7 * distance]; // Set multiplier to 0.7
+
+        const steps = 100;
+        const arcCoordinates = [];
+
+        for (let i = 0; i <= steps; i++) {
+          const t = i / steps;
+          const x = (1 - t) * (1 - t) * start[0] + 2 * (1 - t) * t * controlPoint[0] + t * t * end[0];
+          const y = (1 - t) * (1 - t) * start[1] + 2 * (1 - t) * t * controlPoint[1] + t * t * end[1];
+          arcCoordinates.push([x, y]);
         }
-      });
-    }
-  }
-
-  /**
-   * Draw a curved arc between the start and end location points
-   * @param {Array} start - The start location coordinates
-   * @param {Array} end - The end location coordinates
-   *
-   * This line-arc block of code was adapted from code found here:
-   * source: https://www.youtube.com/watch?v=VNVmlWv4gdQ
-   */
-  function drawArc(start, end) {
-    // First calculate the distance between start and end location points
-    const distance = Math.sqrt(Math.pow(end[0] - start[0], 2) + Math.pow(end[1] - start[1], 2));
-
-    // Calculate the midpoint between the start and end location points
-    const midpoint = [(start[0] + end[0]) / 2, (start[1] + end[1]) / 2];
-
-    // Next, offset the midpoint to create a control point for the curve arc
-    // We need to adjust the offset proportionally to the distance to avoid steep curves for short distances
-    const controlPoint = [midpoint[0], midpoint[1] + 0.7 * distance]; // Set multiplier to 0.7
-
-    const steps = 100;
-    const arcCoordinates = [];
-
-    for (let i = 0; i <= steps; i++) {
-      const t = i / steps;
-      const x = (1 - t) * (1 - t) * start[0] + 2 * (1 - t) * t * controlPoint[0] + t * t * end[0];
-      const y = (1 - t) * (1 - t) * start[1] + 2 * (1 - t) * t * controlPoint[1] + t * t * end[1];
-      arcCoordinates.push([x, y]);
-    }
-    const arcGeojson = {
-      type: 'FeatureCollection',
-      features: [{
-        type: 'Feature',
-        geometry: {
-          type: 'LineString',
-          coordinates: arcCoordinates
+        const arcGeojson = {
+          type: 'FeatureCollection',
+          features: [{
+            type: 'Feature',
+            geometry: {
+              type: 'LineString',
+              coordinates: arcCoordinates
+            }
+          }]
+        };
+        if (map.getSource('line-arc')) {
+          map.getSource('line-arc').setData(arcGeojson);
+        } else {
+          map.addSource('line-arc', {
+            type: 'geojson',
+            data: arcGeojson
+          });
+          map.addLayer({
+            id: 'line-arc',
+            type: 'line',
+            source: 'line-arc',
+            layout: {
+              'line-join': 'round',
+              'line-cap': 'round'
+            },
+            paint: {
+              'line-color': '#31B6C0',
+              'line-width': 4,
+              'line-dasharray': [2, 2]
+            }
+          });
         }
-      }]
-    };
-    if (map.getSource('line-arc')) {
-      map.getSource('line-arc').setData(arcGeojson);
-    } else {
-      map.addSource('line-arc', {
-        type: 'geojson',
-        data: arcGeojson
-      });
-      map.addLayer({
-        id: 'line-arc',
-        type: 'line',
-        source: 'line-arc',
-        layout: {
-          'line-join': 'round',
-          'line-cap': 'round'
-        },
-        paint: {
-          'line-color': '#31B6C0',
-          'line-width': 4,
-          'line-dasharray': [2, 2]
+        // Calculate the midpoint of the arc
+        const midpointArc = arcCoordinates[Math.floor(arcCoordinates.length / 2)];
+
+        // Create custom marker element for flying drone
+        const flyingDrone = document.createElement('div');
+        flyingDrone.className = 'flying-drone';
+
+        // Add the marker at the midpoint of the arc
+        new mapboxgl.Marker(flyingDrone)
+          .setLngLat(midpointArc)
+          .addTo(map);
+      }
+
+      /** 
+       * Draw a straight line that simulates a shadow between the start and end location points 
+       * @param {Array} start - The start location coordinates
+       * @param {Array} end - The end location coordinates
+       */
+      function drawShadow(start, end) {
+        const lineGeojson = {
+          type: 'FeatureCollection',
+          features: [{
+            type: 'Feature',
+            geometry: {
+              type: 'LineString',
+              coordinates: [start, end]
+            }
+          }]
+        } // Add the shadow 
+        if (map.getSource('line-shadow')) {
+          map.getSource('line-shadow').setData(lineGeojson);
+        } else {
+          map.addSource('line-shadow', {
+            type: 'geojson',
+            data: lineGeojson
+          });
+          map.addLayer({
+            id: 'line-shadow',
+            type: 'line',
+            source: 'line-shadow',
+            layout: {
+              'line-join': 'round',
+              'line-cap': 'round'
+            },
+            paint: {
+              'line-color': '#929090', // Shadow colour 
+              'line-width': 6, // Shadow width 
+              'line-opacity': 0.5 // Shadow opacity 
+            }
+          });
         }
-      });
-    }
-    // Calculate the midpoint of the arc
-    const midpointArc = arcCoordinates[Math.floor(arcCoordinates.length / 2)];
+      }
+    </script>
+    </body>
 
-    // Create custom marker element for flying drone
-    const flyingDrone = document.createElement('div');
-    flyingDrone.className = 'flying-drone';
-
-    // Add the marker at the midpoint of the arc
-    new mapboxgl.Marker(flyingDrone)
-      .setLngLat(midpointArc)
-      .addTo(map);
-  }
-
-  /** 
-   * Draw a straight line that simulates a shadow between the start and end location points 
-   * @param {Array} start - The start location coordinates
-   * @param {Array} end - The end location coordinates
-   */
-  function drawShadow(start, end) {
-    const lineGeojson = {
-      type: 'FeatureCollection',
-      features: [{
-        type: 'Feature',
-        geometry: {
-          type: 'LineString',
-          coordinates: [start, end]
-        }
-      }]
-    } // Add the shadow 
-    if (map.getSource('line-shadow')) {
-      map.getSource('line-shadow').setData(lineGeojson);
-    } else {
-      map.addSource('line-shadow', {
-        type: 'geojson',
-        data: lineGeojson
-      });
-      map.addLayer({
-        id: 'line-shadow',
-        type: 'line',
-        source: 'line-shadow',
-        layout: {
-          'line-join': 'round',
-          'line-cap': 'round'
-        },
-        paint: {
-          'line-color': '#929090', // Shadow colour 
-          'line-width': 6, // Shadow width 
-          'line-opacity': 0.5 // Shadow opacity 
-        }
-      });
-    }
-  }
-</script>
-</body>
-
-</html>
+    </html>

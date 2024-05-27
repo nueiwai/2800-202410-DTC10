@@ -110,9 +110,22 @@ app.get('/selectpayment', (req, res) => {
 })
 
 // Confirmation route
+app.post('/submitAddresses', (req, res) => {
+  // retrieve the start and end address from the eavesdropping form
+  const startAddress = req.session.startAddress;
+  const endAddress = req.session.endAddress;
+  console.log('Start address:', startAddress);
+  console.log('End address:', endAddress);
+  res.redirect('/confirmation', { startAddress, endAddress });
+});
+
 app.get('/confirmation', (req, res) => {
-  res.render("confirmation", { pageName: "confirmation" })
-})
+  // retrieve the start and end address from the route /submitAddresses
+  if (!startAddress || !endAddress) {
+    return res.redirect('/');
+  }
+  res.render('confirmation', { startAddress, endAddress, pageName: 'confirmation' });
+});
 
 // Forget ID route
 app.get('/forgotpassword', (req, res) => {
