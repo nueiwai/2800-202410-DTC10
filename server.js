@@ -11,6 +11,9 @@ const cors = require('cors')
 const user = require('./users')
 require('dotenv').config();
 const mongoose = require('mongoose');
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const multer = require('multer');
 
 /* secret information section */
 const mongodb_host = process.env.MONGODB_HOST;
@@ -28,6 +31,23 @@ const db = MongoStore.create({
     secret: mongodb_session_secret
   }
 })
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_CLOUD_KEY,
+  api_secret: process.env.CLOUDINARY_CLOUD_SECRET
+});
+
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'profile_pics',
+    format: async (req, file) => 'png',
+    public_id: (req, file) => 'computed-filename-using-request'
+  },
+});
+
+const parser = multer({ storage: storage });
 
 // Express application setup
 app.set('view engine', 'ejs');
@@ -120,16 +140,35 @@ app.get('/postlogin', (req, res) => {
 
 // Account route
 app.get('/account', async (req, res) => {
-  const userID = req.session.userid;  // get user ID from session
-  console.log("User ID:", userID)
+  const userID = req.session.userid;
   try {
-    const user = await userModel.findById(userID);  // check the user information based on the user ID
+    const user = await userModel.findById(userID);
+    if (!user.profileImageUrl) {
+      user.profileImageUrl = 'profile.png';
+    }
     res.render("account", { user: user });
   } catch (error) {
-    console.error("Failed to fetch user name:", error);
-    res.render("account", { user: null, error: 'Fail to get the user name' });
+    console.error("Failed to fetch user profile:", error);
+    res.render("account", { user: null, error: 'Fail to get the user data' });
   }
-})
+});
+
+// Upload profile image route
+app.post('/upload_profile_image', parser.single('image'), async (req, res) => {
+  const userID = req.session.userid;
+  if (!req.file) {
+    return res.status(400).json({ success: false, message: "No image uploaded" });
+  }
+  try {
+    const user = await userModel.findById(userID);
+    user.profileImageUrl = req.file.path;
+    await user.save();
+    res.json({ success: true, message: "File uploaded successfully", url: req.file.path });
+  } catch (error) {
+    console.error('Upload Error:', error);
+    res.status(500).json({ success: false, message: "Failed to process file", error: error.toString() });
+  }
+});
 
 // Profile Edit route
 app.get('/profile_edit', async (req, res) => {
