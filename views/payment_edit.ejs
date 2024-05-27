@@ -1,5 +1,4 @@
 <%- include('templates/header') %>
-
   <!-- the account icon to the right of the search bar -->
   <div class="account-icon">
     <a href="/account">
@@ -42,17 +41,21 @@
       </div>
 
       <div class="flex flex-col items-center space-y-6 mt-6">
-        <input type="text" id="cardType"
-          class="py-2 px-6 text-sm font-medium text-center text-gray-900 bg-white border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
-          placeholder="Card Type">
+        <select id="cardType"
+          class="w-11/12 py-2 px-6 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300">
+          <option class="" value="">Select Card Type</option>
+          <option class="" value="Debit">Debit</option>
+          <option class="" value="Credit">Credit</option>
+          <option class="" value="Crypto">Crypto</option>
+        </select>
         <input type="text" id="cardNumber"
-          class="py-2 px-6 text-sm font-medium text-center text-gray-900 bg-white border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
+          class="w-11/12 py-2 px-6 text-sm font-medium text-center text-gray-900 bg-white border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
           placeholder="Card Number">
         <input type="text" id="cvv"
-          class="py-2 px-6 text-sm font-medium text-center text-gray-900 bg-white border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
+          class="w-11/12 py-2 px-6 text-sm font-medium text-center text-gray-900 bg-white border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
           placeholder="CVV">
         <input type="text" id="expiryDate"
-          class="py-2 px-6 text-sm font-medium text-center text-gray-900 bg-white border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
+          class="w-11/12 py-2 px-6 text-sm font-medium text-center text-gray-900 bg-white border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
           placeholder="Expiry Date">
       </div>
 

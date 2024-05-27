@@ -42,17 +42,20 @@
       </div>
 
       <form id="paymentForm" class="flex flex-col items-center space-y-6 mt-6">
-        <input type="text" id="cardType" name="cardType" value="<%= payment.cardType %>"
-          class="py-2 px-6 text-sm font-medium text-center text-gray-900 bg-white border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
-          placeholder="Card Type">
+        <select id="cardType" name="cardType"
+          class="w-11/12 py-2 px-3 text-sm font-medium text-center bg-white border border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300">
+          <option value="Debit" <%=payment.cardType==='Debit' ? 'selected' : '' %>>Debit</option>
+          <option value="Credit" <%=payment.cardType==='Credit' ? 'selected' : '' %>>Credit</option>
+          <option value="Crypto" <%=payment.cardType==='Crypto' ? 'selected' : '' %>>Crypto</option>
+        </select>
         <input type="text" id="cardNumber" name="cardNumber" value="<%= payment.cardNumber %>"
-          class="py-2 px-6 text-sm font-medium text-center text-gray-900 bg-white border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
+          class="w-11/12 py-2 px-6 text-sm font-medium text-center text-gray-900 bg-white border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
           placeholder="Card Number">
         <input type="text" id="cvv" name="cvv" value="<%= payment.cvv %>"
-          class="py-2 px-6 text-sm font-medium text-center text-gray-900 bg-white border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
+          class="w-11/12 py-2 px-6 text-sm font-medium text-center text-gray-900 bg-white border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
           placeholder="CVV">
         <input type="text" id="expiryDate" name="expiryDate" value="<%= payment.expiryDate %>"
-          class="py-2 px-6 text-sm font-medium text-center text-gray-900 bg-white border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
+          class="w-11/12 py-2 px-6 text-sm font-medium text-center text-gray-900 bg-white border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
           placeholder="Expiry Date">
       </form>
     </div>
