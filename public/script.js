@@ -9,6 +9,7 @@ let selectSizeNextBtn = $("#selectSizeNextBtn")
 let paymentMethods = $("#paymentMethods")
 let paymentMethodNextBtn = $("#paymentMethodNextBtn")
 let confirmationMenuContainer = $("#confirmationCard")
+let cardContainer = $("#availableCards")
 
 directDeliveryBtn.click(() => {
     console.log("move location modal down")
@@ -41,6 +42,8 @@ selectSizeNextBtn.click(() => {
 
     setTimeout(() => {
         // paymentMethods.addClass("transform translate-x-full")
+        console.log("toggling function")
+        getCardsAndAppendToModal()
         paymentMethods.toggle()
     }, 150);
 
