@@ -112,8 +112,13 @@
 
   endGeocoder.on('result', function (e) {
     endLocation = e.result.geometry.coordinates;
-    pointDestination = e.result.center;
-    marker.setLngLat(pointDestination).addTo(mini_map);
+    marker.setLngLat(endLocation).addTo(mini_map);
+
+    mini_map.flyTo({
+      center: endLocation,
+      zoom: 12,
+      speed: 1.5,
+    });
   });
 
   /**
