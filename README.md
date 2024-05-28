@@ -1,7 +1,7 @@
 ## About Us
 
 <img src="./public/images/logo.png" align="right"
-     alt="Size Limit logo by Anton Lovchikov" width="132" height="120">
+     alt="Dronify Logo" width="245" height="220">
 
 **Team Name:**
 
@@ -39,6 +39,32 @@ Cloudinary for populating user’s profile image
 For the **database** we used:
 * **MongoDB** for hosting our data collection (user’s personal information, user’s session, battery station geo-coordinates)
 
+## File Contents
+
+## How to Run Our Project
+**Language(s):**
+* EJS
+* JavaScript
+* CSS
+
+**IDEs:**
+* Visual Studio Code
+
+**Database(s):**
+* MongoDB
+
+**Other software:**
+* Cloudinary
+
+**Third Party APIs:**
+
+| API        | Usage & Description        |
+| ------------- |:-------------:|
+| Mapbox API      | Map interface and the foundation for UI |
+| Turf.js     | Routing display on the map     |
+| Geolocation API | Getting the user's current location    |
+| Weather API | Our Easter Egg component    |
+
 ## How It Works
 TBD
 
@@ -46,6 +72,6 @@ TBD
 TBD
 
 ## AI Usage
-TBD
+* Our App Logo is generated using ChatGPT 3.5
 
 ## Contact Information
