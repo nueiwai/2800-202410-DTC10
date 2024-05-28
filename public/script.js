@@ -59,46 +59,69 @@ function closeLocationModal() {
 confirmLocationBtn.click(() => {
     let locationfields = isLocationEmpty();
     if (locationfields) {
-        // Remove mainMenuCard 
-        mainMenuCard.addClass("transition-transform translate-y-full")
+        setTimeout(() => {
+            // Remove mainMenuCard 
+            mainMenuCard.addClass("transition ease-in duration-300 transform translate-x-0")
 
-        // Hide Location Modal
-        locationModal.hide()
-        document.querySelector("body > div[modal-backdrop]")?.remove()
+            // Hide Location Modal
+            locationModal.hide()
+            document.querySelector("body > div[modal-backdrop]")?.remove()
 
-        // Hide mainMenuCard
-        mainMenuCard.hide()
+            // Hide mainMenuCard
+            mainMenuCard.hide()
+        }, 400);
 
-        // Show sizeSelectMenu
-        packageSizeOptions.show()
+        if (sessionStorage.getItem("feature") === "direct") {
+            setTimeout(() => {
+                // Show packageSizeOptions
+                packageSizeOptions.show()
+                packageSizeOptions.addClass("transition ease-out duration-300 transform translate-x-0")
+            }, 300);
+
+        } else if (sessionStorage.getItem("feature") === "share") {
+            // Show availableSharedRoutes
+            setTimeout(() => {
+                availableSharedRoutes.show()
+                availableSharedRoutes.addClass("transition ease-out duration-300 transform translate-x-0")
+            }, 300);
+        }
     }
-})
+});
 
-// Step 3: When user clicks next on #sizeSelectMenu, animate and transition to #paymentMethodContainer
+/**
+ * Reload the page if the user clicks the cancel button of available shared routes card
+ * @returns {void}
+ */
+function availableSharedRoutesCancel() {
+    location.reload()
+}
+
+/**
+ * Hide the available Shared Routes and show the package size options
+ * @returns {void}
+ */
+function availableSharedRoutesNext() {
+    setTimeout(() => {
+        availableSharedRoutes.addClass("transition ease-in duration-300 transform translate-x-0")
+        availableSharedRoutes.hide()
+        packageSizeOptions.show()
+        packageSizeOptions.addClass("transition ease-out duration-300 transform translate-x-0")
+    }, 600);
+}
+
+// Hide the package size options and show the payment methods when the user clicks the next button
 selectSizeNextBtn.click(() => {
     if (!sessionStorage.getItem("pkgSize")) {
         alert("Please select a package size")
         return
     } else {
-        if (sessionStorage.getItem("feature") === "direct") {
-            packageSizeOptions.addClass("transition-transform -translate-x-full")
-
-            setTimeout(() => {
-                getCardsAndAppendToModal()
-                paymentMethods.show()
-            }, 150);
-
-            packageSizeOptions.hide()
-        } else if (sessionStorage.getItem("feature") === "share") {
-            packageSizeOptions.addClass("transition-transform -translate-x-full")
-
-            setTimeout(() => {
-                fetchAvailableSharedRoutes()
-                availableSharedRoutes.show()
-            }, 150);
-
-            packageSizeOptions.hide()
-        }
+        setTimeout(() => {
+            packageSizeOptions.addClass("transition ease-in duration-300 transform translate-x-0")
+            packageSizeOptions.hide();
+            getCardsAndAppendToModal()
+            paymentMethods.show()
+            paymentMethods.addClass("transition ease-out duration-300 transform translate-x-0")
+        }, 600);
     }
 });
 
@@ -106,9 +129,18 @@ selectSizeNextBtn.click(() => {
  * Reload the page and clear pkgSize session storage key when the user clicks the cancel button
  * @returns {void}
  */
-function selectPackageSizeCancelBtn() {
+function selectPackageSizeCancel() {
     sessionStorage.removeItem("pkgSize");
-    location.reload();
+    if (sessionStorage.getItem("feature") === "direct") {
+        location.reload();
+    } else if (sessionStorage.getItem("feature") === "share") {
+        setTimeout(() => {
+            packageSizeOptions.addClass("transition ease-in duration-300 transform translate-x-0")
+            packageSizeOptions.hide()
+            availableSharedRoutes.show()
+            availableSharedRoutes.addClass("transition ease-out duration-300 transform translate-x-0")
+        }, 600);
+    }
 }
 
 // Hide the payment methods and show confirmation card when the user clicks the next button
@@ -117,20 +149,18 @@ paymentMethodNextBtn.click(() => {
         alert("Please select a payment method")
         return
     } else {
-        paymentMethods.addClass("transition-none")
-        paymentMethods.removeClass("transition-none")
-        paymentMethods.addClass("transition-transform -translate-x-full")
-
         setTimeout(() => {
-            paymentMethods.toggle("hidden")
-            confirmationMenuContainer.removeClass("hidden")
-            confirmationMenuContainer.addClass("transform translate-x-full")
-            confirmationMenuContainer.removeClass("transform translate-x-full")
-        }, 150);
+            paymentMethods.addClass("transition ease-in duration-300 transform translate-x-0")
+            paymentMethods.hide()
+
+        }, 300);
 
         appendAddresses();
         formatTime();
-        confirmationMenuContainer.addClass("transition-transform -translate-x-0")
+        setTimeout(() => {
+            confirmationMenuContainer.show()
+            confirmationMenuContainer.addClass("transition ease-out duration-300 transform translate-x-0")
+        }, 300);
     }
 });
 
@@ -138,14 +168,14 @@ paymentMethodNextBtn.click(() => {
  * Unhide the package size options and hide the payment methods when the user clicks the cancel button
  * @returns {void}
  */
-function selectPaymentCancelBtn() {
-    paymentMethods.addClass("transition transform translate-x-full");
+function selectPaymentCancel() {
     setTimeout(() => {
-        paymentMethods.hide()
         sessionStorage.removeItem("paymentMethod")
-        packageSizeOptions.removeClass("transition-transform -translate-x-full")
+        paymentMethods.addClass("transition ease-in duration-300 transform translate-x-0")
+        paymentMethods.hide()
         packageSizeOptions.show()
-    }, 150);
+        packageSizeOptions.addClass("transition ease-out duration-300 transform translate-x-0")
+    }, 600);
 }
 
 /**
@@ -154,7 +184,6 @@ function selectPaymentCancelBtn() {
  */
 function displayAvailableBattery() {
     mainMenuCard.hide()
-    mainMenuDrawer.toggle()
     console.log("show available battery card")
     availableBatteryCard.show()
 }
