@@ -5,6 +5,7 @@
 <script src="/scripts/calculate_price.js"></script>
 <script src="/scripts/session_storage.js"></script>
 <script src="/scripts/get_cards_from_DB.js"></script>
+<script src="/scripts/get_available_routes.js"></script>
 
 <script>
   const mapbox_access_token = '<%= process.env.MAPBOX_ACCESS_TOKEN %>';
@@ -29,6 +30,7 @@
 
   let startLocation;
   let endLocation;
+  window.destination = null
 
   var geocoder = new MapboxGeocoder({
     // Initialize the geocoder
@@ -131,6 +133,7 @@
     // Check if start and end locations are defined, then plot the points
     if (startLocation && endLocation) {
       window.destination = endLocation;
+      console.log('destination:', window.destination);
       plotPoints(startLocation, endLocation);
       setTimeout(() => {
         map.flyTo({

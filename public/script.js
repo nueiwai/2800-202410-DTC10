@@ -7,6 +7,7 @@ let mainMenuCard = $("#mainMenuCard")
 let packageSizeOptions = $("#packageSizeOptions")
 let selectSizeNextBtn = $("#selectSizeNextBtn")
 let paymentMethods = $("#paymentMethods")
+let cardContainer = $("#availableCards")
 let paymentMethodNextBtn = $("#paymentMethodNextBtn")
 let confirmationMenuContainer = $("#confirmationCard")
 let availableSharedRoutes = $("#availableRoutes")
@@ -90,6 +91,7 @@ selectSizeNextBtn.click(() => {
             packageSizeOptions.addClass("transition-transform -translate-x-full")
 
             setTimeout(() => {
+                fetchAvailableSharedRoutes()
                 availableSharedRoutes.show()
             }, 150);
 
