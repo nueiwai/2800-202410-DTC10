@@ -323,7 +323,6 @@ app.post('/update_payment/:paymentId', async (req, res) => {
   const { paymentId } = req.params;
   const { cardType, cardNumber, cvv, expiryDate } = req.body;
 
-
   const { error } = cardSchema.validate({ cardType, cardNumber, cvv, expiryDate });
 
   if (error) {
