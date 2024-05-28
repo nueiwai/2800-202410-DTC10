@@ -74,14 +74,23 @@ app.use(session({
   cookie: { secure: false, maxAge: 3600000 }
 }))
 
-// Joi schema
+// profile Joi schema
 const userSchema = Joi.object({
   username: Joi.string().trim().required(),
-  phonenumber: Joi.string().pattern(/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/),
+  phonenumber: Joi.string().trim().pattern(/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/),
   street: Joi.string().trim().regex(/^[a-zA-Z0-9\s]*$/),
   city: Joi.string().trim().regex(/^[a-zA-Z0-9\s]*$/),
   postal: Joi.string().trim().pattern(/^[A-Za-z0-9]{3}\s[A-Za-z0-9]{3}$/)
 });
+
+// payment Joi schema
+const cardSchema = Joi.object({
+  cardType: Joi.string().valid('Debit', 'Credit', 'Crypto').required(),
+  cardNumber: Joi.string().trim().pattern(/^(?:\d{4} ){3}\d{4}$/).required(),
+  cvv: Joi.string().trim().pattern(/^\d{3}$/).required(),
+  expiryDate: Joi.string().trim().pattern(/^\d{2}\/\d{2}$/).required()
+});
+
 
 // Start application
 app.listen(port, () => {
@@ -248,6 +257,16 @@ app.post('/payment_edit', async (req, res) => {
   const { cardType, cardNumber, cvv, expiryDate } = req.body;
   const userID = req.session.userid;
 
+  const { error } = cardSchema.validate({ cardType, cardNumber, cvv, expiryDate });
+
+  if (error) {
+    const errorDetails = error.details.map(detail => ({
+      field: detail.path[0],
+      message: detail.message
+    }));
+    return res.status(400).json({ success: false, message: "Invalid input data", errors: errorDetails });
+  }
+
   try {
     const newPayment = new paymentModel({
       userId: userID,
@@ -303,11 +322,25 @@ app.get('/old_payment_edit/:paymentId', async (req, res) => {
 app.post('/update_payment/:paymentId', async (req, res) => {
   const { paymentId } = req.params;
   const { cardType, cardNumber, cvv, expiryDate } = req.body;
+
+
+  const { error } = cardSchema.validate({ cardType, cardNumber, cvv, expiryDate });
+
+  if (error) {
+    console.error("Validation Error:", error.details[0].message);
+    return res.status(400).json({ success: false, message: "Invalid input data", error: error.details[0].message });
+  }
+
   try {
-    await paymentModel.findByIdAndUpdate(paymentId, {
+    const updatedPayment = await paymentModel.findByIdAndUpdate(paymentId, {
       cardType, cardNumber, cvv, expiryDate
-    });
-    res.redirect('/payment_list');  // redirect to payment list page
+    }, { new: true });
+
+    if (!updatedPayment) {
+      return res.status(404).send('Payment not found');
+    }
+
+    res.json({ success: true, message: "Payment information updated successfully", payment: updatedPayment });
   } catch (error) {
     console.error("Failed to update payment information:", error);
     res.status(500).send("Error updating payment information");
@@ -316,10 +349,10 @@ app.post('/update_payment/:paymentId', async (req, res) => {
 
 // Payment List route
 app.get('/payment_list', async (req, res) => {
-  const userID = req.session.userid;  // Get user ID from session
+  const userID = req.session.userid;
   try {
-    const user = await userModel.findById(userID);  // Retrieve user information based on the user ID
-    const payments = await paymentModel.find({ userId: userID });  // Retrieve payment information for the user
+    const user = await userModel.findById(userID);
+    const payments = await paymentModel.find({ userId: userID });
     res.render("payment_list", { user: user, payments: payments });
   } catch (error) {
     console.error("Failed to fetch user or payment list:", error);
