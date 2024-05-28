@@ -1,11 +1,7 @@
-## About Us
+# Dronify
 
 <img src="./public/images/logo.png" align="right"
-     alt="Dronify Logo" width="245" height="220">
-
-**Team Name:**
-
-DroneOn
+     alt="Dronify Logo" width="225" height="200">
 
 **Team Members:**
 
@@ -15,15 +11,11 @@ DroneOn
 - Melissa Shao
 - Michael Lau
 
-## Project Title
-
-**Dronify**
-
 ## Project Description
 
 **Dronify** is a web application that deploys autonomous drones (on-demand) to offer package delivery and roadside assistance for autonomous car owners during accidents, thereby reducing delivery time and traffic congestion.
 
-## Technologies used
+## Project Technologies
 
 For the **front-end** we used:
 
@@ -39,7 +31,7 @@ Cloudinary for populating user’s profile image
 For the **database** we used:
 * **MongoDB** for hosting our data collection (user’s personal information, user’s session, battery station geo-coordinates)
 
-## File Contents
+## List of Files
 TBD
 
 ## How to Run Our Project
@@ -74,19 +66,37 @@ To get started with Dronify, the hosted version of the product can be used. You 
 * Mapbox Acess Token
 * Open Weather API
 
-### Additional Notes
-Installation location and order does not matter for this project.
-
 ### Testing
 Here is our [link](https://docs.google.com/spreadsheets/d/14Fitry6ACC5__D6XGdvO7034vG4NWeVpk5qbL6u0m30/edit?usp=sharing) to the testing done for this project, feel free to take a look and contribute to any bugfix!
 
-## How It Works (Features)
+### Additional Notes
+Installation location and order does not matter for this project.
+
+## Features
 <img src="./public/images/How_it_works.png"
      alt="How it works" width=full height=full>
 
-## Credits, References, and Licenses
+### How it Works
+
+1. Core feature **Direct Delivery**
+
+<img src="./public/images/Direct_delivery.jpg"
+     alt="Direct delivery" width=full height=full>
+
+2. Core feature **Drone-share**
+
+<img src="./public/images/Droneshare.jpg"
+     alt="Droneshare" width=full height=full>
+
+3. Core feature **Roadside Assistance**
+
+<img src="./public/images/Roadside_assistance.jpg"
+     alt="Roadside assistance" width=full height=full>
+
+## Credits
 * City of Vancouver Open Data -
 https://opendata.vancouver.ca/explore/dataset/electric-vehicle-charging-stations/api/
+* Inspiration for 3-D route representation on a 2-D map interface - https://www.youtube.com/watch?v=VNVmlWv4gdQ
 
 ## AI Usage
 **Project Support:**
