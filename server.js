@@ -415,3 +415,8 @@ app.post('/getAvailableRoutes', async (req, res) => {
       res.status(500).send('Failed to fetch available routes');
     });
 });
+
+// 404 route
+app.get('*', (req, res) => {
+  res.render("404")
+})

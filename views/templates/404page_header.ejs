@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dronify</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/images/Dronify_Favicon.png" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Press Start 2P', cursive;
+      background-color: #31B6C0;
+      margin-bottom: 50px;
+    }
+
+    .account-icon {
+      position: absolute;
+      top: 24px;
+      right: 5%;
+      z-index: 1;
+    }
+
+    .home-icon {
+      position: absolute;
+      top: 24px;
+      left: 5%;
+      z-index: 1;
+    }
+
+    .error-container {
+      text-align: center;
+      font-size: 180px;
+      font-family: 'Catamaran', sans-serif;
+      font-weight: 800;
+      margin: 20px 15px;
+    }
+
+    .error-container>span {
+      display: inline-block;
+      line-height: 0.7;
+      position: relative;
+      color: #FFB485;
+    }
+
+    .error-container>span>span {
+      display: inline-block;
+      position: relative;
+    }
+
+    .error-container>span:nth-of-type(1) {
+      perspective: 1000px;
+      perspective-origin: 500% 50%;
+      color: #F0E395;
+    }
+
+    .error-container>span:nth-of-type(1)>span {
+      transform-origin: 50% 100% 0px;
+      transform: rotateX(0);
+      animation: easyoutelastic 8s infinite;
+    }
+
+    .error-container>span:nth-of-type(3) {
+      perspective: none;
+      perspective-origin: 50% 50%;
+      color: #D15C95;
+    }
+
+    .error-container>span:nth-of-type(3)>span {
+      transform-origin: 100% 100% 0px;
+      transform: rotate(0deg);
+      animation: rotatedrop 8s infinite;
+    }
+
+    @media (max-width: 600px) {
+      .error-container {
+        font-size: 120px;
+        width: 100%;
+        margin: 10px 0;
+        position: relative;
+        height: 200px;
+      }
+
+      .error-container>span {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        line-height: 0.9;
+      }
+
+      .error-container>span:nth-of-type(1) {
+        left: 10%;
+      }
+
+      .error-container>span:nth-of-type(2) {
+        left: 30%;
+      }
+
+      .error-container>span:nth-of-type(3) {
+        left: 50%;
+      }
+    }
+
+
+    @keyframes easyoutelastic {
+      0% {
+        transform: rotateX(0);
+      }
+
+      9% {
+        transform: rotateX(210deg);
+      }
+
+      13% {
+        transform: rotateX(150deg);
+      }
+
+      16% {
+        transform: rotateX(200deg);
+      }
+
+      18% {
+        transform: rotateX(170deg);
+      }
+
+      20% {
+        transform: rotateX(180deg);
+      }
+
+      60% {
+        transform: rotateX(180deg);
+      }
+
+      80% {
+        transform: rotateX(0);
+      }
+
+      100% {
+        transform: rotateX(0);
+      }
+    }
+
+    @keyframes rotatedrop {
+      0% {
+        transform: rotate(0);
+      }
+
+      10% {
+        transform: rotate(30deg);
+      }
+
+      15% {
+        transform: rotate(90deg);
+      }
+
+      70% {
+        transform: rotate(90deg);
+      }
+
+      80% {
+        transform: rotate(0);
+      }
+
+      100% {
+        transform: rotateX(0);
+      }
+    }
+
+    html,
+    textarea {
+      color: #bbb;
+    }
+  </style>
+
+</head>
