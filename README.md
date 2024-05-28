@@ -33,15 +33,20 @@ For the **back-end** we used:
 * **Mapbox API** for the map interface and the foundation for the visual interface
 * **Turf.js** for routing display on the map
 * **Geolocation API** for getting the user’s current location
-* **Weather API** for our Easter egg
+* **Open Weather API** for our Easter egg
 Cloudinary for populating user’s profile image
 
 For the **database** we used:
 * **MongoDB** for hosting our data collection (user’s personal information, user’s session, battery station geo-coordinates)
 
 ## File Contents
+TBD
 
 ## How to Run Our Project
+To get started with Dronify, the hosted version of the product can be used. You can get started immediately [here](https://dronify-mbme.onrender.com/). After the login page, you will be greeted with our three core features to select from.
+
+### What to Install
+
 **Language(s):**
 * EJS
 * JavaScript
@@ -63,10 +68,21 @@ For the **database** we used:
 | Mapbox API      | Map interface and the foundation for UI |
 | Turf.js     | Routing display on the map     |
 | Geolocation API | Getting the user's current location    |
-| Weather API | Our Easter Egg component    |
+| Open Weather API | Our Easter Egg component    |
 
-## How It Works
-TBD
+### Required API Keys
+* Mapbox Acess Token
+* Open Weather API
+
+### Additional Notes
+Installation location and order does not matter for this project.
+
+### Testing
+Here is our [link](https://docs.google.com/spreadsheets/d/14Fitry6ACC5__D6XGdvO7034vG4NWeVpk5qbL6u0m30/edit?usp=sharing) to the testing done for this project, feel free to take a look and contribute to any bugfix!
+
+## How It Works (Features)
+<img src="./public/images/How_it_works.png"
+     alt="How it works" width=full height=full>
 
 ## Credits, References, and Licenses
 * City of Vancouver Open Data -
