@@ -24,14 +24,21 @@ droneShareBtn.click(() => {
 // Step 2: When user confirms location in #delivery-location-modal, animate transition to #sizeSelectMenu
 // ToDo: Adjust speed of transition
 confirmLocationBtn.click(() => {
-    // Remove mainMenuCard 
-    mainMenuCard.addClass("transition-transform translate-y-full")
+    let locationfields = isLocationEmpty();
+    if (locationfields) {
+        // Remove mainMenuCard 
+        mainMenuCard.addClass("transition-transform translate-y-full")
 
-    // Show sizeSelectMenu
-    packageSizeOptions.toggle()
+        // Show sizeSelectMenu
+        packageSizeOptions.toggle()
 
-    // Hide mainMenuCard
-    mainMenuCard.toggle()
+        // Hide mainMenuCard
+        mainMenuCard.toggle()
+
+        // Hide Location Modal
+        locationModal.hide()
+        document.querySelector("body > div[modal-backdrop]")?.remove()
+    }
 })
 
 // Step 3: When user clicks next on #sizeSelectMenu, animate and transition to #paymentMethodContainer

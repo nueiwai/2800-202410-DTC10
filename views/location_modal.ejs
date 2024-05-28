@@ -59,7 +59,7 @@
           <div id="destination" class="end-geocoder"></div>
           <input id="current-destination" class="hidden"></input>
 
-          <button id="confirmBtn" data-modal-hide="deliveryLocationModal" class="w-full text-white bg-buttonBg focus:ring-white focus:ring-4 font-medium rounded-lg text-lg px-5 py-2.5 text-center">Confirm</button>
+          <button id="confirmBtn" class="w-full text-white bg-buttonBg focus:ring-white focus:ring-4 font-medium rounded-lg text-lg px-5 py-2.5 text-center">Confirm</button>
 
         </div>
       </div>
@@ -73,6 +73,7 @@
     confirmBtn.addEventListener('click', function() {
       drawRoute().then(() => {
         calculateDistance(startLocation, endLocation);
+        getConfirmationAddress();
       });
     });
   };
