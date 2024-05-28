@@ -51,7 +51,7 @@
           placeholder="CVV *">
         <input type="text" id="expiryDate"
           class="w-11/12 py-2 px-6 text-sm font-medium text-center text-gray-900 bg-white border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
-          placeholder="Expiry Date *">
+          placeholder="Expiry Date *   MM/YY">
       </div>
 
     </div>
@@ -60,7 +60,8 @@
 
       <button onclick="window.location.href='/payment_list'"
         class="w-28 py-2 px-8 mt-2 mx-2 text-md font-medium text-center text-white bg-black rounded-xl hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Cancel</button>
-      <button id="savePaymentBtn" onclick="window.location.href='/payment_list'"
+
+      <button id="savePaymentBtn"
         class="w-28 py-2 px-8 mt-2 mx-2 text-md font-medium text-center text-white bg-red-600 rounded-xl hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Save</button>
     </div>
   </div>
@@ -79,11 +80,51 @@
         console.error("Save payment button not found.");
         return;
       }
+
+      // add event listener to cardNumber input to remove extra spaces and limit input length to 16 digits
+      const cardNumberInput = document.getElementById('cardNumber');
+      if (cardNumberInput) {
+        cardNumberInput.addEventListener('input', function () {
+          let value = this.value.replace(/\s+/g, '');
+          if (value.length > 16) {
+            value = value.substring(0, 16);
+          }
+          this.value = value.replace(/(\d{4})(?=\d)/g, '$1 ');
+        });
+      }
+
+      // add event listener to cvv input to remove extra spaces and limit input length to 3 digits
+      const cvvInput = document.getElementById('cvv');
+      if (cvvInput) {
+        cvvInput.addEventListener('input', function () {
+          let value = this.value.replace(/\s+/g, '');
+          if (value.length > 3) {
+            value = value.substring(0, 3);
+          }
+          this.value = value;
+        });
+      }
+
+      // add event listener to expiryDate input to remove extra spaces and format input as MM/YY
+      const expiryDateInput = document.getElementById('expiryDate');
+      if (expiryDateInput) {
+        expiryDateInput.addEventListener('input', function () {
+          let value = this.value.replace(/\s+/g, '').replace(/\//g, '');
+          if (value.length > 4) {
+            value = value.substring(0, 4);
+          }
+          if (value.length > 2) {
+            value = value.substring(0, 2) + '/' + value.substring(2, 4);
+          }
+          this.value = value;
+        });
+      }
+
       savePaymentBtn.addEventListener("click", async () => {
         const paymentInfo = ids.reduce((acc, id) => {
           const elem = document.getElementById(id);
           if (elem) {
-            acc[id] = elem.value;
+            acc[id] = elem.value.trim();
           }
           return acc;
         }, {});
@@ -101,15 +142,18 @@
 
           const result = await response.json();
           if (result.success) {
-            console.log("Payment information updated successfully.");
+            alert("Payment information saved successfully!");
+            window.location.href = '/payment_list';
           } else {
-            console.error("Error updating payment information:", result.error);
+            alert("Error updating payment information: " + result.message);
           }
         } catch (error) {
           console.error("Failed to send request:", error);
+          alert("Failed to send request: " + error.message);
         }
       });
     });
+
   </script>
 
   <%- include('templates/footer') %>
