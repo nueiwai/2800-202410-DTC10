@@ -1,5 +1,7 @@
 <%- include('templates/map_header') %>
 <%- include('templates/map') %>
+
+<%# get current location button %>
 <div class="flex container w-full mt-[20%] justify-end">
   <button id="get-location-battery" class="flex z-10 bg-buttonBg m-5  
   rounded-[100%]" onclick="getCurrentLocationBattery()">
@@ -15,6 +17,8 @@
     </svg>
   </button>
 </div>
+
 <%- include('location_modal') %>
 <%- include('templates/bottom_main_menu') %>
+<%- include('available_battery') %>
 <%- include('templates/battery_station_footer') %>

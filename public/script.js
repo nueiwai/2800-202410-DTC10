@@ -1,3 +1,4 @@
+let mainMenuDrawer = $("#main-menu-drawer")
 let directDeliveryBtn = $("#directDeliveryBtn")
 let roadsideAssistanceBtn = $("#roadsideAssistanceBtn")
 let droneShareBtn = $("#droneShareBtn")
@@ -11,6 +12,7 @@ let cardContainer = $("#availableCards")
 let paymentMethodNextBtn = $("#paymentMethodNextBtn")
 let confirmationMenuContainer = $("#confirmationCard")
 let availableSharedRoutes = $("#availableRoutes")
+let availableBatteryCard = $("#availableBatteriesCard")
 
 /**
  * Clear session storage
@@ -144,4 +146,15 @@ function selectPaymentCancelBtn() {
         packageSizeOptions.removeClass("transition-transform -translate-x-full")
         packageSizeOptions.show()
     }, 150);
+}
+
+/**
+ * hide bottom main menu card and show available battery info
+ * @returns {void}
+ */
+function displayAvailableBattery() {
+    mainMenuCard.hide()
+    mainMenuDrawer.toggle()
+    console.log("show available battery card")
+    availableBatteryCard.show()
 }

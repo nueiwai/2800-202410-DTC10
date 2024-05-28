@@ -94,11 +94,6 @@ app.get('/availableroute', (req, res) => {
   res.render("availableroute")
 })
 
-// Available battery route
-app.get('/availablebattery', (req, res) => {
-  res.render("availablebattery")
-})
-
 
 // Confirmation route
 app.get('/confirmation', (req, res) => {
