@@ -69,9 +69,30 @@ For the **database** we used:
 TBD
 
 ## Credits, References, and Licenses
-TBD
+* City of Vancouver Open Data -
+https://opendata.vancouver.ca/explore/dataset/electric-vehicle-charging-stations/api/
 
 ## AI Usage
+**Project Support:**
 * Our App Logo is generated using ChatGPT 3.5
+* Although we did not use AI directly integrated in our app, we used it for code analysis - the old “explain this to me”
+* We used it to minimize the risk of human error when working with long and possibly redundant lines of code (e.g. copy-and-paste fail)
+
+**Data Sets:**
+* Non-applicable, the only data set utilized in this project is is the geoJSON data set used to plot EV Battery Stations
+
+**AI Integration:**
+* Our app does not directly use AI
+
+**Limitations Encountered:**
+* Integration testing is hard for the current “free” models of AI to do well, when there are many components of the application coming together and working together in a somewhat delicate manner, it is hard for the current AI models to fully capture this well and provide accurate trouble-shooting
 
 ## Contact Information
+
+You can reach us via GitHub profiles:
+
+[![GitHub](https://img.shields.io/badge/GitHub-CandiceWei-blue?logo=github)](https://github.com/candiceweily)
+[![GitHub](https://img.shields.io/badge/GitHub-NolanWai-blue?logo=github)](https://github.com/nueiwai)
+[![GitHub](https://img.shields.io/badge/GitHub-MelissaShao-blue?logo=github)](https://github.com/Melissa-Shao)
+[![GitHub](https://img.shields.io/badge/GitHub-MichaelLau-blue?logo=github)](https://github.com/energized36)
+[![GitHub](https://img.shields.io/badge/GitHub-SpringCheng-blue?logo=github)](https://github.com/spring-cheng)
