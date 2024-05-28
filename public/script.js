@@ -23,6 +23,7 @@ function clearSessionStorage() {
 directDeliveryBtn.click(() => {
     clearSessionStorage()
     console.log("move location modal down")
+    locationModal.show()
     sessionStorage.setItem("feature", "direct")
 })
 
@@ -30,8 +31,24 @@ directDeliveryBtn.click(() => {
 droneShareBtn.click(() => {
     clearSessionStorage()
     console.log("move location modal down")
+    locationModal.show()
     sessionStorage.setItem("feature", "share")
 })
+
+// Set the session storage for the selected feature - Roadside Assistance
+roadsideAssistanceBtn.click(() => {
+    clearSessionStorage()
+    sessionStorage.setItem("feature", "roadside")
+})
+
+/**
+ * Close location modal(hide) when user click the cross button
+ * @returns {void}
+ */
+function closeLocationModal() {
+    locationModal.hide()
+    document.querySelector("body > div[modal-backdrop]")?.remove()
+}
 
 //Unhide the package size options and hide the location modal 
 //when user clicks the confirmation button 
@@ -72,13 +89,12 @@ selectSizeNextBtn.click(() => {
 });
 
 /**
- * Unhide the main menu card and hide the package size options when the user clicks the cancel button
+ * Reload the page and clear pkgSize session storage key when the user clicks the cancel button
  * @returns {void}
  */
 function selectPackageSizeCancelBtn() {
-    mainMenuCard.show();
-    mainMenuCard.removeClass("transition-transform translate-y-full");
-    packageSizeOptions.hide();
+    sessionStorage.removeItem("pkgSize");
+    location.reload();
 }
 
 // Hide the payment methods and show confirmation card when the user clicks the next button
