@@ -79,7 +79,6 @@
     <div class="flex justify-center  mt-[-50px]">
       <button onclick="window.location.href='/account'"
         class="w-28 py-2 px-8 mx-2 text-md font-medium text-center text-white bg-black rounded-xl hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300">Cancel</button>
-      <!-- onclick="window.location.href='/account'" -->
       <button id="saveBtn"
         class="w-28 py-2 px-8 mx-2 text-md font-medium text-center text-white bg-red-600 rounded-xl hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300">Save</button>
     </div>
@@ -100,6 +99,39 @@
         console.error("Save button not found.");
         return;
       }
+
+      // add event listener to phone number input to remove extra characters and limit length
+      const phoneInput = document.getElementById('phonenumber');
+      if (phoneInput) {
+        phoneInput.addEventListener('input', function () {
+          let value = this.value.replace(/\D/g, '');
+          if (value.length > 10) {
+            value = value.substring(0, 10);
+          }
+          if (value.length > 6) {
+            value = value.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+          } else if (value.length > 3) {
+            value = value.replace(/(\d{3})(\d{3})/, '$1-$2');
+          }
+          this.value = value;
+        });
+      }
+
+      // add event listener to postal code input to add space after 3 characters
+      const postalInput = document.getElementById('postal');
+      if (postalInput) {
+        postalInput.addEventListener('input', function () {
+          let value = this.value.replace(/\s+/g, '').toUpperCase();
+          if (value.length > 6) {
+            value = value.substring(0, 6);
+          }
+          if (value.length > 3) {
+            value = value.replace(/(\w{3})(\w{3})/, '$1 $2');
+          }
+          this.value = value;
+        });
+      }
+
       saveBtn.addEventListener("click", async () => {
         const userInfo = ids.reduce((acc, id) => {
           const elem = document.getElementById(id);
@@ -109,7 +141,7 @@
           return acc;
         }, {});
 
-        console.log(userInfo); // Debugging
+        console.log(userInfo);
 
         try {
           const response = await fetch("/profile_edit", {
@@ -122,12 +154,15 @@
 
           const result = await response.json();
           if (result.success) {
-            console.log("Profile updated successfully!");
+            alert("Profile updated successfully!");
+            window.location.href = '/account';
           } else {
-            console.error("Error updating profile:", result.error);
+            const errors = result.errors.map(error => `${error.field}: ${error.message}`).join('\n');
+            alert("Error updating profile:\n" + errors);
           }
         } catch (error) {
           console.error("Failed to send request:", error);
+          alert("Failed to send request: " + error.message);
         }
       });
     });
