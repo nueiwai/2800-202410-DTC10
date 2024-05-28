@@ -55,3 +55,31 @@ function showPositionEnd(position) {
   document.getElementById('current-destination').setAttribute('value', currentEndLocation);
   document.querySelector('.end-geocoder>.mapboxgl-ctrl-geocoder>.mapboxgl-ctrl-geocoder--input').setAttribute('value', 'Your Location');
 }
+
+/**
+ * Function to check if the browser supports geolocation and get the current position of the battery getter.
+ * Calls showPositionBattery if the geolocation is supported.
+ * Alerts the user if the geolocation is not supported.
+ * @returns {void}
+ */
+function getCurrentLocationBattery() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPositionBattery);
+  } else {
+    alert("Geolocation is not supported by this browser.");
+  }
+}
+
+/**
+ * Function to get the current location of the user for battery getter location
+ * @returns {void}
+ */
+function showPositionBattery(position) {
+  let latitude = position.coords.latitude;
+  let longitude = position.coords.longitude;
+  console.log(latitude)
+  console.log(longitude)
+  let currentBatteryGetterLocation = [longitude, latitude]
+  // This function is in the battery station footer
+  plotCurrentLocationOfBatteryGetter(currentBatteryGetterLocation);
+}

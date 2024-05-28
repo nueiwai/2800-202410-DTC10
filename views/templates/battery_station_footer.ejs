@@ -2,6 +2,7 @@
 <script type="text/javascript" src="/script.js"></script>
 <script src="/scripts/location_picker.js"></script>
 <script src="/scripts/calculate_distance.js"></script>
+
 <script>
   const mapbox_access_token = '<%= process.env.MAPBOX_ACCESS_TOKEN %>';
   mapboxgl.accessToken = mapbox_access_token;
@@ -67,14 +68,20 @@
   // console.log(geojson);
 
   console.log('<%- stations %>')
+
   // add markers to map
   for (const feature of geojson.features) {
     // create a HTML element for each feature
     const el = document.createElement('div');
     el.className = 'marker';
+    const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
+      '<div class="text-md p-4 bg-white rounded-lg shadow-md text-center text-gray-800"><a href="/availablebattery" class="inline-block px-4 py-2 bg-buttonBg text-white rounded-md transition-colors">Select this station</a>'
+    );
 
     // make a marker for each feature and add to the map
-    new mapboxgl.Marker(el).setLngLat(feature.location.coordinates).addTo(map);
+    new mapboxgl.Marker(el).setLngLat(feature.location.coordinates)
+      .setPopup(popup) // set a popup on this marker
+      .addTo(map);
   }
 
   // After the map style has loaded on the page,
@@ -106,11 +113,11 @@
     });
   });
 
-  startGeocoder.on('result', function(e) {
+  startGeocoder.on('result', function (e) {
     startLocation = e.result.geometry.coordinates;
   });
 
-  endGeocoder.on('result', function(e) {
+  endGeocoder.on('result', function (e) {
     endLocation = e.result.geometry.coordinates;
   });
 
@@ -184,21 +191,21 @@
     const pointsGeojson = {
       type: 'FeatureCollection',
       features: [{
-          type: 'Feature',
-          geometry: {
-            type: 'Point',
-            coordinates: start
-          },
-          properties: {}
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: start
         },
-        {
-          type: 'Feature',
-          geometry: {
-            type: 'Point',
-            coordinates: end
-          },
-          properties: {}
-        }
+        properties: {}
+      },
+      {
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: end
+        },
+        properties: {}
+      }
       ]
     };
 
@@ -315,6 +322,33 @@
         }
       });
     }
+  }
+
+  //Display the current location of the battery getter on the map with a point
+  function plotCurrentLocationOfBatteryGetter(currentBatteryGetterLocation) {
+    map.addLayer({
+      id: 'battery-getter',
+      source: {
+        "type": "geojson",
+        "data": {
+          "type": "Feature",
+          "geometry": {
+            "type": "Point",
+            "coordinates": currentBatteryGetterLocation
+          }
+        }
+      },
+      type: 'circle',
+      paint: {
+        'circle-radius': 12,
+        'circle-color': '#40E0D0'
+      }
+    });
+
+    map.flyTo({
+      center: currentBatteryGetterLocation,
+      zoom: 12.7,  // optimal zoom so that on average the closet three stations are within frame
+    });
   }
 </script>
 </body>

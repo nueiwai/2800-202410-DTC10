@@ -125,9 +125,12 @@ app.get('/resetpassword', (req, res) => {
 })
 
 // Post login route
-app.get('/postlogin', isAuth, (req, res) => {
+app.get('/postlogin', isAuth, async (req, res) => {
+  let userID = req.session.userid
+  let cards = await paymentModel.find({ userId: userID }, { userId: 0, __v: 0 })
+
   if (isAuth) {
-    res.render("postlogin")
+    res.render("postlogin", { cards: JSON.stringify(cards) })
   }
 })
 

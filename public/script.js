@@ -1,70 +1,119 @@
 let directDeliveryBtn = $("#directDeliveryBtn")
-let locationModal = $("#delivery-location-modal")
-let locationModalCloseBtn = $("#location-modal-close-btn")
+let roadsideAssistanceBtn = $("#roadsideAssistanceBtn")
+let droneShareBtn = $("#droneShareBtn")
+let locationModal = $("#deliveryLocationModal")
 let confirmLocationBtn = $("#confirmBtn")
 let mainMenuCard = $("#mainMenuCard")
-let sizeSelectMenu = $("#selectSizeMenu")
+let packageSizeOptions = $("#packageSizeOptions")
 let selectSizeNextBtn = $("#selectSizeNextBtn")
-let paymentMethodContainer = $("#paymentMethodContainer")
+let paymentMethods = $("#paymentMethods")
 let paymentMethodNextBtn = $("#paymentMethodNextBtn")
-let confirmationMenuContainer = $("#confirmationMenuContainer")
+let confirmationMenuContainer = $("#confirmationCard")
+let cardContainer = $("#availableCards")
 
+/**
+ * Clear session storage
+ * @returns {void}
+ */
+function clearSessionStorage() {
+    sessionStorage.clear()
+}
+
+// Set the session storage for the selected feature - Direct Delivery
 directDeliveryBtn.click(() => {
+    clearSessionStorage()
     console.log("move location modal down")
-    locationModal.removeClass("transform -translate-y-full")
-    locationModal.addClass("transition-transform translate-y-[80px]")
+    sessionStorage.setItem("feature", "direct")
 })
 
-locationModalCloseBtn.click(() => {
-    locationModal.removeClass("transform translate-y-[80px]")
-    locationModal.addClass("transition-transform -translate-y-full")
-});
+// Set the session storage for the selected feature - Drone Share
+droneShareBtn.click(() => {
+    clearSessionStorage()
+    console.log("move location modal down")
+    sessionStorage.setItem("feature", "share")
+})
 
-
-// Step 2: When user confirms location in #delivery-location-modal, animate transition to #sizeSelectMenu
-// ToDo: Adjust speed of transition
+//Unhide the package size options and hide the location modal 
+//when user clicks the confirmation button 
+//after checking if the location fields are empty
 confirmLocationBtn.click(() => {
-    // Move location modal back up
-    locationModal.addClass("transition-transform -translate-y-full")
+    let locationfields = isLocationEmpty();
+    if (locationfields) {
+        // Remove mainMenuCard 
+        mainMenuCard.addClass("transition-transform translate-y-full")
 
-    // Remove mainMenuCard 
-    mainMenuCard.addClass("transition-transform -translate-x-full")
+        // Hide Location Modal
+        locationModal.hide()
+        document.querySelector("body > div[modal-backdrop]")?.remove()
 
-    // Show sizeSelectMenu
-    sizeSelectMenu.toggle()
+        // Hide mainMenuCard
+        mainMenuCard.hide()
 
-    // Hide mainMenuCard
-    mainMenuCard.toggle()
+        // Show sizeSelectMenu
+        packageSizeOptions.show()
+    }
 })
 
 // Step 3: When user clicks next on #sizeSelectMenu, animate and transition to #paymentMethodContainer
 selectSizeNextBtn.click(() => {
-    const elementHeight = paymentMethodContainer.outerHeight() + 60
-    paymentMethodContainer.height(elementHeight)
-    sizeSelectMenu.removeClass("transform translate-x-full transition-transform bottom-0 left-0 right-0 transform-none")
-    sizeSelectMenu.addClass("transition-transform -translate-x-full")
+    if (!sessionStorage.getItem("pkgSize")) {
+        alert("Please select a package size")
+        return
+    } else {
+        packageSizeOptions.addClass("transition-transform -translate-x-full")
 
-    setTimeout(() => {
-        paymentMethodContainer.removeClass("transform translate-x-full")
-        paymentMethodContainer.addClass("transition-transform -translate-x-0")
-    }, 150);
-})
+        setTimeout(() => {
+            getCardsAndAppendToModal()
+            paymentMethods.show()
+        }, 150);
 
+        packageSizeOptions.hide()
+    }
+});
 
+/**
+ * Unhide the main menu card and hide the package size options when the user clicks the cancel button
+ * @returns {void}
+ */
+function selectPackageSizeCancelBtn() {
+    mainMenuCard.show();
+    mainMenuCard.removeClass("transition-transform translate-y-full");
+    packageSizeOptions.hide();
+}
+
+// Hide the payment methods and show confirmation card when the user clicks the next button
 paymentMethodNextBtn.click(() => {
-    paymentMethodContainer.addClass("transition-none")
-    paymentMethodContainer.removeClass("transition-none")
-    paymentMethodContainer.addClass("transition-transform -translate-x-full")
+    if (!sessionStorage.getItem("paymentMethod")) {
+        alert("Please select a payment method")
+        return
+    } else {
+        paymentMethods.addClass("transition-none")
+        paymentMethods.removeClass("transition-none")
+        paymentMethods.addClass("transition-transform -translate-x-full")
 
+        setTimeout(() => {
+            paymentMethods.toggle("hidden")
+            confirmationMenuContainer.removeClass("hidden")
+            confirmationMenuContainer.addClass("transform translate-x-full")
+            confirmationMenuContainer.removeClass("transform translate-x-full")
+        }, 150);
+
+        appendAddresses();
+        formatTime();
+        confirmationMenuContainer.addClass("transition-transform -translate-x-0")
+    }
+});
+
+/**
+ * Unhide the package size options and hide the payment methods when the user clicks the cancel button
+ * @returns {void}
+ */
+function selectPaymentCancelBtn() {
+    paymentMethods.addClass("transition transform translate-x-full");
     setTimeout(() => {
-        paymentMethodContainer.toggle("hidden")
-        confirmationMenuContainer.removeClass("hidden")
-        confirmationMenuContainer.addClass("transform translate-x-full")
-        confirmationMenuContainer.removeClass("transform translate-x-full")
+        paymentMethods.hide()
+        sessionStorage.removeItem("paymentMethod")
+        packageSizeOptions.removeClass("transition-transform -translate-x-full")
+        packageSizeOptions.show()
     }, 150);
-
-    confirmationMenuContainer.addClass("transition-transform -translate-x-0")
-})
-
-
-
+}

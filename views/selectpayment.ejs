@@ -1,44 +1,13 @@
-<%- include('templates/map_header') %>
-<%- include('templates/map') %>
-
 <!-- drawer component -->
-<div id="select-payment-drawer" class="fixed z-40 w-full overflow-y-auto bg-cardBg border-t border-gray-200 rounded-t-lg dark:border-gray-700 dark:bg-gray-800 transition-transform bottom-0 left-0 right-0 translate-y-full bottom-[60px]" tabindex="-1" aria-labelledby="select-payment-drawer-label">
-  <div class="p-7 hover:bg-cardBgHover" data-drawer-toggle="select-payment-drawer" data-drawer-target="select-payment-drawer" data-drawer-placement="bottom" data-drawer-edge="true" data-drawer-edge-offset="bottom-[60px]" aria-controls="select-payment-drawer" data-drawer-backdrop="false">
-    <span class="absolute w-36 h-1 -translate-x-1/2 bg-white rounded-lg top-2 left-1/2"></span>
-  </div>
+<div id="paymentMethods" class="hidden">
   <p class="font-bold text-center py-2">Select Payment</p>
 
-  <div class="grid grid-cols-1 gap-4 p-4">
-    <div class="p-4 rounded-lg cursor-pointer bg-buttonBg">
-      <div class="flex justify-center items-center p-2 mx-auto mb-2 dark:bg-gray-600 rounded-full w-[48px] h-[48px] max-w-[48px] max-h-[48px]">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-credit-card" width="36" height="36" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
-          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-          <path d="M3 5m0 3a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3z" />
-          <path d="M3 10l18 0" />
-          <path d="M7 15l.01 0" />
-          <path d="M11 15l2 0" />
-        </svg>
-      </div>
-      <div class="font-medium text-center text-gray-200 dark:text-gray-400">Credit ****1234</div>
-    </div>
-    <div class="p-4 rounded-lg cursor-pointer bg-buttonBg">
-      <div class="flex justify-center items-center p-2 mx-auto mb-2 dark:bg-gray-600 rounded-full w-[48px] h-[48px] max-w-[48px] max-h-[48px]">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-credit-card" width="36" height="36" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
-          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-          <path d="M3 5m0 3a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3z" />
-          <path d="M3 10l18 0" />
-          <path d="M7 15l.01 0" />
-          <path d="M11 15l2 0" />
-        </svg>
-      </div>
-      <div class="font-medium text-center text-gray-200 dark:text-gray-400">Debit ****2345</div>
-    </div>
+  <div id="availableCards" class="grid grid-cols-1 gap-4 p-4">
   </div>
   <div class="flex justify-center mb-4">
     <div class="flex space-x-2 w-64">
-      <button class="bg-white text-black py-2 px-4 rounded-lg text-lg flex-1 h-12">Cancel</button>
-      <button class="bg-black text-white py-2 px-4 rounded-lg text-lg flex-1 h-12">Next</button>
+      <button class="bg-white text-black py-2 px-4 rounded-lg text-lg flex-1 h-12" onclick="selectPaymentCancelBtn()">Cancel</button>
+      <button id="paymentMethodNextBtn" class="bg-black text-white py-2 px-4 rounded-lg text-lg flex-1 h-12">Next</button>
     </div>
   </div>
 </div>
-<%- include('templates/map_footer') %>
