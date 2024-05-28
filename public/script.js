@@ -11,12 +11,23 @@ let paymentMethodNextBtn = $("#paymentMethodNextBtn")
 let confirmationMenuContainer = $("#confirmationCard")
 let cardContainer = $("#availableCards")
 
+/**
+ * Clear session storage
+ * @returns {void}
+ */
+function clearSessionStorage() {
+    sessionStorage.clear()
+}
+
+
 directDeliveryBtn.click(() => {
+    clearSessionStorage()
     console.log("move location modal down")
     sessionStorage.setItem("feature", "direct")
 })
 
 droneShareBtn.click(() => {
+    clearSessionStorage()
     console.log("move location modal down")
     sessionStorage.setItem("feature", "share")
 })
@@ -43,37 +54,45 @@ confirmLocationBtn.click(() => {
 
 // Step 3: When user clicks next on #sizeSelectMenu, animate and transition to #paymentMethodContainer
 selectSizeNextBtn.click(() => {
-    // const elementHeight = paymentMethods.outerHeight() + 60
-    // paymentMethods.height(elementHeight)
-    packageSizeOptions.addClass("transition-transform -translate-x-full")
+    if (!sessionStorage.getItem("pkgSize")) {
+        alert("Please select a package size")
+        return
+    } else {
+        packageSizeOptions.addClass("transition-transform -translate-x-full")
 
-    setTimeout(() => {
-        // paymentMethods.addClass("transform translate-x-full")
-        console.log("toggling function")
-        getCardsAndAppendToModal()
-        paymentMethods.toggle()
-    }, 150);
+        setTimeout(() => {
+            // paymentMethods.addClass("transform translate-x-full")
+            console.log("toggling function")
+            getCardsAndAppendToModal()
+            paymentMethods.toggle()
+        }, 150);
 
-    packageSizeOptions.toggle()
-})
+        packageSizeOptions.toggle()
+    }
+});
 
 
 paymentMethodNextBtn.click(() => {
-    paymentMethods.addClass("transition-none")
-    paymentMethods.removeClass("transition-none")
-    paymentMethods.addClass("transition-transform -translate-x-full")
+    if (!sessionStorage.getItem("paymentMethod")) {
+        alert("Please select a payment method")
+        return
+    } else {
+        paymentMethods.addClass("transition-none")
+        paymentMethods.removeClass("transition-none")
+        paymentMethods.addClass("transition-transform -translate-x-full")
 
-    setTimeout(() => {
-        paymentMethods.toggle("hidden")
-        confirmationMenuContainer.removeClass("hidden")
-        confirmationMenuContainer.addClass("transform translate-x-full")
-        confirmationMenuContainer.removeClass("transform translate-x-full")
-    }, 150);
+        setTimeout(() => {
+            paymentMethods.toggle("hidden")
+            confirmationMenuContainer.removeClass("hidden")
+            confirmationMenuContainer.addClass("transform translate-x-full")
+            confirmationMenuContainer.removeClass("transform translate-x-full")
+        }, 150);
 
-    appendAddresses();
-    formatTime();
-    confirmationMenuContainer.addClass("transition-transform -translate-x-0")
-})
+        appendAddresses();
+        formatTime();
+        confirmationMenuContainer.addClass("transition-transform -translate-x-0")
+    }
+});
 
 
 

@@ -6,7 +6,7 @@ function getCardsAndAppendToModal() {
     let type = card.cardType;
     let number = card.cardNumber;
     let cardHTML = `
-    <button id="${id}" class="payment-select flex container items-center p-4 rounded-lg cursor-pointer bg-buttonBg gap-6">
+    <button id="${id}" class="payment-select flex container items-center p-4 rounded-lg bg-buttonBg gap-6 focus:ring-2 ring-white">
       <div class="p-2  rounded-full w-[48px] h-[48px] max-w-[48px] max-h-[48px]">
         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-credit-card" width="36" height="36" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
           <path stroke="none" d="M0 0h24v24H0z" fill="none" />
