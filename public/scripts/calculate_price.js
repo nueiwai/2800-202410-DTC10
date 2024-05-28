@@ -1,3 +1,8 @@
+/**
+ * Calculate the prices of the routes based on the distance and store it in session storage
+ * @param {Number} distance 
+ * @returns {void}
+ */
 function calculatePrices(distance) {
   console.log("calculating prices");
   const prices = {
@@ -34,6 +39,10 @@ function calculatePrices(distance) {
 }
 
 
+/**
+ * Display the prices on the page in the designated elements
+ * @returns {void}
+ */
 function displayPrices() {
   console.log("displaying prices");
   const prices = JSON.parse(sessionStorage.getItem("prices"));
