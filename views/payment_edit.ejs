@@ -57,7 +57,6 @@
     </div>
 
     <div class="flex justify-center mt-[-50px]">
-
       <button onclick="window.location.href='/payment_list'"
         class="w-28 py-2 px-8 mt-2 mx-2 text-md font-medium text-center text-white bg-black rounded-xl hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Cancel</button>
 
@@ -85,7 +84,7 @@
       const cardNumberInput = document.getElementById('cardNumber');
       if (cardNumberInput) {
         cardNumberInput.addEventListener('input', function () {
-          let value = this.value.replace(/\s+/g, '');
+          let value = this.value.replace(/\D/g, '');
           if (value.length > 16) {
             value = value.substring(0, 16);
           }
@@ -97,7 +96,7 @@
       const cvvInput = document.getElementById('cvv');
       if (cvvInput) {
         cvvInput.addEventListener('input', function () {
-          let value = this.value.replace(/\s+/g, '');
+          let value = this.value.replace(/\D/g, '');
           if (value.length > 3) {
             value = value.substring(0, 3);
           }
@@ -109,12 +108,17 @@
       const expiryDateInput = document.getElementById('expiryDate');
       if (expiryDateInput) {
         expiryDateInput.addEventListener('input', function () {
-          let value = this.value.replace(/\s+/g, '').replace(/\//g, '');
-          if (value.length > 4) {
-            value = value.substring(0, 4);
+          // remove all non-numeric characters except the slash
+          let value = this.value.replace(/[^0-9\/]/g, '');
+          // remove leading slashes and multiple slashes
+          value = value.replace(/^\/+/, '').replace(/\/+/g, '/');
+          // limit the input length to 5 characters
+          if (value.length > 5) {
+            value = value.substring(0, 5);
           }
-          if (value.length > 2) {
-            value = value.substring(0, 2) + '/' + value.substring(2, 4);
+          // automatically add a slash after the second digit
+          if (!value.includes('/') && value.length > 2) {
+            value = value.substring(0, 2) + '/' + value.substring(2);
           }
           this.value = value;
         });
@@ -145,7 +149,8 @@
             alert("Payment information saved successfully!");
             window.location.href = '/payment_list';
           } else {
-            alert("Error updating payment information: " + result.message);
+            const errors = result.errors.map(error => `${error.field}: ${error.message}`).join('\n');
+            alert("Error updating payment information:\n" + errors);
           }
         } catch (error) {
           console.error("Failed to send request:", error);
