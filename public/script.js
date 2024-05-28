@@ -19,36 +19,38 @@ function clearSessionStorage() {
     sessionStorage.clear()
 }
 
-
+// Set the session storage for the selected feature - Direct Delivery
 directDeliveryBtn.click(() => {
     clearSessionStorage()
     console.log("move location modal down")
     sessionStorage.setItem("feature", "direct")
 })
 
+// Set the session storage for the selected feature - Drone Share
 droneShareBtn.click(() => {
     clearSessionStorage()
     console.log("move location modal down")
     sessionStorage.setItem("feature", "share")
 })
 
-// Step 2: When user confirms location in #delivery-location-modal, animate transition to #sizeSelectMenu
-// ToDo: Adjust speed of transition
+//Unhide the package size options and hide the location modal 
+//when user clicks the confirmation button 
+//after checking if the location fields are empty
 confirmLocationBtn.click(() => {
     let locationfields = isLocationEmpty();
     if (locationfields) {
         // Remove mainMenuCard 
         mainMenuCard.addClass("transition-transform translate-y-full")
 
-        // Show sizeSelectMenu
-        packageSizeOptions.toggle()
-
-        // Hide mainMenuCard
-        mainMenuCard.toggle()
-
         // Hide Location Modal
         locationModal.hide()
         document.querySelector("body > div[modal-backdrop]")?.remove()
+
+        // Hide mainMenuCard
+        mainMenuCard.hide()
+
+        // Show sizeSelectMenu
+        packageSizeOptions.show()
     }
 })
 
@@ -61,17 +63,25 @@ selectSizeNextBtn.click(() => {
         packageSizeOptions.addClass("transition-transform -translate-x-full")
 
         setTimeout(() => {
-            // paymentMethods.addClass("transform translate-x-full")
-            console.log("toggling function")
             getCardsAndAppendToModal()
-            paymentMethods.toggle()
+            paymentMethods.show()
         }, 150);
 
-        packageSizeOptions.toggle()
+        packageSizeOptions.hide()
     }
 });
 
+/**
+ * Unhide the main menu card and hide the package size options when the user clicks the cancel button
+ * @returns {void}
+ */
+function selectPackageSizeCancelBtn() {
+    mainMenuCard.show();
+    mainMenuCard.removeClass("transition-transform translate-y-full");
+    packageSizeOptions.hide();
+}
 
+// Hide the payment methods and show confirmation card when the user clicks the next button
 paymentMethodNextBtn.click(() => {
     if (!sessionStorage.getItem("paymentMethod")) {
         alert("Please select a payment method")
@@ -94,6 +104,16 @@ paymentMethodNextBtn.click(() => {
     }
 });
 
-
-
-
+/**
+ * Unhide the package size options and hide the payment methods when the user clicks the cancel button
+ * @returns {void}
+ */
+function selectPaymentCancelBtn() {
+    paymentMethods.addClass("transition transform translate-x-full");
+    setTimeout(() => {
+        paymentMethods.hide()
+        sessionStorage.removeItem("paymentMethod")
+        packageSizeOptions.removeClass("transition-transform -translate-x-full")
+        packageSizeOptions.show()
+    }, 150);
+}
