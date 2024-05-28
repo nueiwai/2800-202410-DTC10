@@ -1,0 +1,29 @@
+<div id="availableRoutes" class="hidden">
+  <!-- drawer component -->
+  <p class="font-bold text-center py-2">Available Routes</p>
+
+  <div id="availableRoutesContainer" class="grid grid-cols-1 grid-rows-3 gap-4 p-4">
+    <button class="flex container gap-6 py-2 px-4 rounded-lg bg-buttonBg focus:ring-2 ring-white">
+      <div class="flex items-center m-2 w-[48px] h-[48px] max-w-[48px] max-h-[48px] justify-start">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-users" width="36" height="36" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
+          <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+          <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+          <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" />
+        </svg>
+      </div>
+      <div class="flex container flex-col gap-2">
+        <div class="font-medium text-center text-white">Estimated Duration:</div>
+        <div id="estimatedDurationShare" class="font-medium text-center text-white"></div>
+      </div>
+      <div class="font-medium text-center text-white">$ <span id="priceShare">0</span></div>
+    </button>
+    <div class="flex justify-center">
+      <div class="flex space-x-2 w-64">
+        <button id="availableRoutesCancel" class="bg-white text-black py-2 px-4 rounded-lg text-lg flex-1" onclick="availableRoutesCancel()">Cancel</button>
+        <button id="availableRoutesNext" class="bg-black text-white py-2 px-4 rounded-lg text-lg flex-1" onclick="availableRoutesNext()">Next</button>
+      </div>
+    </div>
+  </div>
+</div>

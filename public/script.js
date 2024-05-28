@@ -9,7 +9,7 @@ let selectSizeNextBtn = $("#selectSizeNextBtn")
 let paymentMethods = $("#paymentMethods")
 let paymentMethodNextBtn = $("#paymentMethodNextBtn")
 let confirmationMenuContainer = $("#confirmationCard")
-let cardContainer = $("#availableCards")
+let availableSharedRoutes = $("#availableRoutes")
 
 /**
  * Clear session storage
@@ -77,14 +77,24 @@ selectSizeNextBtn.click(() => {
         alert("Please select a package size")
         return
     } else {
-        packageSizeOptions.addClass("transition-transform -translate-x-full")
+        if (sessionStorage.getItem("feature") === "direct") {
+            packageSizeOptions.addClass("transition-transform -translate-x-full")
 
-        setTimeout(() => {
-            getCardsAndAppendToModal()
-            paymentMethods.show()
-        }, 150);
+            setTimeout(() => {
+                getCardsAndAppendToModal()
+                paymentMethods.show()
+            }, 150);
 
-        packageSizeOptions.hide()
+            packageSizeOptions.hide()
+        } else if (sessionStorage.getItem("feature") === "share") {
+            packageSizeOptions.addClass("transition-transform -translate-x-full")
+
+            setTimeout(() => {
+                availableSharedRoutes.show()
+            }, 150);
+
+            packageSizeOptions.hide()
+        }
     }
 });
 

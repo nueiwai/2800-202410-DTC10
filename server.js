@@ -89,11 +89,6 @@ app.get('/login', (req, res) => {
   res.render("login")
 })
 
-// Package size route
-app.get('/packagesize', (req, res) => {
-  res.render("packagesize")
-})
-
 // Available route route
 app.get('/availableroute', (req, res) => {
   res.render("availableroute")
@@ -104,10 +99,6 @@ app.get('/availablebattery', (req, res) => {
   res.render("availablebattery")
 })
 
-// Select payment route
-app.get('/selectpayment', (req, res) => {
-  res.render("selectpayment")
-})
 
 // Confirmation route
 app.get('/confirmation', (req, res) => {
@@ -397,9 +388,6 @@ app.post('/changePassword', async (req, res) => {
 }
 )
 
-//
-//ToDo: Add 404 route
-
 // Weather API
 app.get('/weather', (req, res) => {
   const cityName = req.query.cityName;
@@ -412,5 +400,18 @@ app.get('/weather', (req, res) => {
     .catch(error => {
       console.error('API request failed', error);
       res.status(500).send('Failed to fetch weather data');
+    });
+});
+
+// Get available routes
+app.post('/getAvailableRoutes', async (req, res) => {
+  let destinationPoint = req.body.destinationPoint;
+  url = `https://api.mapbox.com/v4/mapbox.mapbox-streets-v8/tilequery/${destinationPoint[0]},${destinationPoint[1]}.json?radius=500&limit=10&access_token=${mapbox_token}`
+  fetch(url)
+    .then(response => response.json())
+    .then(data => res.send(data))
+    .catch(error => {
+      console.error('API request failed', error);
+      res.status(500).send('Failed to fetch available routes');
     });
 });

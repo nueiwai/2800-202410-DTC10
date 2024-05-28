@@ -130,6 +130,7 @@
 
     // Check if start and end locations are defined, then plot the points
     if (startLocation && endLocation) {
+      window.destination = endLocation;
       plotPoints(startLocation, endLocation);
       setTimeout(() => {
         map.flyTo({
