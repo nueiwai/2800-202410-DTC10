@@ -66,5 +66,40 @@ paymentMethodNextBtn.click(() => {
     confirmationMenuContainer.addClass("transition-transform -translate-x-0")
 })
 
+  function validateForm(event) {
+    event.preventDefault();
+
+    const specialCharacters = /[!@#$%^&*(),.?":{}|<>]/g;
+    const errorMessageElement = document.getElementById('error-message');
+
+    const username = document.querySelector('input[name="username"]') ? document.querySelector('input[name="username"]').value : null;
+    const name = document.querySelector('input[name="name"]') ? document.querySelector('input[name="name"]').value : null;
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirm-password') ? document.getElementById('confirm-password').value : null;
+
+    let errorMessage = '';
+
+    if (username && specialCharacters.test(username)) {
+      errorMessage = 'Special characters are not allowed in Username.';
+    } else if (name && specialCharacters.test(name)) {
+      errorMessage = 'Special characters are not allowed in First Name.';
+    } else if (specialCharacters.test(password)) {
+      errorMessage = 'Special characters are not allowed in Password.';
+    } else if (confirmPassword && specialCharacters.test(confirmPassword)) {
+      errorMessage = 'Special characters are not allowed in Confirm Password.';
+    } else if (confirmPassword && password !== confirmPassword) {
+      errorMessage = 'Passwords do not match.';
+    }
+
+    if (errorMessage) {
+      errorMessageElement.textContent = errorMessage;
+      return false;
+    } else {
+      errorMessageElement.textContent = '';
+      event.target.submit();
+    }
+  }
+
+
 
 
