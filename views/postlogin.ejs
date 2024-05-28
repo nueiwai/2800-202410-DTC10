@@ -5,7 +5,7 @@
 <%- include("templates/bottom_main_menu") %>
 
 <script>
-  window.cardData = <%- cards %>;
+  window.cardData = JSON.parse(`<%- cards %>`);
 </script>
 
 <%- include("templates/map_footer") %>
