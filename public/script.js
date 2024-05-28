@@ -70,8 +70,10 @@ paymentMethodNextBtn.click(() => {
         confirmationMenuContainer.removeClass("transform translate-x-full")
     }, 150);
 
+    appendAddresses();
     confirmationMenuContainer.addClass("transition-transform -translate-x-0")
 })
+
 
 
 
