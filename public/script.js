@@ -71,6 +71,7 @@ paymentMethodNextBtn.click(() => {
     }, 150);
 
     appendAddresses();
+    formatTime();
     confirmationMenuContainer.addClass("transition-transform -translate-x-0")
 })
 

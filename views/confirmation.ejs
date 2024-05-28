@@ -27,7 +27,7 @@
     <div class="flex container items-center justify-between">
       <p class="flex w-[70%] font-medium p-4 py-2 text-darkestShade text-xl">Your delivery is arriving in:</p>
       <div class="flex w-[40%] items-center m-2 ">
-        <p id="estimatedTime" class="py-2 px-4 text-sm font-medium text-center text-white bg-darkestShade rounded-2xl">0</p>
+        <p id="estimatedTime" class="py-2 px-4 text-sm font-medium text-center text-white bg-darkestShade rounded-2xl">0 secs</p>
       </div>
 
     </div>
@@ -43,13 +43,15 @@
       </div>
       <div class="p-1">
         <div>
-          <div class="flex items-center m-2">
-            <p class="w-full py-2 px-2 text-sm text-center text-white bg-buttonBg border-buttonBg rounded-2xl">From: 123 Road</p>
+          <div class="flex flex-col container m-2">
+            <p class="flex mb-2 w-full text-lg font-semibold text-center text-darkestShade">Starting address:</p>
+            <p id="startAddress" class="w-full py-2 px-2 text-sm text-center text-white bg-buttonBg border-buttonBg rounded-2xl">From: 123 Road</p>
           </div>
         </div>
         <div>
-          <div class="flex items-center m-2">
-            <p class="w-full py-2 px-2 text-sm text-center text-white bg-buttonBg border-buttonBg rounded-2xl">To: 345 Road</p>
+          <div class="flex flex-col container m-2">
+            <p class="flex mb-2 w-full text-lg font-semibold text-center text-darkestShade">Destination address:</p>
+            <p id="endAddress" class="w-full py-2 px-2 text-sm text-center text-white bg-buttonBg border-buttonBg rounded-2xl">To: 345 Road</p>
           </div>
         </div>
       </div>

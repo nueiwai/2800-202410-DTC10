@@ -20,6 +20,6 @@ async function calculateDistance(start, end) {
  */
 async function calculateTime() {
   var distance = sessionStorage.getItem("distance");
-  var time = distance / (55 / 60);
+  var time = distance / (55 / 3600);
   sessionStorage.setItem("estimatedDuration", time);
 }

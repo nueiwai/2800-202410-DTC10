@@ -79,3 +79,14 @@ function isLocationEmpty() {
   }
   return true;
 }
+
+/**
+ * Function to append the starting and ending addresses to the confirmation modal
+ * @returns {void}
+ */
+function appendAddresses() {
+  let startAddress = sessionStorage.getItem('startAddress');
+  let endAddress = sessionStorage.getItem('endAddress');
+  document.getElementById('startAddress').textContent = startAddress;
+  document.getElementById('endAddress').textContent = endAddress;
+}
