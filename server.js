@@ -14,6 +14,7 @@ const mongoose = require('mongoose');
 const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const multer = require('multer');
+const Joi = require('joi');
 
 /* secret information section */
 const mongodb_host = process.env.MONGODB_HOST;
@@ -72,6 +73,15 @@ app.use(session({
   unset: 'destroy',
   cookie: { secure: false, maxAge: 3600000 }
 }))
+
+// Joi schema
+const userSchema = Joi.object({
+  username: Joi.string().trim().required(),
+  phonenumber: Joi.string().pattern(/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/),
+  street: Joi.string().trim().regex(/^[a-zA-Z0-9\s]*$/),
+  city: Joi.string().trim().regex(/^[a-zA-Z0-9\s]*$/),
+  postal: Joi.string().trim().pattern(/^[A-Za-z0-9]{3}\s[A-Za-z0-9]{3}$/)
+});
 
 // Start application
 app.listen(port, () => {
@@ -172,10 +182,11 @@ app.post('/upload_profile_image', parser.single('image'), async (req, res) => {
 
 // Profile Edit route
 app.get('/profile_edit', async (req, res) => {
+  console.log('Received data:', req.body);
 
-  const userID = req.session.userid;  // get user ID from session
+  const userID = req.session.userid;
   try {
-    const user = await userModel.findById(userID);  // check the user information based on the user ID
+    const user = await userModel.findById(userID);
     res.render("profile_edit", { user: user });
   } catch (error) {
     console.error("Failed to fetch user profile:", error);
@@ -184,22 +195,40 @@ app.get('/profile_edit', async (req, res) => {
 })
 
 app.post('/profile_edit', async (req, res) => {
-  const { username, email, phonenumber, street, city, postal } = req.body;
+  const data = req.body;
+  delete data.email;
+  console.log('Received data:', req.body);
+  const { error, value } = userSchema.validate(req.body, { abortEarly: false });
+
+  if (error) {
+    console.error("Validation Error:", error.details);
+    return res.status(400).json({
+      success: false,
+      message: error.details.map(detail => detail.message).join(", ")
+    });
+  }
+
+  // update user profile after validation
+  const { username, phonenumber, street, city, postal } = value;
   const userID = req.session.userid;
-  console.log("User ID:", userID)
 
   try {
-    await userModel.findByIdAndUpdate(userID, {
+    const updatedUser = await userModel.findByIdAndUpdate(userID, {
       username,
       phonenumber,
       street,
       city,
       postal
-    });
-    res.json({ success: true });
+    }, { new: true, runValidators: true });
+
+    if (!updatedUser) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    res.json({ success: true, message: 'Profile updated successfully', user: updatedUser });
   } catch (error) {
     console.error("Failed to update user profile:", error);
-    res.json({ success: false, error: error.message });
+    res.status(500).json({ success: false, error: error.message });
   }
 });
 
