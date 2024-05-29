@@ -63,7 +63,14 @@
       <button id="savePaymentBtn"
         class="w-28 py-2 px-8 mt-2 mx-2 text-md font-medium text-center text-white bg-red-600 rounded-xl hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Save</button>
     </div>
+
+    <br>
+    <div id="error-message" class="font-bold text-red-500 mb-4 text-center"></div>
+
+    <div id="error-message" class="text-red-500 mb-4 text-center"></div>
   </div>
+
+
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -135,6 +142,26 @@
 
         console.log(paymentInfo);
 
+        const errorMessageElement = document.getElementById('error-message');
+        let errorMessage = '';
+
+        if (!paymentInfo.cardType) {
+          errorMessage = 'Card Type is required.';
+        } else if (paymentInfo.cardNumber.length < 16) {
+          errorMessage = 'Card Number must be 16 digits.';
+        } else if (paymentInfo.cvv.length < 3) {
+          errorMessage = 'CVV must be 3 digits.';
+        } else if (!/^\d{2}\/\d{2}$/.test(paymentInfo.expiryDate)) {
+          errorMessage = 'Expiry Date must be in MM/YY format.';
+        }
+
+        if (errorMessage) {
+          errorMessageElement.textContent = errorMessage;
+          return;
+        } else {
+          errorMessageElement.textContent = '';
+        }
+
         try {
           const response = await fetch("/payment_edit", {
             method: "POST",
@@ -158,7 +185,6 @@
         }
       });
     });
-
   </script>
 
   <%- include('templates/footer') %>
