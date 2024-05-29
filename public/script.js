@@ -74,15 +74,23 @@ confirmLocationBtn.click(() => {
         if (sessionStorage.getItem("feature") === "direct") {
             setTimeout(() => {
                 // Show packageSizeOptions
-                packageSizeOptions.show()
-                packageSizeOptions.addClass("transition ease-out duration-300 transform translate-x-0")
-            }, 300);
+                drawRoute().then(() => {
+                    calculateDistance(startLocation, endLocation);
+                    getConfirmationAddress();
+                    packageSizeOptions.show()
+                    packageSizeOptions.addClass("transition ease-out duration-300 transform translate-x-0")
+                }, 300);
+            });
 
         } else if (sessionStorage.getItem("feature") === "share") {
             // Show availableSharedRoutes
             setTimeout(() => {
-                availableSharedRoutes.show()
-                availableSharedRoutes.addClass("transition ease-out duration-300 transform translate-x-0")
+                fetchAvailableSharedRoutes().then(() => {
+                    calculateDistance(startLocation, endLocation);
+                    getConfirmationAddress();
+                    availableSharedRoutes.show()
+                    availableSharedRoutes.addClass("transition ease-out duration-300 transform translate-x-0")
+                });
             }, 300);
         }
     }

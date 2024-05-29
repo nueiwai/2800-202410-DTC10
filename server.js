@@ -400,8 +400,8 @@ app.get('/weather', (req, res) => {
 
 // Get available routes
 app.post('/getAvailableRoutes', async (req, res) => {
-  let destinationPoint = req.body.destinationPoint;
-  url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${destinationPoint[0]},${destinationPoint[1]}.json?types=poi&limit=3&access_token=${mapbox_token}`;
+  let destinationPoint = req.body.locationEnd;
+  url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${destinationPoint[0]},${destinationPoint[1]}.json?types=poi&country=ca&limit=3&access_token=${mapbox_token}&bbox=-123.246%2C49.1666%2C-122.9086%2C49.32`;
   fetch(url)
     .then(response => response.json())
     .then(data => res.send(data))

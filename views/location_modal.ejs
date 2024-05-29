@@ -68,13 +68,19 @@
 </div>
 
 <script>
-  let confirmBtn = document.getElementById('confirmBtn');
-  if (confirmBtn) {
-    confirmBtn.addEventListener('click', function() {
-      drawRoute().then(() => {
-        calculateDistance(startLocation, endLocation);
-        getConfirmationAddress();
-      });
-    });
-  };
+  document.getElementById('confirmBtn').addEventListener('click', function() {
+    if (document.querySelector('.start-geocoder>.mapboxgl-ctrl-geocoder>.mapboxgl-ctrl-geocoder--input').value.trim() === 'Your Location') {
+      let manualStartLocationStr = document.querySelector('#current-starting-location').value;
+      let manualStartLocationArr = manualStartLocationStr.split(',');
+      window.manualStartLocation = [parseFloat(manualStartLocationArr[0]), parseFloat(manualStartLocationArr[1])]
+    };
+
+    if (document.querySelector('.end-geocoder>.mapboxgl-ctrl-geocoder>.mapboxgl-ctrl-geocoder--input').value.trim() === 'Your Location') {
+      let manualEndLocationStr = document.querySelector('#current-destination').value;
+      let manualEndLocationArr = manualEndLocationStr.split(',');
+      window.manualEndLocation = [parseFloat(manualEndLocationArr[0]), parseFloat(manualEndLocationArr[1])]
+    };
+
+    setVariables();
+  });
 </script>
