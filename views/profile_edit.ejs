@@ -83,6 +83,8 @@
         class="w-28 py-2 px-8 mx-2 text-md font-medium text-center text-white bg-red-600 rounded-xl hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300">Save</button>
     </div>
 
+    <br>
+    <div id="error-message" class="text-red-500 mb-4 text-center"></div>
   </div>
 
   <script>
@@ -143,6 +145,27 @@
 
         console.log(userInfo);
 
+        const errorMessageElement = document.getElementById('error-message');
+        const successMessageElement = document.getElementById('success-message');
+        let errorMessage = '';
+
+        // Validate input fields
+        if (!userInfo.username) {
+          errorMessage = 'Username is required.';
+        } else if (userInfo.phonenumber && !/^\d{3}-\d{3}-\d{4}$/.test(userInfo.phonenumber)) {
+          errorMessage = 'Phone number must be in the format 123-456-7890.';
+        } else if (userInfo.postal && !/^\w{3} \w{3}$/.test(userInfo.postal)) {
+          errorMessage = 'Postal Code must be in the format A1A 1A1.';
+        }
+
+        if (errorMessage) {
+          errorMessageElement.textContent = errorMessage;
+          successMessageElement.textContent = '';
+          return;
+        } else {
+          errorMessageElement.textContent = '';
+        }
+
         try {
           const response = await fetch("/profile_edit", {
             method: "POST",
@@ -166,7 +189,6 @@
         }
       });
     });
-
   </script>
 
   <%- include('templates/footer') %>
