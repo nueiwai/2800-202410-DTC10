@@ -83,20 +83,18 @@ confirmLocationBtn.click(() => {
             });
 
         } else if (sessionStorage.getItem("feature") === "share") {
-            // Show availableSharedRoutes
             setTimeout(() => {
-                fetchAvailableSharedRoutes().then(() => {
-                    drawSharedRoute().then(() => {
-                        getConfirmationAddress();
-                        appendSharedRoutesInfo().then(() => {
-                            calculateDistanceAndTimeForDroneShare();
-                            displayTimeRoutes()
-                            availableSharedRoutes.show();
-                            availableSharedRoutes.addClass("transition ease-out duration-300 transform translate-x-0")
-                        });
-                    });
+                async function waitForFunctions() {
+                    await Promise.all([fetchAvailableSharedRoutes(), drawSharedRoute(), appendSharedRoutesInfo(), calculateDistanceAndTimeForDroneShare()]);
+                }
+                waitForFunctions().then(() => {
+                    getConfirmationAddress();
+                    displayTimeRoutes()
+                    availableSharedRoutes.show();
+                    availableSharedRoutes.addClass("transition ease-out duration-300 transform translate-x-0")
                 });
             }, 300);
+            // }
         }
     }
 });
@@ -114,12 +112,17 @@ function availableSharedRoutesCancel() {
  * @returns {void}
  */
 function availableSharedRoutesNext() {
-    setTimeout(() => {
-        availableSharedRoutes.addClass("transition ease-in duration-300 transform translate-x-0")
-        availableSharedRoutes.hide()
-        packageSizeOptions.show()
-        packageSizeOptions.addClass("transition ease-out duration-300 transform translate-x-0")
-    }, 600);
+    if (!sessionStorage.getItem("selectedRoute")) {
+        alert("Please select the route")
+        return
+    } else {
+        setTimeout(() => {
+            availableSharedRoutes.addClass("transition ease-in duration-300 transform translate-x-0")
+            availableSharedRoutes.hide()
+            packageSizeOptions.show()
+            packageSizeOptions.addClass("transition ease-out duration-300 transform translate-x-0")
+        }, 600);
+    }
 }
 
 // Hide the package size options and show the payment methods when the user clicks the next button

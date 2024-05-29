@@ -27,7 +27,7 @@ async function calculateTime() {
 
 /**
  * Calculate distance and duration for shared route
- * 
+ * @return {void}
  */
 async function calculateDistanceAndTimeForDroneShare() {
   let pointsAlongRoute = await getCoordinatesFromNearByDestinations();
@@ -39,4 +39,6 @@ async function calculateDistanceAndTimeForDroneShare() {
 
   const duration = length * 3600 / 50; // slowed speed for more load in seconds
   sessionStorage.setItem('estimatedDuration', duration);
+
+  calculateSharedPrices(length, pointsAlongRouteOrdered.length - 2);
 }

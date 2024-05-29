@@ -19,7 +19,7 @@ pkgButtons.forEach(button => button.addEventListener("click", function (e) {
 function formatTime() {
   const estimatedTime = sessionStorage.getItem("estimatedDuration");
   let totalSeconds = parseInt(estimatedTime, 10); // Parse time string to number
-
+  console.log(totalSeconds);
   if (isNaN(totalSeconds) || totalSeconds < 0) {
     return "Invalid input"; // Handle invalid or negative values
   }

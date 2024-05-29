@@ -1,3 +1,7 @@
+/**
+ * Get cards from the database and append them to the modal
+ * @returns {void}
+ */
 function getCardsAndAppendToModal() {
   let cards = window.cardData;
   cardContainerHTML = ""

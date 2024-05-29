@@ -319,12 +319,12 @@ async function appendSharedRoutesInfo() {
 
   if (sharedRoutes.length < 1) {
     console.log('No shared routes available');
-    sharedRoutesCard.innerHTML = '<p class="text-center font-semibold">No shared routes available</p>';
+    sharedRoutesCard.innerHTML = '<p class="text-center text-4xl font-semibold">No shared routes available</p>';
     return;
   } else {
     let sharedRouteCount = sharedRoutes.length;
-    sharedRouteOption.innerHTML = `
-    <button id="sharedRoute-${sharedRouteCount}routes" class="flex container gap-6 py-2 px-4 rounded-lg bg-buttonBg focus:ring-2 ring-white">
+    let availableRouteCard = `
+    <button id="sharedRoute-${sharedRouteCount}-routes" class="available-route flex container gap-6 py-2 px-4 rounded-lg bg-buttonBg focus:ring-2 ring-white">
       <div class="flex items-center m-2 w-[48px] h-[48px] max-w-[48px] max-h-[48px] justify-start" >
         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-users" width="36" height="36" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
           <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -337,12 +337,18 @@ async function appendSharedRoutesInfo() {
       <div class="flex container flex-col gap-2">
         <div>
           <div class="font-medium text-center text-white">Estimated Duration:</div>
-          <div id="estimatedDurationShare" class="font-medium text-center text-white"></div>
+          <span id="estimatedDurationShare" class="font-semibold text-lg text-center text-white"></span>
         </div>
         <div>
-          <div class="font-medium text-center text-white">Number of Stops:</div>
-          <div class="font-medium text-center text-white">${sharedRouteCount + 1}</div>
+          <div class="font-medium text-center text-white">Number of Drop-offs:<span class="font-semibold text-lg text-center"> ${sharedRouteCount + 1}</span></div>
       </div>
     </button > `
+    sharedRouteOption.innerHTML = availableRouteCard;
   };
+
+  const availableRouteButton = document.querySelectorAll('.available-route');
+  availableRouteButton.forEach(button => button.addEventListener('click', function (e) {
+    console.log('Selected route:', e.currentTarget.id);
+    sessionStorage.setItem('selectedRoute', e.currentTarget.id);
+  }));
 }
