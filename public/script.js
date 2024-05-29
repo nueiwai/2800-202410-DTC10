@@ -88,9 +88,12 @@ confirmLocationBtn.click(() => {
                 fetchAvailableSharedRoutes().then(() => {
                     drawSharedRoute().then(() => {
                         getConfirmationAddress();
-                        appendSharedRoutesInfo();
-                        availableSharedRoutes.show()
-                        availableSharedRoutes.addClass("transition ease-out duration-300 transform translate-x-0")
+                        appendSharedRoutesInfo().then(() => {
+                            calculateDistanceAndTimeForDroneShare();
+                            displayTimeRoutes()
+                            availableSharedRoutes.show();
+                            availableSharedRoutes.addClass("transition ease-out duration-300 transform translate-x-0")
+                        });
                     });
                 });
             }, 300);
@@ -166,7 +169,7 @@ paymentMethodNextBtn.click(() => {
         }, 300);
 
         appendAddresses();
-        formatTime();
+        displayTimeConfirm();
         setTimeout(() => {
             confirmationMenuContainer.show()
             confirmationMenuContainer.addClass("transition ease-out duration-300 transform translate-x-0")

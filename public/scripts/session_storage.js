@@ -13,7 +13,7 @@ pkgButtons.forEach(button => button.addEventListener("click", function (e) {
 }));
 
 /**
- * Format the estimated time and display it in the confirmation modal
+ * Format the estimated time in readable format
  * @returns {void}
  */
 function formatTime() {
@@ -38,6 +38,25 @@ function formatTime() {
   }
   formattedTime += `${remainingSeconds} second${remainingSeconds > 1 ? "s" : ""}`;
 
-  let timeContainer = document.getElementById("estimatedTime");
-  timeContainer.textContent = formattedTime.trim();// Remove any trailing spaces
+  return formattedTime;
+}
+
+/**
+ * Display the estimated time in the confirmation modal
+ * @returns {void}
+ */
+function displayTimeConfirm() {
+  const time = formatTime();
+  const timeElement = document.querySelector("#estimatedTime");
+  timeElement.textContent = time;
+}
+
+/**
+ * Display the estimated time in the available routes card
+ * @returns {void}
+ */
+function displayTimeRoutes() {
+  const time = formatTime();
+  const timeElement = document.querySelector("#estimatedDurationShare");
+  timeElement.textContent = time;
 }

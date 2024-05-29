@@ -30,6 +30,7 @@ function setVariables() {
   console.log('Destination location:', locationEnd)
 }
 
+
 /**
  * Fetch available shared routes from the server
  * @returns {Promise<Object>} Reformatted Mapbox response
@@ -48,14 +49,15 @@ async function fetchAvailableSharedRoutes() {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-
     const data = await response.json();
+    console.log('Data from server:', data);
     const reformattedMapboxResponse = reformatMapboxResponse(data);
     return reformattedMapboxResponse;
   } catch (error) {
     console.error('Error fetching routes:', error);
   }
 }
+
 
 /**
  * Reformat the response from Mapbox API to the required structure
@@ -83,16 +85,15 @@ function reformatMapboxResponse(response) {
 
   // Mark the available shared routes on the map
   markAvailableSharedRoutesOnMap(reformattedResponse);
-
   return reformattedResponse; // Return the reformatted response
 }
+
 
 /**
  * Mark starting location on the map
  * @returns {void}
  */
 function markStartingLocationOnMap(locationStart) {
-
   // Add a marker for the starting location
   const marker = new mapboxgl.Marker(
     {
@@ -104,12 +105,12 @@ function markStartingLocationOnMap(locationStart) {
     .addTo(map);
 }
 
+
 /**
  * Mark final destination on the map
  * @returns {void}
  */
 function markDestinationOnMap(locationEnd) {
-
   // Add a marker for the final destination
   const marker = new mapboxgl.Marker(
     {
@@ -120,6 +121,7 @@ function markDestinationOnMap(locationEnd) {
     .setLngLat(locationEnd)
     .addTo(map);
 }
+
 
 /**
  * Mark the available shared routes on the map
@@ -157,6 +159,7 @@ function markAvailableSharedRoutesOnMap(availableRoutes) {
   map.fitBounds(bounds, { padding: 50 });
 }
 
+
 function clearMap() {
   // Remove all markers from the map
   const markers = document.querySelectorAll(".mapboxgl-marker");
@@ -167,17 +170,19 @@ function clearMap() {
 //get coordinates of formatted mapbox response
 async function getCoordinatesFromNearByDestinations() {
   let reformattedMapboxResponse = await fetchAvailableSharedRoutes();
+
+  // Get only the coordinates of the shared routes and add the starting and ending coordinates
   let sharedRouteCoordinates = reformattedMapboxResponse.features.map(feature => feature.geometry.coordinates);
   sharedRouteCoordinates.unshift(locationStart);
   sharedRouteCoordinates.push(locationEnd);
-  console.log('Shared route coordinates after adding:', sharedRouteCoordinates);
   return sharedRouteCoordinates;
 }
 
 
 async function drawSharedRoute() {
   // Get the coordinates of the shared routes
-  const sharedRouteCoordinates = await getCoordinatesFromNearByDestinations();
+  const sharedRouteCoordinatesWithoutOrder = await getCoordinatesFromNearByDestinations();
+  const sharedRouteCoordinates = sortByDistance(sharedRouteCoordinatesWithoutOrder);
 
   if (sharedRouteCoordinates.length > 2) {
     // Draw the route on the map
@@ -191,27 +196,35 @@ async function drawSharedRoute() {
     // Draw the polyline on the map
     drawPolyline(polylineCoordinates);
   }
+}
 
-  function drawPolyline(coordinates) {
-    const polylineGeojson = {
-      type: 'FeatureCollection',
-      features: [{
-        type: 'Feature',
-        geometry: {
-          type: 'LineString',
-          coordinates: coordinates
-        }
-      }]
-    };
+function drawPolyline(coordinates) {
+  const polylineGeojson = {
+    type: 'FeatureCollection',
+    features: [{
+      type: 'Feature',
+      geometry: {
+        type: 'LineString',
+        coordinates: coordinates
+      }
+    }]
+  };
 
-    // Update or add the polyline to the map
-    if (map.getSource('line-polyline')) {
-      map.getSource('line-polyline').setData(polylineGeojson);
-    } else {
-      map.addSource('line-polyline', {
-        type: 'geojson',
-        data: polylineGeojson
-      });
+  // Update or add the polyline to the map
+  if (map.getSource('line-polyline')) {
+    map.getSource('line-polyline').setData(polylineGeojson);
+  } else {
+    map.addSource('line-polyline', {
+      type: 'geojson',
+      data: polylineGeojson
+    });
+
+    map.loadImage('/images/chevrons-right.png', function (error, image) {
+      if (error) throw error;
+
+      // Add the image to your map style
+      map.addImage('chevron', image);
+
       map.addLayer({
         id: 'line-polyline',
         type: 'line',
@@ -221,26 +234,87 @@ async function drawSharedRoute() {
           'line-cap': 'round'
         },
         paint: {
+          'line-pattern': 'chevron',
           'line-color': '#31B6C0',
-          'line-width': 4
+          'line-width': 20
         }
       });
-    }
-    let lengthSharedRoute = turf.length(polylineGeojson, { units: 'kilometers' });
-    console.log('Length of shared route:', lengthSharedRoute);
-    let estimatedDurationSharedRoute = lengthSharedRoute * 60 / 50;
-    console.log('Estimated duration of shared route:', estimatedDurationSharedRoute); // 50 km/h is the average speed of a drone
+      // let lengthSharedRoute = turf.length(polylineGeojson.features.coordinates, { units: 'kilometers' });
+      // console.log('Length of shared route:', lengthSharedRoute);
+      // let estimatedDurationSharedRoute = lengthSharedRoute * 60 / 50;
+      // console.log('Estimated duration of shared route:', estimatedDurationSharedRoute); // 50 km/h is the average speed of a drone
+    })
   }
 }
 
+
+/**
+ * This code snippet is generated by Gemini Advanced
+ * Sort the coordinates by the distance from the first point in the array
+ * @param {Array} coordinates 
+ * @returns {Array} 
+ * @author https://gemini.google.com/
+ */
+function sortByDistance(coordinates) {
+  const origin = coordinates[0]; // First point is the origin
+  const distances = coordinates.map(point =>
+    haversineDistance(origin, point)
+  ); // Calculate distances
+
+  const sortedPoints = coordinates.slice(1) // Remove origin
+    .map((point, i) => ({ point, distance: distances[i + 1] })) // Pair points with distances
+    .sort((a, b) => a.distance - b.distance) // Sort by distance
+    .map(item => item.point); // Extract sorted points
+
+  return [origin, ...sortedPoints]; // Add origin back to the beginning
+}
+
+
+/**
+ * Haversine formula to calculate distance between two [lon, lat] points
+ * This code snippet is generated by Gemini Advanced
+ * @param {Array} coord1 
+ * @param {Array} coord2
+ * @returns {Number} 
+ * @author https://gemini.google.com/
+ */
+function haversineDistance(coords1, coords2) {
+  const R = 6371e3; // Earth radius in meters
+  const φ1 = toRadians(coords1[1]); // Latitude of point 1
+  const φ2 = toRadians(coords2[1]); // Latitude of point 2
+  const Δφ = toRadians(coords2[1] - coords1[1]);
+  const Δλ = toRadians(coords2[0] - coords1[0]);
+
+  const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+    Math.cos(φ1) * Math.cos(φ2) *
+    Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+  const d = R * c;
+  return d;
+}
+
+
+/**
+ * This code snippet is generated by Gemini Advanced
+ * Convert degrees to radians
+ * @param {Number} degrees
+ * @returns {Number} 
+ * @author https://gemini.google.com/
+ */
+function toRadians(degrees) {
+  return degrees * Math.PI / 180;
+}
+
+
 /**
  * Append information into available shared routes card
- * 
+ * @returns {Promise<void>}
  */
-function appendSharedRoutesInfo() {
+async function appendSharedRoutesInfo() {
   let sharedRoutesCard = document.getElementById('availableRoutes');
   let sharedRouteOption = document.getElementById('availableRoutesContainer');
-  let reformattedMapboxResponse = fetchAvailableSharedRoutes();
+  let reformattedMapboxResponse = await fetchAvailableSharedRoutes();
   let sharedRoutes = reformattedMapboxResponse.features;
 
   if (sharedRoutes.length < 1) {
@@ -249,8 +323,9 @@ function appendSharedRoutesInfo() {
     return;
   } else {
     let sharedRouteCount = sharedRoutes.length;
-    sharedRouteOption.innerHTML = `<button class="flex container gap-6 py-2 px-4 rounded-lg bg-buttonBg focus:ring-2 ring-white">
-      < div class="flex items-center m-2 w-[48px] h-[48px] max-w-[48px] max-h-[48px] justify-start" >
+    sharedRouteOption.innerHTML = `
+    <button id="sharedRoute-${sharedRouteCount}routes" class="flex container gap-6 py-2 px-4 rounded-lg bg-buttonBg focus:ring-2 ring-white">
+      <div class="flex items-center m-2 w-[48px] h-[48px] max-w-[48px] max-h-[48px] justify-start" >
         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-users" width="36" height="36" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
           <path stroke="none" d="M0 0h24v24H0z" fill="none" />
           <path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
@@ -260,8 +335,13 @@ function appendSharedRoutesInfo() {
         </svg>
       </div >
       <div class="flex container flex-col gap-2">
-        <div class="font-medium text-center text-white">Estimated Duration:</div>
-        <div id="estimatedDurationShare" class="font-medium text-center text-white"></div>
+        <div>
+          <div class="font-medium text-center text-white">Estimated Duration:</div>
+          <div id="estimatedDurationShare" class="font-medium text-center text-white"></div>
+        </div>
+        <div>
+          <div class="font-medium text-center text-white">Number of Stops:</div>
+          <div class="font-medium text-center text-white">${sharedRouteCount + 1}</div>
       </div>
     </button > `
   };

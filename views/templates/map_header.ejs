@@ -22,12 +22,11 @@
 
   <!-- import turf JS -->
   <script src="https://api.mapbox.com/mapbox.js/plugins/turf/v3.0.11/turf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
 
   <!-- import geocoder plugins for search bar from Mapbox -->
-  <script
-    src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
-  <link rel="stylesheet"
-    href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css">
+  <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
+  <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css">
 
   <script>
     tailwind.config = {
@@ -49,10 +48,10 @@
   </script>
 
   <% if (typeof stations !=='undefined' ) { %>
-    <link rel="stylesheet" href="/styles/battery_stations_map.css">
-    <% } else { %>
-      <link rel="stylesheet" href="/styles/style.css">
-      <% } %>
+  <link rel="stylesheet" href="/styles/battery_stations_map.css">
+  <% } else { %>
+  <link rel="stylesheet" href="/styles/style.css">
+  <% } %>
 </head>
 
 <body>
