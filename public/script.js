@@ -173,8 +173,12 @@ paymentMethodNextBtn.click(() => {
         return
     } else {
         setTimeout(() => {
+            const newMenuHeight = mainMenuDrawer.height() + 60
+            paymentMethods.toggle("hidden")
             paymentMethods.addClass("slide-out-left")
             confirmationCard.addClass("slide-in-left")
+
+            $("#main-menu-drawer").css("height", newMenuHeight)
             // paymentMethods.addClass("transition ease-in duration-300 transform translate-x-0")
             // paymentMethods.hide()
 

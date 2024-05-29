@@ -113,7 +113,8 @@
         </div>
         `
         availableCards.append(element)
-        paymentMethods.removeClass("slide-in-left hidden")
+        paymentMethods.toggleClass("hidden")
+        paymentMethods.removeClass("slide-in-left")
         paymentMethods.addClass("slide-in-left")
       });
       $("#main-menu-drawer").height($("#paymentMethods").height() + 50 + "px")
