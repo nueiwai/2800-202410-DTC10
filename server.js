@@ -398,17 +398,40 @@ app.get('/weather', (req, res) => {
     });
 });
 
-// Get available routes
+// Get available shared routes
 app.post('/getAvailableRoutes', async (req, res) => {
   let destinationPoint = req.body.locationEnd;
-  url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${destinationPoint[0]},${destinationPoint[1]}.json?types=poi&country=ca&limit=3&access_token=${mapbox_token}&bbox=-123.246%2C49.1666%2C-122.9086%2C49.32`;
-  fetch(url)
-    .then(response => response.json())
-    .then(data => res.send(data))
-    .catch(error => {
-      console.error('API request failed', error);
+  const point = [destinationPoint[0], destinationPoint[1]];
+  const tileset = 'mapbox.mapbox-streets-v8'; // Mapbox's default tileset ID
+  const outerRadius = 2000;
+  const innerRadius = 500;
+
+  const outerQuery = `https://api.mapbox.com/v4/${tileset}/tilequery/${point[0]},${point[1]}.json?radius=${outerRadius}&limit=50&access_token=${mapbox_token}`;
+  const innerQuery = `https://api.mapbox.com/v4/${tileset}/tilequery/${point[0]},${point[1]}.json?radius=${innerRadius}&limit=45&access_token=${mapbox_token}`;
+
+  Promise.all([fetch(outerQuery), fetch(innerQuery)])
+    .then(responses => Promise.all(responses.map(response => response.json())))
+    .then(([outerData, innerData]) => {
+      const outerFeatures = outerData.features;
+      const innerFeatures = innerData.features;
+
+      // Create a set of inner feature IDs for quick lookup
+      const innerFeatureIds = new Set(innerFeatures.map(feature => feature.id));
+
+      // Filter out the outer features that are not in the inner features
+      const ringFeatures = outerFeatures.filter(feature => !innerFeatureIds.has(feature.id));
+
+      // Create GeoJSON object
+      const ringGeoJSON = {
+        type: "FeatureCollection",
+        features: ringFeatures
+      };
+
+      res.send(ringGeoJSON);
+    }).catch(error => {
       res.status(500).send('Failed to fetch available routes');
     });
+
 });
 
 // 404 route
