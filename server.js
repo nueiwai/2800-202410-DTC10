@@ -128,25 +128,11 @@ app.get('/login', (req, res) => {
   res.render("login")
 })
 
-// Package size route
-app.get('/packagesize', (req, res) => {
-  res.render("packagesize")
-})
-
 // Available route route
 app.get('/availableroute', (req, res) => {
   res.render("availableroute")
 })
 
-// Available battery route
-app.get('/availablebattery', (req, res) => {
-  res.render("availablebattery")
-})
-
-// Select payment route
-app.get('/selectpayment', (req, res) => {
-  res.render("selectpayment")
-})
 
 // Confirmation route
 app.get('/confirmation', (req, res) => {
@@ -164,9 +150,12 @@ app.get('/resetpassword', (req, res) => {
 })
 
 // Post login route
-app.get('/postlogin', isAuth, (req, res) => {
+app.get('/postlogin', isAuth, async (req, res) => {
+  let userID = req.session.userid
+  let cards = await paymentModel.find({ userId: userID }, { userId: 0, __v: 0 })
+
   if (isAuth) {
-    res.render("postlogin")
+    res.render("postlogin", { cards: JSON.stringify(cards) })
   }
 })
 
@@ -584,6 +573,42 @@ app.get('/weather', (req, res) => {
       console.error('API request failed', error);
       res.status(500).send('Failed to fetch weather data');
     });
+});
+
+// Get available shared routes
+app.post('/getAvailableRoutes', async (req, res) => {
+  let destinationPoint = req.body.locationEnd;
+  const point = [destinationPoint[0], destinationPoint[1]];
+  const tileset = 'mapbox.mapbox-streets-v8'; // Mapbox's default tileset ID
+  const outerRadius = 2000;
+  const innerRadius = 500;
+
+  const outerQuery = `https://api.mapbox.com/v4/${tileset}/tilequery/${point[0]},${point[1]}.json?radius=${outerRadius}&limit=50&access_token=${mapbox_token}`;
+  const innerQuery = `https://api.mapbox.com/v4/${tileset}/tilequery/${point[0]},${point[1]}.json?radius=${innerRadius}&limit=45&access_token=${mapbox_token}`;
+
+  Promise.all([fetch(outerQuery), fetch(innerQuery)])
+    .then(responses => Promise.all(responses.map(response => response.json())))
+    .then(([outerData, innerData]) => {
+      const outerFeatures = outerData.features;
+      const innerFeatures = innerData.features;
+
+      // Create a set of inner feature IDs for quick lookup
+      const innerFeatureIds = new Set(innerFeatures.map(feature => feature.id));
+
+      // Filter out the outer features that are not in the inner features
+      const ringFeatures = outerFeatures.filter(feature => !innerFeatureIds.has(feature.id));
+
+      // Create GeoJSON object
+      const ringGeoJSON = {
+        type: "FeatureCollection",
+        features: ringFeatures
+      };
+
+      res.send(ringGeoJSON);
+    }).catch(error => {
+      res.status(500).send('Failed to fetch available routes');
+    });
+
 });
 
 // 404 route
