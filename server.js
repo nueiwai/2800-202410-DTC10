@@ -115,8 +115,14 @@ app.get('/postlogin', isAuth, async (req, res) => {
   let userID = req.session.userid
   let cards = await paymentModel.find({ userId: userID }, { userId: 0, __v: 0 })
 
+  let battery_stations = await batteryStationModel.find({}, { _id: 0 })
+  let geojsonData = {
+    type: "FeatureCollection",
+    features: battery_stations
+  }
+
   if (isAuth) {
-    res.render("postlogin", { cards: JSON.stringify(cards) })
+    res.render("postlogin", { cards: JSON.stringify(cards), stations: JSON.stringify(geojsonData) })
   }
 })
 
@@ -410,6 +416,19 @@ app.post('/getAvailableRoutes', async (req, res) => {
       res.status(500).send('Failed to fetch available routes');
     });
 });
+
+//  get user payment information
+app.get('/paymentInfo', async (req, res) => {
+  const userID = req.session.userid;  // get user ID from session
+  try {
+    const userPaymentMethods = await paymentModel.find({ userId: userID });
+    res.send(userPaymentMethods);
+  }
+  catch(error){
+    console.log(error)
+  }
+})
+    
 
 // 404 route
 app.get('*', (req, res) => {

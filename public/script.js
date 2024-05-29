@@ -153,13 +153,28 @@ function selectPackageSizeCancel() {
 
 // Hide the payment methods and show confirmation card when the user clicks the next button
 paymentMethodNextBtn.click(() => {
+    // select all divs with class credit-card
+    let selectedPaymentMethod = $("input[name=payment-method]:checked")
+    let confirmationCard = $("#confirmationCard")
+    sessionStorage.setItem("paymentMethod", selectedPaymentMethod)
+
+    //$('input[name=radioName]:checked', '#myForm').val()
+
+    
+    // check which one is checked
+
+    // set session storage for the selected payment method
+
+
     if (!sessionStorage.getItem("paymentMethod")) {
         alert("Please select a payment method")
         return
     } else {
         setTimeout(() => {
-            paymentMethods.addClass("transition ease-in duration-300 transform translate-x-0")
-            paymentMethods.hide()
+            paymentMethods.addClass("slide-out-left")
+            confirmationCard.addClass("slide-in-left")
+            // paymentMethods.addClass("transition ease-in duration-300 transform translate-x-0")
+            // paymentMethods.hide()
 
         }, 300);
 
@@ -195,3 +210,23 @@ function displayAvailableBattery() {
     console.log("show available battery card")
     availableBatteryCard.show()
 }
+
+function toggleBatteryStations() {
+    $(".mapboxgl-canvas-container").children("div").each(async function() {
+        $(this).toggle()
+    })
+    $("#mainMenuCard").addClass("transition-transform -translate-x-full")
+    $("#availableBatteriesCard").addClass("slide-in-left")
+    // console.log($("#availableBatteriesCard").height() + 60)
+    $("#mainMenuCard").css("height", $("#availableBatteriesCard").height())
+}
+
+/**
+ * Toggle visibility of the battery station markers
+ * @returns {void}
+ */
+$(document).ready(async function() {
+    $(".mapboxgl-canvas-container").children("div").each(async function() {
+        $(this).toggle()
+    })
+})
