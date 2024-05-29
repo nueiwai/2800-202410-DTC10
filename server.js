@@ -11,6 +11,10 @@ const cors = require('cors')
 const user = require('./users')
 require('dotenv').config();
 const mongoose = require('mongoose');
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const multer = require('multer');
+const Joi = require('joi');
 
 /* secret information section */
 const mongodb_host = process.env.MONGODB_HOST;
@@ -28,6 +32,23 @@ const db = MongoStore.create({
     secret: mongodb_session_secret
   }
 })
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_CLOUD_KEY,
+  api_secret: process.env.CLOUDINARY_CLOUD_SECRET
+});
+
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'profile_pics',
+    format: async (req, file) => 'png',
+    public_id: (req, file) => 'computed-filename-using-request'
+  },
+});
+
+const parser = multer({ storage: storage });
 
 // Express application setup
 app.set('view engine', 'ejs');
@@ -52,6 +73,24 @@ app.use(session({
   unset: 'destroy',
   cookie: { secure: false, maxAge: 3600000 }
 }))
+
+// profile Joi schema
+const userSchema = Joi.object({
+  username: Joi.string().trim().required(),
+  phonenumber: Joi.string().trim().pattern(/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/),
+  street: Joi.string().trim().regex(/^[a-zA-Z0-9\s]*$/),
+  city: Joi.string().trim().regex(/^[a-zA-Z0-9\s]*$/),
+  postal: Joi.string().trim().pattern(/^[A-Za-z0-9]{3}\s[A-Za-z0-9]{3}$/)
+});
+
+// payment Joi schema
+const cardSchema = Joi.object({
+  cardType: Joi.string().valid('Debit', 'Credit', 'Crypto').required(),
+  cardNumber: Joi.string().trim().pattern(/^(?:\d{4} ){3}\d{4}$/).required(),
+  cvv: Joi.string().trim().pattern(/^\d{3}$/).required(),
+  expiryDate: Joi.string().trim().pattern(/^(0[1-9]|1[0-2])\/(24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|46|47|48|49|50|51|52|53|54|55|56|57|58|59|60|61|62|63|64|65|66|67|68|69|70|71|72|73|74|75|76|77|78|79|80|81|82|83|84|85|86|87|88|89|90|91|92|93|94|95|96|97|98|99)$/).required()
+});
+
 
 const isAuth = async (req, res, next) => {
   const user = await userModel.findOne({ email: req.session.email })
@@ -133,23 +172,43 @@ app.get('/postlogin', isAuth, (req, res) => {
 
 // Account route
 app.get('/account', async (req, res) => {
-  const userID = req.session.userid;  // get user ID from session
-  console.log("User ID:", userID)
+  const userID = req.session.userid;
   try {
-    const user = await userModel.findById(userID);  // check the user information based on the user ID
+    const user = await userModel.findById(userID);
+    if (!user.profileImageUrl) {
+      user.profileImageUrl = 'profile.png';
+    }
     res.render("account", { user: user });
   } catch (error) {
-    console.error("Failed to fetch user name:", error);
-    res.render("account", { user: null, error: 'Fail to get the user name' });
+    console.error("Failed to fetch user profile:", error);
+    res.render("account", { user: null, error: 'Fail to get the user data' });
   }
-})
+});
+
+// Upload profile image route
+app.post('/upload_profile_image', parser.single('image'), async (req, res) => {
+  const userID = req.session.userid;
+  if (!req.file) {
+    return res.status(400).json({ success: false, message: "No image uploaded" });
+  }
+  try {
+    const user = await userModel.findById(userID);
+    user.profileImageUrl = req.file.path;
+    await user.save();
+    res.json({ success: true, message: "File uploaded successfully", url: req.file.path });
+  } catch (error) {
+    console.error('Upload Error:', error);
+    res.status(500).json({ success: false, message: "Failed to process file", error: error.toString() });
+  }
+});
 
 // Profile Edit route
 app.get('/profile_edit', async (req, res) => {
+  console.log('Received data:', req.body);
 
-  const userID = req.session.userid;  // get user ID from session
+  const userID = req.session.userid;
   try {
-    const user = await userModel.findById(userID);  // check the user information based on the user ID
+    const user = await userModel.findById(userID);
     res.render("profile_edit", { user: user });
   } catch (error) {
     console.error("Failed to fetch user profile:", error);
@@ -158,23 +217,67 @@ app.get('/profile_edit', async (req, res) => {
 })
 
 app.post('/profile_edit', async (req, res) => {
-  const { username, email, phonenumber, street, city, postal } = req.body;
+  const data = req.body;
+  delete data.email;
+  console.log('Received data:', req.body);
+  const { error, value } = userSchema.validate(req.body, { abortEarly: false });
+
+  if (error) {
+    const errorDetails = error.details.map(detail => {
+      let message;
+      switch (detail.path[0]) {
+        case 'username':
+          message = 'Username is required and must not contain special characters.';
+          break;
+        case 'phonenumber':
+          message = 'Phone number must be in the format 777-777-7777 and must not contain special characters.';
+          break;
+        case 'street':
+          message = 'Street address must not contain special characters.';
+          break;
+        case 'city':
+          message = 'City name must not contain special characters.';
+          break;
+        case 'postal':
+          message = 'Postal code must be in the format VVV VVV and must not contain special characters.';
+          break;
+        default:
+          message = 'Invalid input data.';
+      }
+      return {
+        field: detail.path[0],
+        message: message
+      };
+    });
+    console.error("Validation Error:", errorDetails);
+    return res.status(400).json({
+      success: false,
+      message: "Invalid input data",
+      errors: errorDetails
+    });
+  }
+
+  // update user profile after validation
+  const { username, phonenumber, street, city, postal } = value;
   const userID = req.session.userid;
-  console.log("User ID:", userID)
 
   try {
-    await userModel.findByIdAndUpdate(userID, {
+    const updatedUser = await userModel.findByIdAndUpdate(userID, {
       username,
-      email,
       phonenumber,
       street,
       city,
       postal
-    });
-    res.json({ success: true });
+    }, { new: true, runValidators: true });
+
+    if (!updatedUser) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    res.json({ success: true, message: 'Profile updated successfully', user: updatedUser });
   } catch (error) {
     console.error("Failed to update user profile:", error);
-    res.json({ success: false, error: error.message });
+    res.status(500).json({ success: false, error: error.message });
   }
 });
 
@@ -193,6 +296,40 @@ app.get('/payment_edit', async (req, res) => {
 app.post('/payment_edit', async (req, res) => {
   const { cardType, cardNumber, cvv, expiryDate } = req.body;
   const userID = req.session.userid;
+
+  const { error } = cardSchema.validate({ cardType, cardNumber, cvv, expiryDate });
+
+  if (error) {
+    const errorDetails = error.details.map(detail => {
+      let message;
+      switch (detail.path[0]) {
+        case 'cardType':
+          message = 'Card type is required and must be one of Debit, Credit, or Crypto.';
+          break;
+        case 'cardNumber':
+          message = 'Card number must be number and in the format 1111 1111 1111 1111.';
+          break;
+        case 'cvv':
+          message = 'CVV must be a 3-digit number.';
+          break;
+        case 'expiryDate':
+          message = 'Expiry date must be in the format MM/YY, where MM is 01-12 and YY is 24-99.';
+          break;
+        default:
+          message = 'Invalid input data.';
+      }
+      return {
+        field: detail.path[0],
+        message: message
+      };
+    });
+    console.error("Validation Error:", errorDetails);
+    return res.status(400).json({
+      success: false,
+      message: "Invalid input data",
+      errors: errorDetails
+    });
+  }
 
   try {
     const newPayment = new paymentModel({
@@ -249,23 +386,63 @@ app.get('/old_payment_edit/:paymentId', async (req, res) => {
 app.post('/update_payment/:paymentId', async (req, res) => {
   const { paymentId } = req.params;
   const { cardType, cardNumber, cvv, expiryDate } = req.body;
-  try {
-    await paymentModel.findByIdAndUpdate(paymentId, {
-      cardType, cardNumber, cvv, expiryDate
+
+  const { error } = cardSchema.validate({ cardType, cardNumber, cvv, expiryDate });
+
+  if (error) {
+    const errorDetails = error.details.map(detail => {
+      let message;
+      switch (detail.path[0]) {
+        case 'cardType':
+          message = 'Card type is required and must be one of Debit, Credit, or Crypto.';
+          break;
+        case 'cardNumber':
+          message = 'Card number must be number and in the format 1111 1111 1111 1111.';
+          break;
+        case 'cvv':
+          message = 'CVV must be a 3-digit number.';
+          break;
+        case 'expiryDate':
+          message = 'Expiry date must be in the format MM/YY, where MM is 01-12 and YY is 24-99.';
+          break;
+        default:
+          message = 'Invalid input data.';
+      }
+      return {
+        field: detail.path[0],
+        message: message
+      };
     });
-    res.redirect('/payment_list');  // redirect to payment list page
+    console.error("Validation Error:", errorDetails);
+    return res.status(400).json({
+      success: false,
+      message: "Invalid input data",
+      errors: errorDetails
+    });
+  }
+
+  try {
+    const updatedPayment = await paymentModel.findByIdAndUpdate(paymentId, {
+      cardType, cardNumber, cvv, expiryDate
+    }, { new: true });
+
+    if (!updatedPayment) {
+      return res.status(404).json({ success: false, message: 'Payment not found' });
+    }
+
+    res.json({ success: true, message: "Payment information updated successfully", payment: updatedPayment });
   } catch (error) {
     console.error("Failed to update payment information:", error);
-    res.status(500).send("Error updating payment information");
+    res.status(500).json({ success: false, message: "Error updating payment information" });
   }
 });
 
 // Payment List route
 app.get('/payment_list', async (req, res) => {
-  const userID = req.session.userid;  // Get user ID from session
+  const userID = req.session.userid;
   try {
-    const user = await userModel.findById(userID);  // Retrieve user information based on the user ID
-    const payments = await paymentModel.find({ userId: userID });  // Retrieve payment information for the user
+    const user = await userModel.findById(userID);
+    const payments = await paymentModel.find({ userId: userID });
     res.render("payment_list", { user: user, payments: payments });
   } catch (error) {
     console.error("Failed to fetch user or payment list:", error);

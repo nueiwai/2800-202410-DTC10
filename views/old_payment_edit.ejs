@@ -1,4 +1,4 @@
-<%- include('templates/map_header') %>
+<%- include('templates/header') %>
 
   <!-- the account icon to the right of the search bar -->
   <div class="account-icon">
@@ -6,19 +6,23 @@
       <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="44" height="44" viewBox="0 0 64 64" id="Account">
         <path
           d="M32,2A30.034,30.034,0,0,0,2,32a29.6307,29.6307,0,0,0,1.1387,8.1758,1,1,0,1,0,1.9218-.5518A27.64,27.64,0,0,1,4,32a28,28,0,0,1,56,0,27.64,27.64,0,0,1-1.06,7.624,1,1,0,1,0,1.9218.5518A29.6307,29.6307,0,0,0,62,32,30.034,30.034,0,0,0,32,2Z"
-          fill="#cbcbcb" class="color000000 svgShape"></path>
+          fill="#074464" class="color000000 svgShape"></path>
         <path
           d="M37.8383,35.5991a13,13,0,1,0-11.6766,0,28.89,28.89,0,0,0-16.5474,9.97,5.0514,5.0514,0,0,0,.1484,6.564,29.9923,29.9923,0,0,0,44.4746,0,5.0514,5.0514,0,0,0,.1484-6.564A28.89,28.89,0,0,0,37.8383,35.5991Z"
-          fill="#cbcbcb" class="color000000 svgShape"></path>
+          fill="#074464" class="color000000 svgShape"></path>
       </svg>
     </a>
   </div>
+
+  <h1
+    style="text-align: center; margin: 20px 0; position: absolute; left: 50%; transform: translateX(-50%); z-index: 1; color: black; font-size:xx-large; font-weight:800; font-family: 'Poetsen One', sans-serif; letter-spacing: 2px;">
+    Dronify</h1>
 
   <!-- the home icon to the left of the search bar -->
   <div class="home-icon">
     <a href="/postlogin">
       <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="44" height="44" viewBox="0 0 48 48"
-        style="fill:#cbcbcb;">
+        style="fill:#074464;">
         <path
           d="M39.5,43h-9c-1.381,0-2.5-1.119-2.5-2.5v-9c0-1.105-0.895-2-2-2h-4c-1.105,0-2,0.895-2,2v9c0,1.381-1.119,2.5-2.5,2.5h-9	C7.119,43,6,41.881,6,40.5V21.413c0-2.299,1.054-4.471,2.859-5.893L23.071,4.321c0.545-0.428,1.313-0.428,1.857,0L39.142,15.52	C40.947,16.942,42,19.113,42,21.411V40.5C42,41.881,40.881,43,39.5,43z">
         </path>
@@ -29,67 +33,130 @@
   <div class="w-full bg-cardBg h-full fixed bottom-0 left-1/2 transform -translate-x-1/2 pt-56">
 
     <div class="flex flex-col items-center" style="transform: translateY(-80px)">
-      <img class="w-40 h-40 mb-3 rounded-full shadow-lg" src="/profile.png" alt="Profile image" />
-      <div class="flex items-center">
-        <h5 class="m-4 text-xl font-medium text-gray-900 dark:text-white">
-          <%= user && user.name ? user.name : 'Unknown User' %>
-        </h5>
-      </div>
+      <img class="w-40 h-40 mb-3 rounded-full shadow-lg"
+        src="<%= user.profileImageUrl ? user.profileImageUrl : 'profile.png' %>" alt="Profile image" />
 
       <form id="paymentForm" class="flex flex-col items-center space-y-6 mt-6">
-        <input type="text" id="cardType" name="cardType" value="<%= payment.cardType %>"
-          class="w-3/4 py-2 px-6 text-sm font-medium text-center text-gray-900 bg-white border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
-          placeholder="Card Type">
+        <select id="cardType" name="cardType"
+          class="w-11/12 py-2 px-3 text-sm font-medium text-center bg-white border border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300">
+          <option value="Debit" <%=payment.cardType==='Debit' ? 'selected' : '' %>>Debit</option>
+          <option value="Credit" <%=payment.cardType==='Credit' ? 'selected' : '' %>>Credit</option>
+          <option value="Crypto" <%=payment.cardType==='Crypto' ? 'selected' : '' %>>Crypto</option>
+        </select>
         <input type="text" id="cardNumber" name="cardNumber" value="<%= payment.cardNumber %>"
-          class="w-3/4 py-2 px-6 text-sm font-medium text-center text-gray-900 bg-white border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
-          placeholder="Card Number">
+          class="w-11/12 py-2 px-6 text-sm font-medium text-center text-gray-900 bg-white border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
+          placeholder="Card Number *">
         <input type="text" id="cvv" name="cvv" value="<%= payment.cvv %>"
-          class="w-3/4 py-2 px-6 text-sm font-medium text-center text-gray-900 bg-white border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
-          placeholder="CVV">
+          class="w-11/12 py-2 px-6 text-sm font-medium text-center text-gray-900 bg-white border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
+          placeholder="CVV *">
         <input type="text" id="expiryDate" name="expiryDate" value="<%= payment.expiryDate %>"
-          class="w-3/4 py-2 px-6 text-sm font-medium text-center text-gray-900 bg-white border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
-          placeholder="Expiry Date">
+          class="w-11/12 py-2 px-6 text-sm font-medium text-center text-gray-900 bg-white border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
+          placeholder="Expiry Date *   MM/YY">
       </form>
     </div>
 
     <div class="flex justify-center mt-[-50px]">
-      <button id="savePaymentBtn" onclick="window.location.href='/payment_list'"
-        class="py-2 px-8 mt-2 mx-4 text-md font-medium text-center text-white bg-red-500 rounded-xl hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Save</button>
       <button onclick="window.location.href='/payment_list'"
-        class="py-2 px-8 mt-2 mx-4 text-md font-medium text-center text-white bg-red-500 rounded-xl hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Cancel</button>
+        class="w-28 py-2 px-8 mt-2 mx-2 text-md font-medium text-center text-white bg-black rounded-xl hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Cancel</button>
+      <button id="savePaymentBtn"
+        class="w-28 py-2 px-8 mt-2 mx-2 text-md font-medium text-center text-white bg-red-600 rounded-xl hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Save</button>
     </div>
   </div>
 
   <script>
-    document.getElementById('savePaymentBtn').addEventListener('click', function () {
-      var form = document.getElementById('paymentForm');
-      var formData = new FormData(form);
-      var object = {};
-      formData.forEach(function (value, key) {
-        object[key] = value;
+    document.addEventListener('DOMContentLoaded', function () {
+      const ids = ['cardType', 'cardNumber', 'cvv', 'expiryDate'];
+      ids.forEach(id => {
+        if (!document.getElementById(id)) {
+          console.error(`Element with ID ${id} not found.`);
+        }
       });
-      var json = JSON.stringify(object);
 
-      fetch('/update_payment/<%= payment._id %>', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: json
-      })
-        .then(response => response.json())
-        .then(data => {
-          if (data.success) {
-            alert('Payment updated successfully!');
+      const savePaymentBtn = document.getElementById("savePaymentBtn");
+      if (!savePaymentBtn) {
+        console.error("Save payment button not found.");
+        return;
+      }
+
+      // add an event listener to the cardNumber input to remove extra spaces and limit the input length to 16 digits
+      const cardNumberInput = document.getElementById('cardNumber');
+      if (cardNumberInput) {
+        cardNumberInput.addEventListener('input', function () {
+          let value = this.value.replace(/\D/g, '');
+          if (value.length > 16) {
+            value = value.substring(0, 16);
+          }
+          this.value = value.replace(/(\d{4})(?=\d)/g, '$1 ');
+        });
+      }
+
+      // add an event listener to the cvv input to remove extra spaces and limit the input length to 3 digits
+      const cvvInput = document.getElementById('cvv');
+      if (cvvInput) {
+        cvvInput.addEventListener('input', function () {
+          let value = this.value.replace(/\D/g, '');
+          if (value.length > 3) {
+            value = value.substring(0, 3);
+          }
+          this.value = value;
+        });
+      }
+
+      // add an event listener to the expiryDate input to remove extra spaces and format the input as MM/YY
+      const expiryDateInput = document.getElementById('expiryDate');
+      if (expiryDateInput) {
+        expiryDateInput.addEventListener('input', function () {
+          // remove all non-numeric characters except the slash
+          let value = this.value.replace(/[^0-9\/]/g, '');
+          // remove leading slashes and multiple slashes
+          value = value.replace(/^\/+/, '').replace(/\/+/g, '/');
+          // limit the input length to 5 characters
+          if (value.length > 5) {
+            value = value.substring(0, 5);
+          }
+          // automatically add a slash after the second digit
+          if (!value.includes('/') && value.length > 2) {
+            value = value.substring(0, 2) + '/' + value.substring(2);
+          }
+          this.value = value;
+        });
+      }
+
+      savePaymentBtn.addEventListener("click", async () => {
+        const paymentInfo = ids.reduce((acc, id) => {
+          const elem = document.getElementById(id);
+          if (elem) {
+            acc[id] = elem.value.trim();
+          }
+          return acc;
+        }, {});
+
+        console.log(paymentInfo);
+
+        try {
+          const response = await fetch("/update_payment/<%= payment._id %>", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json; charset=UTF-8"
+            },
+            body: JSON.stringify(paymentInfo)
+          });
+
+          const result = await response.json();
+          if (result.success) {
+            alert("Payment information updated successfully!");
             window.location.href = '/payment_list';
           } else {
-            alert('Failed to update payment.');
+            const errors = result.errors.map(error => `${error.field}: ${error.message}`).join('\n');
+            alert("Error updating payment information:\n" + errors);
           }
-        })
-        .catch(error => {
-          alert('Error updating payment: ' + error);
-        });
+        } catch (error) {
+          console.error("Failed to send request:", error);
+          alert("Failed to send request: " + error.message);
+        }
+      });
     });
+
   </script>
 
   <%- include('templates/footer') %>
