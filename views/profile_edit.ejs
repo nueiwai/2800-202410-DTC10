@@ -102,7 +102,10 @@
         return;
       }
 
-      // add event listener to phone number input to remove extra characters and limit length
+      // Validation patterns
+      const validUsernamePattern = /^[a-zA-Z0-9_-]+$/;  // Only letters, numbers, underscores, and hyphens
+      const validStreetCityPattern = /^[a-zA-Z0-9\s.,'-]+$/; // Allows letters, numbers, spaces, periods, commas, apostrophes, and hyphens
+
       const phoneInput = document.getElementById('phonenumber');
       if (phoneInput) {
         phoneInput.addEventListener('input', function () {
@@ -113,13 +116,12 @@
           if (value.length > 6) {
             value = value.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
           } else if (value.length > 3) {
-            value = value.replace(/(\d{3})(\d{3})/, '$1-$2');
+            value = value.replace(/(\d{3})(\d+)/, '$1-$2');
           }
           this.value = value;
         });
       }
 
-      // add event listener to postal code input to add space after 3 characters
       const postalInput = document.getElementById('postal');
       if (postalInput) {
         postalInput.addEventListener('input', function () {
@@ -143,27 +145,37 @@
           return acc;
         }, {});
 
-        console.log(userInfo);
-
         const errorMessageElement = document.getElementById('error-message');
-        const successMessageElement = document.getElementById('success-message');
         let errorMessage = '';
 
-        // Validate input fields
+        // Validate username
         if (!userInfo.username) {
           errorMessage = 'Username is required.';
-        } else if (userInfo.phonenumber && !/^\d{3}-\d{3}-\d{4}$/.test(userInfo.phonenumber)) {
+        } else if (!validUsernamePattern.test(userInfo.username)) {
+          errorMessage = 'Username must only contain letters, numbers, underscores, or hyphens.';
+        }
+
+        // Validate street and city for special characters
+        if (userInfo.street && !validStreetCityPattern.test(userInfo.street)) {
+          errorMessage = 'Street must not contain special characters.';
+        }
+        if (userInfo.city && !validStreetCityPattern.test(userInfo.city)) {
+          errorMessage = 'City must not contain special characters.';
+        }
+
+        // Additional validations for phone number and postal code
+        if (userInfo.phonenumber && !/^\d{3}-\d{3}-\d{4}$/.test(userInfo.phonenumber)) {
           errorMessage = 'Phone number must be in the format 123-456-7890.';
-        } else if (userInfo.postal && !/^\w{3} \w{3}$/.test(userInfo.postal)) {
+        }
+        if (userInfo.postal && !/^\w{3} \w{3}$/.test(userInfo.postal)) {
           errorMessage = 'Postal Code must be in the format A1A 1A1.';
         }
 
         if (errorMessage) {
           errorMessageElement.textContent = errorMessage;
-          successMessageElement.textContent = '';
-          return;
+          return; // Stop the form submission if there is an error
         } else {
-          errorMessageElement.textContent = '';
+          errorMessageElement.textContent = ''; // Clear previous errors
         }
 
         try {
@@ -190,5 +202,6 @@
       });
     });
   </script>
+
 
   <%- include('templates/footer') %>
