@@ -86,10 +86,12 @@ confirmLocationBtn.click(() => {
             // Show availableSharedRoutes
             setTimeout(() => {
                 fetchAvailableSharedRoutes().then(() => {
-                    calculateDistance(startLocation, endLocation);
-                    getConfirmationAddress();
-                    availableSharedRoutes.show()
-                    availableSharedRoutes.addClass("transition ease-out duration-300 transform translate-x-0")
+                    drawSharedRoute().then(() => {
+                        getConfirmationAddress();
+                        appendSharedRoutesInfo();
+                        availableSharedRoutes.show()
+                        availableSharedRoutes.addClass("transition ease-out duration-300 transform translate-x-0")
+                    });
                 });
             }, 300);
         }
