@@ -1,37 +1,39 @@
 <%- include('templates/header') %>
   <div class="flex items-center justify-center min-h-screen bg-gray-100">
     <div class="bg-white p-6 rounded-lg shadow-md max-w-sm w-full">
-      <h1 class="text-3xl font-bold text-center mb-4">DRONIFY</h1>
+      <h1
+        style="text-align: center;z-index: 1; color: black; font-size:xx-large; font-weight:800; font-family: 'Poetsen One', sans-serif; letter-spacing: 2px;">
+        Dronify</h1>
       <p class="text-center text-gray-700 mb-6">Create a New Account</p>
       <form class="flex flex-col justify-center items-center gap-2 mx-auto p-4" action="/signup" method="POST"
         onsubmit="validateForm(event)">
         <div class="w-full">
-          <label for="username" class="block text-lg font-medium text-gray-700 mb-2"><span class="text-red-600">*</span>
+          <label for="username" class="block font-medium text-gray-700 mb-2"><span class="text-red-600">*</span>
             Username</label>
           <input required class="border p-2 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-cardBg mb-4"
             name="username" type="text" placeholder="username" />
         </div>
         <div class="w-full">
-          <label for="name" class="block text-lg font-medium text-gray-700 mb-2"><span class="text-red-600">*</span>
+          <label for="name" class="block font-medium text-gray-700 mb-2"><span class="text-red-600">*</span>
             First Name</label>
           <input required class="border p-2 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-cardBg mb-4"
             name="name" type="text" placeholder="name" />
         </div>
         <div class="w-full">
-          <label for="email" class="block text-lg font-medium text-gray-700 mb-2"><span class="text-red-600">*</span>
+          <label for="email" class="block font-medium text-gray-700 mb-2"><span class="text-red-600">*</span>
             Email</label>
           <input required class="border p-2 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-cardBg mb-4"
             name="email" type="email" placeholder="email" />
         </div>
         <div class="w-full">
-          <label for="password" class="block text-lg font-medium text-gray-700 mb-2"><span class="text-red-600">*</span>
+          <label for="password" class="block font-medium text-gray-700 mb-2"><span class="text-red-600">*</span>
             Password</label>
           <input required class="border p-2 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-cardBg mb-4"
             name="password" type="password" placeholder="password" />
         </div>
         <div class="w-full">
-          <label for="confirm-password" class="block text-lg font-medium text-gray-700 mb-2"><span
-              class="text-red-600">*</span> Confirm Password</label>
+          <label for="confirm-password" class="block font-medium text-gray-700 mb-2"><span class="text-red-600">*</span>
+            Confirm Password</label>
           <input required class="border p-2 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-cardBg mb-4"
             name="confirm-password" type="password" placeholder="password" />
         </div>
