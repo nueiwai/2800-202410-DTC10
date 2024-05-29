@@ -74,8 +74,8 @@ paymentMethodNextBtn.click(() => {
 
     const username = document.querySelector('input[name="username"]') ? document.querySelector('input[name="username"]').value : null;
     const name = document.querySelector('input[name="name"]') ? document.querySelector('input[name="name"]').value : null;
-    const password = document.getElementById('password') ? document.getElementById('password').value: null;
-    const confirmPassword = document.getElementById('confirm-password') ? document.getElementById('confirm-password').value : null;
+    const password = document.querySelector('input[name="password"]') ? document.querySelector('input[name="password"]').value: null;
+    const confirmPassword = document.querySelector('input[name="confirm-password"]') ? document.querySelector('input[name="confirm-password"]').value : null;
 
     let errorMessage = '';
 
