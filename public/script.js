@@ -162,7 +162,7 @@ paymentMethodNextBtn.click(() => {
 
     //$('input[name=radioName]:checked', '#myForm').val()
 
-    
+
     // check which one is checked
 
     // set session storage for the selected payment method
@@ -174,7 +174,8 @@ paymentMethodNextBtn.click(() => {
     } else {
         setTimeout(() => {
             const newMenuHeight = mainMenuDrawer.height() + 60
-            paymentMethods.toggle("hidden")
+            // paymentMethods.toggle("hidden")
+            confirmationCard.removeClass("invisible")
             paymentMethods.addClass("slide-out-left")
             confirmationCard.addClass("slide-in-left")
 
@@ -218,7 +219,7 @@ function displayAvailableBattery() {
 }
 
 function toggleBatteryStations() {
-    $(".mapboxgl-canvas-container").children("div").each(async function() {
+    $(".mapboxgl-canvas-container").children("div").each(async function () {
         $(this).toggle()
     })
     $("#mainMenuCard").addClass("transition-transform -translate-x-full")
@@ -231,8 +232,8 @@ function toggleBatteryStations() {
  * Toggle visibility of the battery station markers
  * @returns {void}
  */
-$(document).ready(async function() {
-    $(".mapboxgl-canvas-container").children("div").each(async function() {
+$(document).ready(async function () {
+    $(".mapboxgl-canvas-container").children("div").each(async function () {
         $(this).toggle()
     })
 })
