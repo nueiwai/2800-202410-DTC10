@@ -1,72 +1,207 @@
+let mainMenuDrawer = $("#main-menu-drawer")
 let directDeliveryBtn = $("#directDeliveryBtn")
-let locationModal = $("#delivery-location-modal")
-let locationModalCloseBtn = $("#location-modal-close-btn")
+let roadsideAssistanceBtn = $("#roadsideAssistanceBtn")
+let droneShareBtn = $("#droneShareBtn")
+let locationModal = $("#deliveryLocationModal")
 let confirmLocationBtn = $("#confirmBtn")
 let mainMenuCard = $("#mainMenuCard")
-let sizeSelectMenu = $("#selectSizeMenu")
+let packageSizeOptions = $("#packageSizeOptions")
 let selectSizeNextBtn = $("#selectSizeNextBtn")
-let paymentMethodContainer = $("#paymentMethodContainer")
+let paymentMethods = $("#paymentMethods")
+let cardContainer = $("#availableCards")
 let paymentMethodNextBtn = $("#paymentMethodNextBtn")
-let confirmationMenuContainer = $("#confirmationMenuContainer")
+let confirmationMenuContainer = $("#confirmationCard")
+let availableSharedRoutes = $("#availableRoutes")
+let availableBatteryCard = $("#availableBatteriesCard")
 
+/**
+ * Clear session storage
+ * @returns {void}
+ */
+function clearSessionStorage() {
+    sessionStorage.clear()
+}
+
+// Set the session storage for the selected feature - Direct Delivery
 directDeliveryBtn.click(() => {
+    clearSessionStorage()
     console.log("move location modal down")
-    locationModal.removeClass("transform -translate-y-full")
-    locationModal.addClass("transition-transform translate-y-[80px]")
+    locationModal.show()
+    sessionStorage.setItem("feature", "direct")
 })
 
-locationModalCloseBtn.click(() => {
-    locationModal.removeClass("transform translate-y-[80px]")
-    locationModal.addClass("transition-transform -translate-y-full")
+// Set the session storage for the selected feature - Drone Share
+droneShareBtn.click(() => {
+    clearSessionStorage()
+    console.log("move location modal down")
+    locationModal.show()
+    sessionStorage.setItem("feature", "share")
+})
+
+// Set the session storage for the selected feature - Roadside Assistance
+roadsideAssistanceBtn.click(() => {
+    clearSessionStorage()
+    sessionStorage.setItem("feature", "roadside")
+})
+
+/**
+ * Close location modal(hide) when user click the cross button
+ * @returns {void}
+ */
+function closeLocationModal() {
+    locationModal.hide()
+    document.querySelector("body > div[modal-backdrop]")?.remove()
+}
+
+//Unhide the package size options and hide the location modal 
+//when user clicks the confirmation button 
+//after checking if the location fields are empty
+confirmLocationBtn.click(() => {
+    let locationfields = isLocationEmpty();
+    if (locationfields) {
+        setTimeout(() => {
+            // Remove mainMenuCard 
+            mainMenuCard.addClass("transition ease-in duration-300 transform translate-x-0")
+
+            // Hide Location Modal
+            locationModal.hide()
+            document.querySelector("body > div[modal-backdrop]")?.remove()
+
+            // Hide mainMenuCard
+            mainMenuCard.hide()
+        }, 400);
+
+        if (sessionStorage.getItem("feature") === "direct") {
+            setTimeout(() => {
+                // Show packageSizeOptions
+                drawRoute().then(() => {
+                    calculateDistance(startLocation, endLocation);
+                    getConfirmationAddress();
+                    packageSizeOptions.show()
+                    packageSizeOptions.addClass("transition ease-out duration-300 transform translate-x-0")
+                }, 300);
+            });
+
+        } else if (sessionStorage.getItem("feature") === "share") {
+            // Show availableSharedRoutes
+            setTimeout(() => {
+                fetchAvailableSharedRoutes().then(() => {
+                    drawSharedRoute().then(() => {
+                        getConfirmationAddress();
+                        appendSharedRoutesInfo().then(() => {
+                            calculateDistanceAndTimeForDroneShare();
+                            displayTimeRoutes()
+                            availableSharedRoutes.show();
+                            availableSharedRoutes.addClass("transition ease-out duration-300 transform translate-x-0")
+                        });
+                    });
+                });
+            }, 300);
+        }
+    }
 });
 
+/**
+ * Reload the page if the user clicks the cancel button of available shared routes card
+ * @returns {void}
+ */
+function availableSharedRoutesCancel() {
+    location.reload()
+}
 
-// Step 2: When user confirms location in #delivery-location-modal, animate transition to #sizeSelectMenu
-// ToDo: Adjust speed of transition
-confirmLocationBtn.click(() => {
-    // Move location modal back up
-    locationModal.addClass("transition-transform -translate-y-full")
+/**
+ * Hide the available Shared Routes and show the package size options
+ * @returns {void}
+ */
+function availableSharedRoutesNext() {
+    setTimeout(() => {
+        availableSharedRoutes.addClass("transition ease-in duration-300 transform translate-x-0")
+        availableSharedRoutes.hide()
+        packageSizeOptions.show()
+        packageSizeOptions.addClass("transition ease-out duration-300 transform translate-x-0")
+    }, 600);
+}
 
-    // Remove mainMenuCard 
-    mainMenuCard.addClass("transition-transform -translate-x-full")
-
-    // Show sizeSelectMenu
-    sizeSelectMenu.toggle()
-
-    // Hide mainMenuCard
-    mainMenuCard.toggle()
-})
-
-// Step 3: When user clicks next on #sizeSelectMenu, animate and transition to #paymentMethodContainer
+// Hide the package size options and show the payment methods when the user clicks the next button
 selectSizeNextBtn.click(() => {
-    const elementHeight = paymentMethodContainer.outerHeight() + 60
-    paymentMethodContainer.height(elementHeight)
-    sizeSelectMenu.removeClass("transform translate-x-full transition-transform bottom-0 left-0 right-0 transform-none")
-    sizeSelectMenu.addClass("transition-transform -translate-x-full")
+    if (!sessionStorage.getItem("pkgSize")) {
+        alert("Please select a package size")
+        return
+    } else {
+        setTimeout(() => {
+            packageSizeOptions.addClass("transition ease-in duration-300 transform translate-x-0")
+            packageSizeOptions.hide();
+            getCardsAndAppendToModal()
+            paymentMethods.show()
+            paymentMethods.addClass("transition ease-out duration-300 transform translate-x-0")
+        }, 600);
+    }
+});
 
-    setTimeout(() => {
-        paymentMethodContainer.removeClass("transform translate-x-full")
-        paymentMethodContainer.addClass("transition-transform -translate-x-0")
-    }, 150);
-})
+/**
+ * Reload the page and clear pkgSize session storage key when the user clicks the cancel button
+ * @returns {void}
+ */
+function selectPackageSizeCancel() {
+    sessionStorage.removeItem("pkgSize");
+    if (sessionStorage.getItem("feature") === "direct") {
+        location.reload();
+    } else if (sessionStorage.getItem("feature") === "share") {
+        setTimeout(() => {
+            packageSizeOptions.addClass("transition ease-in duration-300 transform translate-x-0")
+            packageSizeOptions.hide()
+            availableSharedRoutes.show()
+            availableSharedRoutes.addClass("transition ease-out duration-300 transform translate-x-0")
+        }, 600);
+    }
+}
 
-
+// Hide the payment methods and show confirmation card when the user clicks the next button
 paymentMethodNextBtn.click(() => {
-    paymentMethodContainer.addClass("transition-none")
-    paymentMethodContainer.removeClass("transition-none")
-    paymentMethodContainer.addClass("transition-transform -translate-x-full")
+    if (!sessionStorage.getItem("paymentMethod")) {
+        alert("Please select a payment method")
+        return
+    } else {
+        setTimeout(() => {
+            paymentMethods.addClass("transition ease-in duration-300 transform translate-x-0")
+            paymentMethods.hide()
 
+        }, 300);
+
+        appendAddresses();
+        displayTimeConfirm();
+        setTimeout(() => {
+            confirmationMenuContainer.show()
+            confirmationMenuContainer.addClass("transition ease-out duration-300 transform translate-x-0")
+        }, 300);
+    }
+});
+
+/**
+ * Unhide the package size options and hide the payment methods when the user clicks the cancel button
+ * @returns {void}
+ */
+function selectPaymentCancel() {
     setTimeout(() => {
-        paymentMethodContainer.toggle("hidden")
-        confirmationMenuContainer.removeClass("hidden")
-        confirmationMenuContainer.addClass("transform translate-x-full")
-        confirmationMenuContainer.removeClass("transform translate-x-full")
-    }, 150);
+        sessionStorage.removeItem("paymentMethod")
+        paymentMethods.addClass("transition ease-in duration-300 transform translate-x-0")
+        paymentMethods.hide()
+        packageSizeOptions.show()
+        packageSizeOptions.addClass("transition ease-out duration-300 transform translate-x-0")
+    }, 600);
+}
 
-    confirmationMenuContainer.addClass("transition-transform -translate-x-0")
-})
+/**
+ * hide bottom main menu card and show available battery info
+ * @returns {void}
+ */
+function displayAvailableBattery() {
+    mainMenuCard.hide()
+    console.log("show available battery card")
+    availableBatteryCard.show()
+}
 
-  function validateForm(event) {
+function validateForm(event) {
     event.preventDefault();
 
     const specialCharacters = /[!@#$%^&*(),.?":{}|<>]/g;
@@ -74,32 +209,28 @@ paymentMethodNextBtn.click(() => {
 
     const username = document.querySelector('input[name="username"]') ? document.querySelector('input[name="username"]').value : null;
     const name = document.querySelector('input[name="name"]') ? document.querySelector('input[name="name"]').value : null;
-    const password = document.querySelector('input[name="password"]') ? document.querySelector('input[name="password"]').value: null;
+    const password = document.querySelector('input[name="password"]') ? document.querySelector('input[name="password"]').value : null;
     const confirmPassword = document.querySelector('input[name="confirm-password"]') ? document.querySelector('input[name="confirm-password"]').value : null;
 
     let errorMessage = '';
 
     if (username && specialCharacters.test(username)) {
-      errorMessage = 'Special characters are not allowed in Username.';
+        errorMessage = 'Special characters are not allowed in Username.';
     } else if (name && specialCharacters.test(name)) {
-      errorMessage = 'Special characters are not allowed in First Name.';
+        errorMessage = 'Special characters are not allowed in First Name.';
     } else if (specialCharacters.test(password)) {
-      errorMessage = 'Special characters are not allowed in Password.';
+        errorMessage = 'Special characters are not allowed in Password.';
     } else if (confirmPassword && specialCharacters.test(confirmPassword)) {
-      errorMessage = 'Special characters are not allowed in Confirm Password.';
+        errorMessage = 'Special characters are not allowed in Confirm Password.';
     } else if (confirmPassword && password !== confirmPassword) {
-      errorMessage = 'Passwords do not match.';
+        errorMessage = 'Passwords do not match.';
     }
 
     if (errorMessage) {
-      errorMessageElement.textContent = errorMessage;
-      return false;
+        errorMessageElement.textContent = errorMessage;
+        return false;
     } else {
-      errorMessageElement.textContent = '';
-      event.target.submit();
+        errorMessageElement.textContent = '';
+        event.target.submit();
     }
-  }
-
-
-
-
+}
