@@ -46,6 +46,7 @@ async function fetchAvailableSharedRoutes() {
     .then(response => response.json())
     .then(data => {
       reformatMapboxResponse(data)
+      // console.log('Available routes:', data)
     })
     .catch(error => {
       console.error('Error fetching routes:', error);
@@ -69,15 +70,33 @@ function reformatMapboxResponse(response) {
       type: feature.type,
       geometry: feature.geometry,
       properties: {
-        short_name: feature.text,
-        full_address: feature.place_name
+        name: feature.properties.name,
+        place_type: feature.properties.category_en
       }
     }))
   };
-
+  console.log('Reformatted response:', reformattedResponse)
   markAvailableSharedRoutesOnMap(reformattedResponse);
   return reformattedResponse;
 }
+
+/**
+ * Mark final destination on the map
+ * @returns {void}
+ */
+function markDestinationOnMap(locationEnd) {
+
+  // Add a marker for the final destination
+  const marker = new mapboxgl.Marker(
+    {
+      color: "#074464",
+      draggable: false,
+    }
+  )
+    .setLngLat(locationEnd)
+    .addTo(map);
+}
+
 
 /**
  * Mark the available shared routes on the map
@@ -93,6 +112,8 @@ function markAvailableSharedRoutesOnMap(availableRoutes) {
   // Clear the map of any existing markers
   clearMap();
 
+  markDestinationOnMap(locationEnd);
+
   // Add markers for each available route
   availableRoutes.features.forEach(route => {
     const marker = new mapboxgl.Marker(
@@ -101,9 +122,6 @@ function markAvailableSharedRoutesOnMap(availableRoutes) {
         draggable: false,
       }
     )
-      .setLngLat(route.geometry.coordinates)
-      .setPopup(new mapboxgl.Popup().setHTML(route.properties.full_address))
-      .addTo(map);
   });
 
   // Fit the map to the bounds of the available routes
