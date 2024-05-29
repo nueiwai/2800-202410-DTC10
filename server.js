@@ -88,7 +88,7 @@ const cardSchema = Joi.object({
   cardType: Joi.string().valid('Debit', 'Credit', 'Crypto').required(),
   cardNumber: Joi.string().trim().pattern(/^(?:\d{4} ){3}\d{4}$/).required(),
   cvv: Joi.string().trim().pattern(/^\d{3}$/).required(),
-  expiryDate: Joi.string().trim().pattern(/^\d{2}\/\d{2}$/).required()
+  expiryDate: Joi.string().trim().pattern(/^(0[1-9]|1[0-2])\/(24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|46|47|48|49|50|51|52|53|54|55|56|57|58|59|60|61|62|63|64|65|66|67|68|69|70|71|72|73|74|75|76|77|78|79|80|81|82|83|84|85|86|87|88|89|90|91|92|93|94|95|96|97|98|99)$/).required()
 });
 
 
@@ -210,10 +210,37 @@ app.post('/profile_edit', async (req, res) => {
   const { error, value } = userSchema.validate(req.body, { abortEarly: false });
 
   if (error) {
-    console.error("Validation Error:", error.details);
+    const errorDetails = error.details.map(detail => {
+      let message;
+      switch (detail.path[0]) {
+        case 'username':
+          message = 'Username is required and must not contain special characters.';
+          break;
+        case 'phonenumber':
+          message = 'Phone number must be in the format 777-777-7777 and must not contain special characters.';
+          break;
+        case 'street':
+          message = 'Street address must not contain special characters.';
+          break;
+        case 'city':
+          message = 'City name must not contain special characters.';
+          break;
+        case 'postal':
+          message = 'Postal code must be in the format VVV VVV and must not contain special characters.';
+          break;
+        default:
+          message = 'Invalid input data.';
+      }
+      return {
+        field: detail.path[0],
+        message: message
+      };
+    });
+    console.error("Validation Error:", errorDetails);
     return res.status(400).json({
       success: false,
-      message: error.details.map(detail => detail.message).join(", ")
+      message: "Invalid input data",
+      errors: errorDetails
     });
   }
 
@@ -260,11 +287,35 @@ app.post('/payment_edit', async (req, res) => {
   const { error } = cardSchema.validate({ cardType, cardNumber, cvv, expiryDate });
 
   if (error) {
-    const errorDetails = error.details.map(detail => ({
-      field: detail.path[0],
-      message: detail.message
-    }));
-    return res.status(400).json({ success: false, message: "Invalid input data", errors: errorDetails });
+    const errorDetails = error.details.map(detail => {
+      let message;
+      switch (detail.path[0]) {
+        case 'cardType':
+          message = 'Card type is required and must be one of Debit, Credit, or Crypto.';
+          break;
+        case 'cardNumber':
+          message = 'Card number must be number and in the format 1111 1111 1111 1111.';
+          break;
+        case 'cvv':
+          message = 'CVV must be a 3-digit number.';
+          break;
+        case 'expiryDate':
+          message = 'Expiry date must be in the format MM/YY, where MM is 01-12 and YY is 24-99.';
+          break;
+        default:
+          message = 'Invalid input data.';
+      }
+      return {
+        field: detail.path[0],
+        message: message
+      };
+    });
+    console.error("Validation Error:", errorDetails);
+    return res.status(400).json({
+      success: false,
+      message: "Invalid input data",
+      errors: errorDetails
+    });
   }
 
   try {
@@ -326,8 +377,35 @@ app.post('/update_payment/:paymentId', async (req, res) => {
   const { error } = cardSchema.validate({ cardType, cardNumber, cvv, expiryDate });
 
   if (error) {
-    console.error("Validation Error:", error.details[0].message);
-    return res.status(400).json({ success: false, message: "Invalid input data", error: error.details[0].message });
+    const errorDetails = error.details.map(detail => {
+      let message;
+      switch (detail.path[0]) {
+        case 'cardType':
+          message = 'Card type is required and must be one of Debit, Credit, or Crypto.';
+          break;
+        case 'cardNumber':
+          message = 'Card number must be number and in the format 1111 1111 1111 1111.';
+          break;
+        case 'cvv':
+          message = 'CVV must be a 3-digit number.';
+          break;
+        case 'expiryDate':
+          message = 'Expiry date must be in the format MM/YY, where MM is 01-12 and YY is 24-99.';
+          break;
+        default:
+          message = 'Invalid input data.';
+      }
+      return {
+        field: detail.path[0],
+        message: message
+      };
+    });
+    console.error("Validation Error:", errorDetails);
+    return res.status(400).json({
+      success: false,
+      message: "Invalid input data",
+      errors: errorDetails
+    });
   }
 
   try {
@@ -336,13 +414,13 @@ app.post('/update_payment/:paymentId', async (req, res) => {
     }, { new: true });
 
     if (!updatedPayment) {
-      return res.status(404).send('Payment not found');
+      return res.status(404).json({ success: false, message: 'Payment not found' });
     }
 
     res.json({ success: true, message: "Payment information updated successfully", payment: updatedPayment });
   } catch (error) {
     console.error("Failed to update payment information:", error);
-    res.status(500).send("Error updating payment information");
+    res.status(500).json({ success: false, message: "Error updating payment information" });
   }
 });
 
