@@ -263,9 +263,9 @@ app.post('/profile_edit', async (req, res) => {
 
 // Add new payments route
 app.get('/payment_edit', async (req, res) => {
-  const userID = req.session.userid;  // get user ID from session
+  const userID = req.session.userid;
   try {
-    const user = await userModel.findById(userID);  // check the user information based on the user ID
+    const user = await userModel.findById(userID);
     res.render("payment_edit", { user: user });
   } catch (error) {
     console.error("Failed to fetch user name:", error);
@@ -329,9 +329,9 @@ app.post('/payment_edit', async (req, res) => {
 
 // Edit existing payment route
 app.get('/old_payment_edit', async (req, res) => {
-  const userID = req.session.userid;  // get user ID from session
+  const userID = req.session.userid;
   try {
-    const user = await userModel.findById(userID);  // check the user information based on the user ID
+    const user = await userModel.findById(userID);
     res.render("old_payment_edit", { user: user });
   } catch (error) {
     console.error("Failed to fetch user name:", error);
@@ -449,21 +449,33 @@ app.get('/logout', (req, res) => {
 })
 
 // Creates a new user from the body of the submitted form and writes to database
-// ToDo: Need to handle errors when user is trying to create account with exisitng email
 app.post('/signup', async (req, res) => {
-  const newUser = await new userModel({
-    username: req.body.username,
-    name: req.body.name,
-    email: req.body.email,
-    password: bcrypt.hashSync(req.body.password, 10)
-  })
-  console.log(newUser.username)
-  console.log(newUser.name)
-  console.log(newUser.email)
-  req.session.userid = newUser.id
-  await newUser.save()
-  res.redirect("postlogin")
-})
+  try {
+    const existingUser = await userModel.findOne({ email: req.body.email });
+    if (existingUser) {
+      return res.status(400).render('signup', { message: "Email already in use." });
+    }
+
+    const newUser = new userModel({
+      username: req.body.username,
+      name: req.body.name,
+      email: req.body.email,
+      password: bcrypt.hashSync(req.body.password, 10)
+    });
+
+    console.log(newUser.username);
+    console.log(newUser.name);
+    console.log(newUser.email);
+    await newUser.save();
+
+    req.session.userid = newUser.id;
+    res.redirect("postlogin");
+  } catch (error) {
+    console.error('Signup error:', error);
+    res.status(500).render('signup', { message: "An error occurred during sign up." });
+  }
+});
+
 
 // Checks the login information and redirects to landing page if successful, otherwise redirect to index 
 app.post('/login', async (req, res) => {
