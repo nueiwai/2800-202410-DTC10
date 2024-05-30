@@ -254,12 +254,14 @@ function batteryOptionSelect(event) {
 function availableBatteryCancel() {
     clearMarkers();
     sessionStorage.clear();
-    availableBatteryCard.removeClass("transition ease-in duration-400 transform translate-x-0")
-    availableBatteryCard.addClass("transition ease-out duration-400 transform translate-x-0")
-    getLocationBatteryBtn.hide()
-    availableBatteryCard.hide()
-    mainMenuCard.show()
-    mainMenuCard.addClass("transition ease-in duration-400 transform translate-x-0")
+    setTimeout(() => {
+        availableBatteryCard.removeClass("transition ease-in duration-400 transform translate-x-0")
+        availableBatteryCard.addClass("transition ease-out duration-400 transform translate-x-0")
+        getLocationBatteryBtn.hide()
+        availableBatteryCard.hide()
+        mainMenuCard.show()
+        mainMenuCard.addClass("transition ease-in duration-400 transform translate-x-0")
+    }, 800);
 }
 
 /**
