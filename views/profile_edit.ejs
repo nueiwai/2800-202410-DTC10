@@ -149,34 +149,11 @@
         const errorMessageElement = document.getElementById('error-message');
         let errorMessage = '';
 
-        // Validate username
         if (!userInfo.username) {
-          errorMessage = 'Username is required.';
-        } else if (!validUsernamePattern.test(userInfo.username)) {
-          errorMessage = 'Username must only contain letters, numbers, underscores, or hyphens.';
-        }
-
-        // Validate street and city for special characters
-        if (userInfo.street && !validStreetCityPattern.test(userInfo.street)) {
-          errorMessage = 'Street must not contain special characters.';
-        }
-        if (userInfo.city && !validStreetCityPattern.test(userInfo.city)) {
-          errorMessage = 'City must not contain special characters.';
-        }
-
-        // Additional validations for phone number and postal code
-        if (userInfo.phonenumber && !/^\d{3}-\d{3}-\d{4}$/.test(userInfo.phonenumber)) {
-          errorMessage = 'Phone number must be in the format 123-456-7890.';
-        }
-        if (userInfo.postal && !/^\w{3} \w{3}$/.test(userInfo.postal)) {
-          errorMessage = 'Postal Code must be in the format A1A 1A1.';
-        }
-
-        if (errorMessage) {
-          errorMessageElement.textContent = errorMessage;
-          return; // Stop the form submission if there is an error
+          errorMessageElement.textContent = 'Username is required.';
+          return;
         } else {
-          errorMessageElement.textContent = ''; // Clear previous errors
+          errorMessageElement.textContent = '';
         }
 
         try {
@@ -203,6 +180,5 @@
       });
     });
   </script>
-
 
   <%- include('templates/footer') %>
