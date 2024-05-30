@@ -62,6 +62,7 @@ app.use(express.static("videos"));
 app.use(express.static(__dirname + "/public"));
 app.use(express.static("public/images"));
 app.use(express.static("public/videos"));
+app.use(express.static("public/styles"));
 
 // Configure sessions
 app.use(session({

@@ -316,3 +316,12 @@ function validateForm(event) {
         event.target.submit();
     }
 }
+
+
+// $(document).ready(function () {
+//     $("mapboxgl-ctrl-geocoder--input").addClass(".searchbar")
+// });
+
+$(document).on("change", ".mapboxgl-ctrl-geocoder--input", function () {
+    $(".mapboxgl-ctrl-geocoder--input").addClass("test")
+})
