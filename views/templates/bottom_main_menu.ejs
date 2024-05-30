@@ -1,8 +1,12 @@
 <!-- Start drawer component -->
-<div id="main-menu-drawer" class="fixed z-40 w-full overflow-y-auto bg-cardBg border-t border-gray-200 rounded-t-xl shadow-xl transition-transform bottom-0 left-0 right-0 translate-y-full bottom-[60px]" tabindex="-1" aria-labelledby="main-menu-drawer-label">
+<div id="main-menu-drawer"
+  class="fixed z-40 w-full overflow-y-auto bg-cardBg border-t border-gray-200 rounded-t-xl shadow-xl transition-transform bottom-0 left-0 right-0 translate-y-full bottom-[60px]"
+  tabindex="-1" aria-labelledby="main-menu-drawer-label">
 
   <!-- swipe/click button for the menu -->
-  <div id="mainMenuControl" class="p-7 hover:bg-cardBgHover" data-drawer-toggle="main-menu-drawer" data-drawer-target="main-menu-drawer" data-drawer-placement="bottom" data-drawer-edge="true" data-drawer-edge-offset="bottom-[60px]" aria-controls="main-menu-drawer" data-drawer-backdrop="false">
+  <div id="mainMenuControl" class="p-7 hover:bg-cardBgHover" data-drawer-toggle="main-menu-drawer"
+    data-drawer-target="main-menu-drawer" data-drawer-placement="bottom" data-drawer-edge="true"
+    data-drawer-edge-offset="bottom-[60px]" aria-controls="main-menu-drawer" data-drawer-backdrop="false">
     <span class="absolute w-36 h-1 -translate-x-1/2 bg-white rounded-lg top-2 left-1/2"></span>
   </div>
 
@@ -11,8 +15,10 @@
 
     <!-- Drone-share option -->
     <div class="p-1 rounded-lg hover:bg-cardBgHover pt-2">
-      <button id="droneShareBtn" data-modal-target="deliveryLocationModal" data-modal-toggle="deliveryLocationModal" class="flex flex-col mx-auto">
-        <img src="images/core_feature_icon1.svg" class="rounded-lg w-[50px] mx-auto focus:ring-2 focus:ring-white" alt="drone-share" tabindex="0">
+      <button id="droneShareBtn" data-modal-target="deliveryLocationModal" data-modal-toggle="deliveryLocationModal"
+        class="flex flex-col mx-auto">
+        <img src="images/core_feature_icon1.svg" class="rounded-lg w-[50px] mx-auto focus:ring-2 focus:ring-white"
+          alt="drone-share" tabindex="0">
         <div class="mt-2 font-medium text-center text-buttonBg leading-tight">Drone-share
       </button>
     </div>
@@ -20,8 +26,10 @@
 
     <!-- Direct delivery option -->
     <div class="p-1 rounded-lg hover:bg-cardBgHover pt-2">
-      <button id="directDeliveryBtn" data-modal-target="deliveryLocationModal" data-modal-toggle="deliveryLocationModal" class="flex flex-col mx-auto">
-        <img src="images/core_feature_icon3.svg" class="rounded-lg w-[50px] mx-auto focus:ring-2 focus:ring-white" alt="direct-delivery" tabindex="0">
+      <button id="directDeliveryBtn" data-modal-target="deliveryLocationModal" data-modal-toggle="deliveryLocationModal"
+        class="flex flex-col mx-auto">
+        <img src="images/core_feature_icon3.svg" class="rounded-lg w-[50px] mx-auto focus:ring-2 focus:ring-white"
+          alt="direct-delivery" tabindex="0">
         <div class="mt-2 font-medium text-center text-buttonBg leading-tight">Direct Delivery</div>
       </button>
     </div>
@@ -29,17 +37,19 @@
     <!-- Roadside assistance option -->
     <div class="p-1 rounded-lg hover:bg-cardBgHover pt-2 ">
       <button id="roadsideAssistanceBtn" class="flex flex-col mx-auto">
-        <img src="images/core_feature_icon2.svg" class="rounded-lg w-[50px] mx-auto focus:ring-2 focus:ring-white" alt="roadside-assistance" tabindex="0">
+        <img src="images/core_feature_icon2.svg" class="rounded-lg w-[50px] mx-auto focus:ring-2 focus:ring-white"
+          alt="roadside-assistance" tabindex="0">
         <div class="mt-2 font-medium text-center text-buttonBg leading-tight">Roadside Assistance</div>
       </button>
     </div>
 
   </div>
-
-  <%- include('../package_sizes') %>
-  <%- include('../available_routes') %>
-  <%- include('../select_payment') %>
-  <%- include('../confirmation') %>
-
-  <%- include('../available_battery') %>
 </div>
+
+<%- include('../package_sizes') %>
+  <%- include('../available_routes') %>
+    <%- include('../select_payment') %>
+      <%- include('../confirmation') %>
+
+        <%- include('../available_battery') %>
+          </div>
