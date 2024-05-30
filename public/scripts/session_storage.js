@@ -41,15 +41,6 @@ function formatTime() {
   return formattedTime;
 }
 
-/**
- * Display the estimated time in the confirmation modal
- * @returns {void}
- */
-function displayTimeConfirm() {
-  const time = formatTime();
-  const timeElement = document.querySelector("#estimatedTime");
-  timeElement.textContent = time;
-}
 
 /**
  * Display the estimated time in the available routes card
