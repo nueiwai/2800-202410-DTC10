@@ -16,9 +16,30 @@
 **Dronify** is a web application that deploys autonomous drones (on-demand) to offer package delivery and roadside assistance for autonomous car owners during accidents, thereby reducing delivery time and traffic congestion.
 
 ## Project Technologies
+**Front-End**
+* HTML, CSS 
+* Tailwind
+* Express.js
+* EJS
+* AJAX
+
+**UI Component Library**
+* Flowbite
+* Cloudinary
+
+**Back-End**
+* JavaScript
+* jQuery
+* Turf.js
+* MongoDB
+
+**API**
+* Mapbox API
+* Geolocation API
+* Open Weather API
+
 
 For the **front-end** we used:
-
 * **Flowbite** as our UI library
 
 For the **back-end** we used:
@@ -52,9 +73,16 @@ To get started with Dronify, the hosted version of the product can be used. You 
 
 **Other software:**
 * Cloudinary
+* Express
+* bcrypt
+* mongoose
+* Joi
+* multer
+* cors
 
 **Third Party APIs:**
 
+Turf.js is a GIS library not API?? not sure
 | API        | Usage & Description        |
 | ------------- |:-------------:|
 | Mapbox API      | Map interface and the foundation for UI |
@@ -73,6 +101,7 @@ Here is our [link](https://docs.google.com/spreadsheets/d/14Fitry6ACC5__D6XGdvO7
 Installation location and order does not matter for this project.
 
 ## Features
+Need the app's screen shot here??
 <img src="./public/images/How_it_works.png"
      alt="How it works" width=full height=full>
 
@@ -101,6 +130,9 @@ https://opendata.vancouver.ca/explore/dataset/electric-vehicle-charging-stations
 * Tabler for in-app icons - https://tablericons.com/
 * Gemini Advanced for mathematical logic implemented in map routing - https://gemini.google.com/advanced
 
+## References
+* 404 page animation design from: https://www.silocreativo.com/en/creative-examples-404-error-css
+
 ## AI Usage
 **Project Support:**
 * Our App Logo is generated using ChatGPT 3.5
@@ -115,6 +147,11 @@ https://opendata.vancouver.ca/explore/dataset/electric-vehicle-charging-stations
 
 **Limitations Encountered:**
 * Integration testing is hard for the current “free” models of AI to do well, when there are many components of the application coming together and working together in a somewhat delicate manner, it is hard for the current AI models to fully capture this well and provide accurate trouble-shooting
+
+## Sources
+* default profile image from: google image
+* video from: freepik
+
 
 ## Contact Information
 
