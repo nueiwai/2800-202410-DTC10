@@ -40,17 +40,22 @@
   <script>
     tailwind.config = {
       theme: {
-        colors: {
-          transparent: "transparent",
-          current: "currentColor",
-          white: "#ffffff",
-          black: "#000000",
-          cardBg: "#31B6C0",
-          cardBgHover: "#2A9AA2",
-          buttonBg: "#074464",
-          bluishGray: "#8FA3AD",
-          yellowishGray: "#CBCBCB",
-          darkestShade: "#010204",
+        extend: {
+          fontFamily: {
+            'PoetsenOne': ['Poetsen One', 'sans-serif'],
+          },
+          colors: {
+            transparent: "transparent",
+            current: "currentColor",
+            white: "#ffffff",
+            black: "#000000",
+            cardBg: "#31B6C0",
+            cardBgHover: "#2A9AA2",
+            buttonBg: "#074464",
+            bluishGray: "#8FA3AD",
+            yellowishGray: "#CBCBCB",
+            darkestShade: "#010204",
+          },
         },
       },
     };
