@@ -1,0 +1,35 @@
+.component {
+  opacity: 1;
+  width: 50px;
+  height: 50px;
+  background-color: #CBCBCB;
+  margin-left: auto;
+  margin-right: auto;
+
+}
+
+.light-up {
+  animation-name: lightUp;
+  animation-fill-mode: forwards;
+}
+
+@keyframes lightUp {
+  0% {
+    opacity: 1;
+  }
+
+  10% {
+    opacity: 1;
+    background-color: yellow;
+  }
+
+  90% {
+    opacity: 1;
+    background-color: yellow;
+  }
+
+  100% {
+    opacity: 1;
+    background-color: yellow;
+  }
+}
