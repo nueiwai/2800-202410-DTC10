@@ -60,3 +60,14 @@ function displayTimeRoutes() {
   const timeElement = document.querySelector("#estimatedDurationShare");
   timeElement.textContent = time;
 }
+
+
+/**
+ * Display the estimated time in the available routes card
+ * @returns {void}
+ */
+function displayTimeBatteryStation() {
+  const time = formatTime();
+  const timeElement = document.querySelector("#estimatedDurationBattery");
+  timeElement.textContent = time;
+}
