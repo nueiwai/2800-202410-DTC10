@@ -54,9 +54,9 @@
 
 input {
   outline: none !important;
-  padding-left: 45px !important;
 }
 
 .mapboxgl-ctrl-geocoder--input {
   padding-left: 45px;
+  padding-left: 45px !important;
 }
