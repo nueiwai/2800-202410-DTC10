@@ -516,15 +516,6 @@ app.post('/update', async (req, res) => {
     })
 })
 
-// Get geojson data for battery stations
-app.get('/battery_stations', async (req, res) => {
-  let battery_stations = await batteryStationModel.find({}, { _id: 0 })
-  let geojsonData = {
-    type: "FeatureCollection",
-    features: battery_stations
-  }
-  res.render("battery_station_map", { stations: JSON.stringify(geojsonData) })
-})
 
 // Reset password route
 app.post('/checkAccountExists', async (req, res) => {
