@@ -80,7 +80,8 @@ function showPositionBattery(position) {
   console.log(latitude)
   console.log(longitude)
   let currentBatteryGetterLocation = [longitude, latitude]
-  // This function is in the battery station footer
+  sessionStorage.setItem('currentLocationBatteryGetter', currentBatteryGetterLocation);
+  // This function is in the battery stations.js file
   plotCurrentLocationOfBatteryGetter(currentBatteryGetterLocation);
 }
 

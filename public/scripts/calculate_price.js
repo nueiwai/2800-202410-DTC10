@@ -75,12 +75,28 @@ function calculateSharedPrices(distance, stops) {
   return prices;
 }
 
+
+/**
+ * Calculate the prices for the roadside assistance
+ * @returns {void}
+ */
+function calculateRoadsideAssistancePrices(distance) {
+  console.log("calculating prices");
+  if (distance <= 5) {
+    sessionStorage.setItem("price", 150);
+  } else if (distance <= 10) {
+    sessionStorage.setItem("price", 200);
+  } else {
+    sessionStorage.setItem("price", 250);
+  }
+}
+
+
 /**
  * Display the prices on the page in the designated elements
  * @returns {void}
  */
 function displayPrices() {
-  console.log("displaying prices");
   const prices = JSON.parse(sessionStorage.getItem("prices"));
   console.log(prices);
 
@@ -89,3 +105,12 @@ function displayPrices() {
   $("#largePrice").text(prices.Large);
 }
 
+
+/**
+ * Display the price of the battery in the modal
+ * @returns {void}
+ */
+function displayPriceBattery() {
+  const price = sessionStorage.getItem("price");
+  $("#priceBattery").text(price);
+}

@@ -1,18 +1,37 @@
+// main menu drawer ids
 let mainMenuDrawer = $("#main-menu-drawer")
+let mainMenuControl = $("#mainMenuControl")
+let mainMenuCard = $("#mainMenuCard")
+
+// main menu drawer buttons
 let directDeliveryBtn = $("#directDeliveryBtn")
 let roadsideAssistanceBtn = $("#roadsideAssistanceBtn")
 let droneShareBtn = $("#droneShareBtn")
+
+// location modal ids
 let locationModal = $("#deliveryLocationModal")
 let confirmLocationBtn = $("#confirmBtn")
-let mainMenuCard = $("#mainMenuCard")
+
+// Common button and componesnts ids
+// select package size ids
 let packageSizeOptions = $("#packageSizeOptions")
 let selectSizeNextBtn = $("#selectSizeNextBtn")
+
+// payment methods ids
 let paymentMethods = $("#paymentMethods")
 let cardContainer = $("#availableCards")
 let paymentMethodNextBtn = $("#paymentMethodNextBtn")
+
+// confirmation menu ids
 let confirmationMenuContainer = $("#confirmationCard")
+
+//Feature specific components
+// drone share components
 let availableSharedRoutes = $("#availableRoutes")
+
+// road side assistance components
 let availableBatteryCard = $("#availableBatteriesCard")
+let getLocationBatteryBtn = $("#getLocationBatteryBtn")
 
 /**
  * Clear session storage
@@ -25,7 +44,8 @@ function clearSessionStorage() {
 // Set the session storage for the selected feature - Direct Delivery
 directDeliveryBtn.click(() => {
     clearSessionStorage()
-    console.log("move location modal down")
+    getLocationBatteryBtn.hide()
+    clearMarkers()
     locationModal.show()
     sessionStorage.setItem("feature", "direct")
 })
@@ -33,7 +53,8 @@ directDeliveryBtn.click(() => {
 // Set the session storage for the selected feature - Drone Share
 droneShareBtn.click(() => {
     clearSessionStorage()
-    console.log("move location modal down")
+    getLocationBatteryBtn.hide()
+    clearMarkers()
     locationModal.show()
     sessionStorage.setItem("feature", "share")
 })
@@ -42,6 +63,8 @@ droneShareBtn.click(() => {
 roadsideAssistanceBtn.click(() => {
     clearSessionStorage()
     sessionStorage.setItem("feature", "roadside")
+    renderBatteryStations()
+    getLocationBatteryBtn.show()
 })
 
 /**
@@ -192,8 +215,17 @@ function selectPaymentCancel() {
         sessionStorage.removeItem("paymentMethod")
         paymentMethods.addClass("transition ease-in duration-400 transform translate-x-0")
         paymentMethods.hide()
-        packageSizeOptions.show()
-        packageSizeOptions.addClass("transition ease-out duration-400 transform translate-x-0")
+        if (sessionStorage.getItem("feature") === "direct") {
+            packageSizeOptions.show()
+            packageSizeOptions.addClass("transition ease-out duration-400 transform translate-x-0")
+        } else if (sessionStorage.getItem("feature") === "share") {
+            packageSizeOptions.show()
+            packageSizeOptions.addClass("transition ease-out duration-400 transform translate-x-0")
+        } else if (sessionStorage.getItem("feature") === "roadside") {
+            availableBatteryCard.show()
+            sessionStorage.removeItem("batteryOption")
+            availableBatteryCard.addClass("transition ease-out duration-400 transform translate-x-0")
+        }
     }, 800);
 }
 
@@ -202,10 +234,54 @@ function selectPaymentCancel() {
  * @returns {void}
  */
 function displayAvailableBattery() {
+    let coordinate = this.id
+    // let coordsStr = coordinate.split(",")
+    // let coords = [parseFloat(coordsStr[0]), parseFloat(coordsStr[1])]
+    sessionStorage.setItem("batteryStationLocation", coordinate)
+
     mainMenuCard.hide()
     console.log("show available battery card")
     availableBatteryCard.show()
 }
+
+
+function batteryOptionSelect(event) {
+    sessionStorage.setItem("batteryOption", event.currentTarget.id)
+}
+
+
+
+function availableBatteryCancel() {
+    clearMarkers();
+    sessionStorage.clear();
+    availableBatteryCard.removeClass("transition ease-in duration-400 transform translate-x-0")
+    availableBatteryCard.addClass("transition ease-out duration-400 transform translate-x-0")
+    getLocationBatteryBtn.hide()
+    availableBatteryCard.hide()
+    mainMenuCard.show()
+    mainMenuCard.addClass("transition ease-in duration-400 transform translate-x-0")
+}
+
+/**
+ * Hide the available battery card and show the payment methods when the user clicks the next button
+ * @returns {void}
+ */
+function availableBatteryNext() {
+    if (!sessionStorage.getItem("batteryOption")) {
+        alert("Please select the battery station")
+        return
+    } else {
+        setTimeout(() => {
+            availableBatteryCard.addClass("transition ease-in duration-400 transform translate-x-0")
+            availableBatteryCard.hide()
+            getCardsAndAppendToModal()
+            paymentMethods.show()
+            mainMenuCard.removeClass("transition ease-in duration-400 transform translate-x-0")
+            paymentMethods.addClass("transition ease-out duration-400 transform translate-x-0")
+        });
+    }
+}
+
 
 function validateForm(event) {
     event.preventDefault();
