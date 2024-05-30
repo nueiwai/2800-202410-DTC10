@@ -479,8 +479,9 @@ app.post('/signup', async (req, res) => {
 
 // Checks the login information and redirects to landing page if successful, otherwise redirect to index 
 app.post('/login', async (req, res) => {
+  const trimmedUsername = req.body.username.trim();
   // Find user in db
-  const user = await userModel.findOne({ username: req.body.username })
+  const user = await userModel.findOne({ username: trimmedUsername })
     .catch(error => {
       console.log(error)
       return res.render("login", { errorMessage: "Cannot find account" })
