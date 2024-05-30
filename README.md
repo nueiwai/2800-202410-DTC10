@@ -160,12 +160,9 @@ To get started with Dronify, the hosted version of the product can be used. You 
 * cors
 
 **Third Party APIs:**
-
-Turf.js is a GIS library not API?? not sure
 | API        | Usage & Description        |
 | ------------- |:-------------:|
 | Mapbox API      | Map interface and the foundation for UI |
-| Turf.js     | Routing display on the map     |
 | Geolocation API | Getting the user's current location    |
 | Open Weather API | Our Easter Egg component    |
 
@@ -180,26 +177,34 @@ Here is our [link](https://docs.google.com/spreadsheets/d/14Fitry6ACC5__D6XGdvO7
 Installation location and order does not matter for this project.
 
 ## Features
-Need the app's screen shot here??
-<img src="./public/images/How_it_works.png"
-     alt="How it works" width=full height=full>
+<img src="./public/images/Feature_cover.png"
+     alt="Feature cover" width=full height=full>
+<img src="./public/images/Feature_1.png"
+     alt="Feature cover" width=full height=full>
 
-### How it Works
+### Core Feature 1: Direct Delivery
+<img src="./public/images/Feature_2.png"
+     alt="Feature cover" width=full height=full>
+<img src="./public/images/Feature_3.png"
+     alt="Feature cover" width=full height=full>
+<img src="./public/images/Feature_4.png"
+     alt="Feature cover" width=full height=full>
 
-1. Core feature **Direct Delivery**
+### Core Feature 2: Drone-share
+<img src="./public/images/Feature_5.png"
+     alt="Feature cover" width=full height=full>
+<img src="./public/images/Feature_6.png"
+     alt="Feature cover" width=full height=full>
 
-<img src="./public/images/Direct_delivery.jpg"
-     alt="Direct delivery" width=full height=full>
+### Core Feature 3: Roadside Assistance
+<img src="./public/images/Feature_7.png"
+     alt="Feature cover" width=full height=full>
+<img src="./public/images/Feature_8.png"
+     alt="Feature cover" width=full height=full>
 
-2. Core feature **Drone-share**
-
-<img src="./public/images/Droneshare.jpg"
-     alt="Droneshare" width=full height=full>
-
-3. Core feature **Roadside Assistance**
-
-<img src="./public/images/Roadside_assistance.jpg"
-     alt="Roadside assistance" width=full height=full>
+### Account Feature: Profile Image Customization
+<img src="./public/images/Feature_9.png"
+     alt="Feature cover" width=full height=full>
 
 ## Credits
 * City of Vancouver Open Data for plotting battery stations -
@@ -210,7 +215,7 @@ https://opendata.vancouver.ca/explore/dataset/electric-vehicle-charging-stations
 * Gemini Advanced for mathematical logic implemented in map routing - https://gemini.google.com/advanced
 
 ## References
-* 404 page animation design from: https://www.silocreativo.com/en/creative-examples-404-error-css
+* 404 page animation design - https://www.silocreativo.com/en/creative-examples-404-error-css
 
 ## AI Usage
 **Project Support:**
@@ -228,9 +233,8 @@ https://opendata.vancouver.ca/explore/dataset/electric-vehicle-charging-stations
 * Integration testing is hard for the current “free” models of AI to do well, when there are many components of the application coming together and working together in a somewhat delicate manner, it is hard for the current AI models to fully capture this well and provide accurate trouble-shooting
 
 ## Sources
-* default profile image from: google image
-* video from: freepik
-
+* Default profile image from - Google Image
+* Landing page video from - Freepik
 
 ## Contact Information
 
