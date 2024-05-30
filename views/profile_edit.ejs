@@ -30,62 +30,61 @@
     </a>
   </div>
 
-  <div class="w-full bg-cardBg h-full container fixed inset-0 font-Nunito">
-    <div class="flex flex-col fixed items-center justify-center mx-auto inset-0">
+  <div class="w-full bg-cardBg h-full fixed bottom-0 left-1/2 transform -translate-x-1/2 pt-56 font-Nunito">
 
-      <div class="flex flex-col items-center" style="transform: translateY(-80px)">
-        <img class="w-40 h-40 mb-3 rounded-full shadow-lg"
-          src="<%= user.profileImageUrl ? user.profileImageUrl : 'profile.png' %>" alt="Profile image" />
+    <div class="flex flex-col items-center" style="transform: translateY(-80px)">
+      <img class="w-40 h-40 mb-3 rounded-full shadow-lg"
+        src="<%= user.profileImageUrl ? user.profileImageUrl : 'profile.png' %>" alt="Profile image" />
 
-        <div class="flex flex-col items-center space-y-4">
-          <div class="flex items-center space-x-2">
-            <input id="username" type="text"
-              class="py-2 px-8 text-sm font-medium text-center text-gray-900 bg-white border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
-              placeholder="Username *" value="<%= user && user.username ? user.username : '' %>">
-          </div>
-
-          <div class="flex items-center space-x-2">
-            <input id="email" type="text"
-              class="text-gray-400 cursor-not-allowed py-2 px-8 text-sm font-medium text-center bg-white border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
-              placeholder="Email *" value="<%= user && user.email ? user.email : '' %>" disabled>
-          </div>
-
-          <div class="flex items-center space-x-2">
-            <input id="phonenumber" type="text"
-              class="py-2 px-8 text-sm font-medium text-center text-gray-900 bg-white border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
-              placeholder="Phone Number" value="<%= user && user.phonenumber ? user.phonenumber : '' %>">
-          </div>
-
-          <div class="flex items-center space-x-2">
-            <input id="street" type="text"
-              class="py-2 px-8 text-sm font-medium text-center text-gray-900 bg-white border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
-              placeholder="Street" value="<%= user && user.street ? user.street : '' %>">
-          </div>
-
-          <div class="flex items-center space-x-2">
-            <input id="city" type="text"
-              class="py-2 px-8 text-sm font-medium text-center text-gray-900 bg-white border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
-              placeholder="City" value="<%= user && user.city ? user.city : '' %>">
-          </div>
-
-          <div class="flex items-center space-x-2">
-            <input id="postal" type="text"
-              class="py-2 px-8 text-sm font-medium text-center text-gray-900 bg-white border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
-              placeholder="Postal Code" value="<%= user && user.postal ? user.postal : '' %>">
-          </div>
-
+      <div class="flex flex-col items-center space-y-4">
+        <div class="flex items-center space-x-2">
+          <input id="username" type="text"
+            class="py-2 px-8 text-sm font-medium text-center text-gray-900 bg-white border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
+            placeholder="Username *" value="<%= user && user.username ? user.username : '' %>">
         </div>
-      </div>
 
-      <div class="flex justify-center  mt-[-50px]">
-        <button onclick="window.location.href='/account'"
-          class="w-28 py-2 px-8 mx-2 text-md font-medium text-center text-white bg-black rounded-xl hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300">Cancel</button>
-        <button id="saveBtn"
-          class="w-28 py-2 px-8 mx-2 text-md font-medium text-center text-white bg-red-600 rounded-xl hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300">Save</button>
-      </div>
+        <div class="flex items-center space-x-2">
+          <input id="email" type="text"
+            class="text-gray-400 cursor-not-allowed py-2 px-8 text-sm font-medium text-center bg-white border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
+            placeholder="Email *" value="<%= user && user.email ? user.email : '' %>" disabled>
+        </div>
 
+        <div class="flex items-center space-x-2">
+          <input id="phonenumber" type="text"
+            class="py-2 px-8 text-sm font-medium text-center text-gray-900 bg-white border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
+            placeholder="Phone Number" value="<%= user && user.phonenumber ? user.phonenumber : '' %>">
+        </div>
+
+        <div class="flex items-center space-x-2">
+          <input id="street" type="text"
+            class="py-2 px-8 text-sm font-medium text-center text-gray-900 bg-white border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
+            placeholder="Street" value="<%= user && user.street ? user.street : '' %>">
+        </div>
+
+        <div class="flex items-center space-x-2">
+          <input id="city" type="text"
+            class="py-2 px-8 text-sm font-medium text-center text-gray-900 bg-white border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
+            placeholder="City" value="<%= user && user.city ? user.city : '' %>">
+        </div>
+
+        <div class="flex items-center space-x-2">
+          <input id="postal" type="text"
+            class="py-2 px-8 text-sm font-medium text-center text-gray-900 bg-white border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
+            placeholder="Postal Code" value="<%= user && user.postal ? user.postal : '' %>">
+        </div>
+
+      </div>
     </div>
-    <div id="error-message" class="text-red-500 mt-2 mb-4 text-center"></div>
+
+    <div class="flex justify-center  mt-[-50px]">
+      <button onclick="window.location.href='/account'"
+        class="w-28 py-2 px-8 mx-2 text-md font-medium text-center text-white bg-black rounded-xl hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300">Cancel</button>
+      <button id="saveBtn"
+        class="w-28 py-2 px-8 mx-2 text-md font-medium text-center text-white bg-red-600 rounded-xl hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300">Save</button>
+    </div>
+
+    <br>
+    <div id="error-message" class="text-red-500 mb-4 text-center"></div>
   </div>
 
   <script>
