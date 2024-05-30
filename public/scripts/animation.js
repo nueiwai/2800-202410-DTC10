@@ -1,7 +1,3 @@
-let totalDuration = 0;
-totalDuration = sessionStorage.getItem('estimatedDuration');
-let eachDuration = parseFloat(totalDuration) / 4;
-
 /**
  * Light up the component
  * This is only for demonstration purposes
@@ -23,7 +19,7 @@ function lightUpComponent(componentId, duration, delay) {
   component.classList.add("light-up");
 }
 
-function animateComponents() {
+function animateComponents(totalDuration, eachDuration) {
   lightUpComponent("confirmation_1", totalDuration, 1);
   lightUpComponent("confirmation_2", totalDuration, eachDuration);
   lightUpComponent("confirmation_3", totalDuration, 2 * eachDuration);

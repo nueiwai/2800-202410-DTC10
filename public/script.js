@@ -175,7 +175,9 @@ paymentMethodNextBtn.click(() => {
         displayTimeConfirm();
         setTimeout(() => {
             confirmationMenuContainer.show()
-            animateComponents()
+            let totalDuration = sessionStorage.getItem('estimatedDuration');
+            let eachDuration = parseFloat(totalDuration) / 4;
+            animateComponents(totalDuration, eachDuration)
             confirmationMenuContainer.addClass("transition ease-out duration-400 transform translate-x-0")
         }, 400);
     }

@@ -112,11 +112,6 @@ app.get('/', async (req, res) => {
   res.render("landing_page")
 })
 
-// Map testing route: routing
-app.get('/routing', async (req, res) => {
-  res.render("routing")
-})
-
 // Signup route
 app.get('/signup', (req, res) => {
   res.render("signup")
@@ -125,17 +120,6 @@ app.get('/signup', (req, res) => {
 // Login route
 app.get('/login', (req, res) => {
   res.render("login")
-})
-
-// Available route route
-app.get('/availableroute', (req, res) => {
-  res.render("availableroute")
-})
-
-
-// Confirmation route
-app.get('/confirmation', (req, res) => {
-  res.render("confirmation", { pageName: "confirmation" })
 })
 
 // Forget ID route
