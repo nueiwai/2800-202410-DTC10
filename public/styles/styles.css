@@ -55,3 +55,7 @@ input {
 #destination>div {
   border-radius: 15px !important;
 }
+
+input {
+  outline: none !important;
+}
