@@ -135,10 +135,18 @@ app.get('/resetpassword', (req, res) => {
 // Post login route
 app.get('/postlogin', isAuth, async (req, res) => {
   let userID = req.session.userid
+  //pull all payment information for the user
   let cards = await paymentModel.find({ userId: userID }, { userId: 0, __v: 0 })
 
+  //pull all battery station information
+  let battery_stations = await batteryStationModel.find({}, { _id: 0 })
+  let geojsonData = {
+    type: "FeatureCollection",
+    features: battery_stations
+  }
+
   if (isAuth) {
-    res.render("postlogin", { cards: JSON.stringify(cards) })
+    res.render("postlogin", { cards: JSON.stringify(cards), stations: JSON.stringify(geojsonData) })
   }
 })
 

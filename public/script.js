@@ -1,18 +1,36 @@
+// main menu drawer ids
 let mainMenuDrawer = $("#main-menu-drawer")
+let mainMenuCard = $("#mainMenuCard")
+
+// main menu drawer buttons
 let directDeliveryBtn = $("#directDeliveryBtn")
 let roadsideAssistanceBtn = $("#roadsideAssistanceBtn")
 let droneShareBtn = $("#droneShareBtn")
+
+// location modal ids
 let locationModal = $("#deliveryLocationModal")
 let confirmLocationBtn = $("#confirmBtn")
-let mainMenuCard = $("#mainMenuCard")
+
+// Common button and componesnts ids
+// select package size ids
 let packageSizeOptions = $("#packageSizeOptions")
 let selectSizeNextBtn = $("#selectSizeNextBtn")
+
+// payment methods ids
 let paymentMethods = $("#paymentMethods")
 let cardContainer = $("#availableCards")
 let paymentMethodNextBtn = $("#paymentMethodNextBtn")
+
+// confirmation menu ids
 let confirmationMenuContainer = $("#confirmationCard")
+
+//Feature specific components
+// drone share components
 let availableSharedRoutes = $("#availableRoutes")
+
+// road side assistance components
 let availableBatteryCard = $("#availableBatteriesCard")
+let getLocationBatteryBtn = $("#getLocationBatteryBtn")
 
 /**
  * Clear session storage
@@ -42,6 +60,8 @@ droneShareBtn.click(() => {
 roadsideAssistanceBtn.click(() => {
     clearSessionStorage()
     sessionStorage.setItem("feature", "roadside")
+    addBatteryStations()
+    getLocationBatteryBtn.show()
 })
 
 /**

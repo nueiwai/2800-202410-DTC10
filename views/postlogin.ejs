@@ -1,11 +1,31 @@
 <%- include("templates/map_header") %>
 
 <%- include("templates/map") %>
+
+<%# //Location Button for Battery Stations %>
+<div id="getLocationBatteryBtn" class="hidden">
+  <button class="flex justify-end z-10 absolute inset-x-0 me-[5%] mt-[80px]
+    rounded-[100%]" onclick="getCurrentLocationBattery()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="-6 -6 36 36" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-current-location">
+      <circle r="15" cx="12" cy="12" fill="#074464" stroke="#074464" />
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+      <path d="M12 12m-8 0a8 8 0 1 0 16 0a8 8 0 1 0 -16 0" />
+      <path d="M12 2l0 2" />
+      <path d="M12 20l0 2" />
+      <path d="M20 12l2 0" />
+      <path d="M2 12l2 0" />
+    </svg>
+  </button>
+</div>
+
+
 <%- include("location_modal") %>
 <%- include("templates/bottom_main_menu") %>
 
 <script>
   window.cardData = JSON.parse(`<%- cards %>`);
+  window.batteryStations = JSON.parse(`<%- stations %>`);
 </script>
 
 <%- include("templates/map_footer") %>
