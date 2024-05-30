@@ -1,7 +1,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 <script type="text/javascript" src="/script.js"></script>
-<script src="/scripts/location_picker.js"></script>
-<script src="/scripts/calculate_distance.js"></script>
+<script src="/scrisortedCoordinates/location_picker.js"></script>
+<script src="/scrisortedCoordinates/calculate_distance.js"></script>
 
 <script>
   const mapbox_access_token = '<%= process.env.MAPBOX_ACCESS_TOKEN %>';
@@ -66,23 +66,53 @@
 
   let geojson = JSON.parse('<%- stations %>')
   
+  var myLocation = turf.point([49.3287177, -123.085623], {"marker-color": "#0F0"});
 
-  // add markers to map
-  for (const feature of geojson.features) {
+  let results = []
+
+  geojson.features.forEach(feature => {
+    // turf distance between user and points
+    let from = turf.point(feature.location.coordinates)
+    let to = myLocation
+    let distance = turf.distance(from, to)
+
+    let result = {
+      distance: distance,
+      address: feature.properties.address,
+      to: to,
+      from: from
+    }
+    results.push(result)
+  });
+
+  let sorted = results.sort((a, b) => {
+    const distanceDifference = Math.abs(parseInt(a.distance) - parseInt(b.distance))
+    // console.log(distanceDifference)
+    if (distanceDifference >= 4){
+      return -1
+    } else {
+      return 1
+    }
+  })
+
+  sorted.slice(0, 3).forEach(points => {
     // create a HTML element for each feature
     const el = document.createElement('div');
     el.className = 'marker';
+    let sortedCoordinates = points.from.geometry.coordinates
     const popup = new mapboxgl.Popup({
       offset: 25
     }).setHTML(
-      '<div class="text-md p-4 bg-white rounded-lg shadow-md text-center text-gray-800"><button onclick="displayAvailableBattery()" class="inline-block px-4 py-2 bg-buttonBg text-white rounded-md transition-colors">Select this station</button>'
+      '<button class="roadsideBtn inline-block px-4 py-2 bg-buttonBg text-white rounded-md transition-colors">Select this station</button>'
     );
-
+    // console.log(sortedCoordinates)
     // make a marker for each feature and add to the map
-    new mapboxgl.Marker(el).setLngLat(feature.location.coordinates)
-      .setPopup(popup) // set a popup on this marker
+    new mapboxgl.Marker(el).setLngLat(sortedCoordinates)
+      .setPopup(popup)
       .addTo(map);
-  }
+  })
+
+  
 
   // After the map style has loaded on the page,
   // add a source layer and default styling for a single point

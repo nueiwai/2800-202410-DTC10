@@ -13,6 +13,8 @@ let paymentMethodNextBtn = $("#paymentMethodNextBtn")
 let confirmationMenuContainer = $("#confirmationCard")
 let availableSharedRoutes = $("#availableRoutes")
 let availableBatteryCard = $("#availableBatteriesCard")
+let swipeAria = $("#swipe-aria")
+let batterySelectBtns = $(".battery-btn")
 
 /**
  * Clear session storage
@@ -42,6 +44,8 @@ droneShareBtn.click(() => {
 roadsideAssistanceBtn.click(() => {
     clearSessionStorage()
     sessionStorage.setItem("feature", "roadside")
+    swipeAria.click()
+    getCurrentLocationBattery()
 })
 
 /**
@@ -208,32 +212,31 @@ function selectPaymentCancel() {
     }, 600);
 }
 
-/**
- * hide bottom main menu card and show available battery info
- * @returns {void}
- */
-function displayAvailableBattery() {
-    mainMenuCard.hide()
-    console.log("show available battery card")
-    availableBatteryCard.show()
-}
-
-function toggleBatteryStations() {
-    $(".mapboxgl-canvas-container").children("div").each(async function () {
-        $(this).toggle()
-    })
-    $("#mainMenuCard").addClass("transition-transform -translate-x-full")
-    $("#availableBatteriesCard").addClass("slide-in-left")
-    // console.log($("#availableBatteriesCard").height() + 60)
-    $("#mainMenuCard").css("height", $("#availableBatteriesCard").height())
-}
+// /**
+//  * hide bottom main menu card and show available battery info
+//  * @returns {void}
+//  */
+// function displayAvailableBattery() {
+//     console.log("show available battery card")
+//     swipeAria.click()
+//     toggleBatteryStations()
+// }
 
 /**
  * Toggle visibility of the battery station markers
  * @returns {void}
  */
-$(document).ready(async function () {
-    $(".mapboxgl-canvas-container").children("div").each(async function () {
+function toggleBatteryStations() {
+    $(".marker").each(function () {
         $(this).toggle()
     })
+}
+
+/**
+ * Main: On document load, execute the following functions:
+ * @returns {void}
+ */
+$(document).ready(async function () {
+    toggleBatteryStations()
 })
+
