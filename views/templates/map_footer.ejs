@@ -13,6 +13,11 @@
   window.mapbox_access_token = mapbox_access_token;
   mapboxgl.accessToken = mapbox_access_token;
 
+  // create a marker for mini map
+  const marker = new mapboxgl.Marker({
+    color: "#CD3434",
+  });
+
   var map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/streets-v11',
@@ -22,14 +27,14 @@
   });
 
   if (document.getElementById('cardTitle').innerText === 'Confirmation') {
-    var minimap = new mapboxgl.Map({
+    var mini_map = new mapboxgl.Map({
       container: 'mini_map',
       style: 'mapbox://styles/mapbox/streets-v11',
       center: [-123.112755, 49.241722], // Central Vancouver
       zoom: 8.7,
     });
   }
-
+ 
   let startLocation;
   let endLocation;
 
@@ -104,14 +109,21 @@
     });
   });
 
-  startGeocoder.on('result', function(e) {
+  startGeocoder.on('result', function (e) {
     startLocation = e.result.geometry.coordinates;
     window.mapboxStartLocation = startLocation;
   });
 
-  endGeocoder.on('result', function(e) {
+  endGeocoder.on('result', function (e) {
     endLocation = e.result.geometry.coordinates;
     window.mapboxDestination = endLocation;
+    marker.setLngLat(endLocation).addTo(mini_map);
+
+    mini_map.flyTo({
+      center: endLocation,
+      zoom: 12,
+      speed: 1.5,
+    });
   });
 
   /**
@@ -170,21 +182,21 @@
     const pointsGeojson = {
       type: 'FeatureCollection',
       features: [{
-          type: 'Feature',
-          geometry: {
-            type: 'Point',
-            coordinates: start
-          },
-          properties: {}
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: start
         },
-        {
-          type: 'Feature',
-          geometry: {
-            type: 'Point',
-            coordinates: end
-          },
-          properties: {}
-        }
+        properties: {}
+      },
+      {
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: end
+        },
+        properties: {}
+      }
       ]
     };
 

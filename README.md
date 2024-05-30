@@ -94,9 +94,12 @@ Installation location and order does not matter for this project.
      alt="Roadside assistance" width=full height=full>
 
 ## Credits
-* City of Vancouver Open Data -
+* City of Vancouver Open Data for plotting battery stations -
 https://opendata.vancouver.ca/explore/dataset/electric-vehicle-charging-stations/api/
 * Inspiration for 3-D route representation on a 2-D map interface - https://www.youtube.com/watch?v=VNVmlWv4gdQ
+* Icons8 for in-app icons - https://icons8.com/icons/
+* Tabler for in-app icons - https://tablericons.com/
+* Gemini Advanced for mathematical logic implemented in map routing - https://gemini.google.com/advanced
 
 ## AI Usage
 **Project Support:**
@@ -105,7 +108,7 @@ https://opendata.vancouver.ca/explore/dataset/electric-vehicle-charging-stations
 * We used it to minimize the risk of human error when working with long and possibly redundant lines of code (e.g. copy-and-paste fail)
 
 **Data Sets:**
-* Non-applicable, the only data set utilized in this project is is the geoJSON data set used to plot EV Battery Stations
+* Non-applicable, the only data set utilized in this project is the geoJSON data set used to plot EV Battery Stations
 
 **AI Integration:**
 * Our app does not directly use AI
