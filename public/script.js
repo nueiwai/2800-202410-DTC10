@@ -195,7 +195,7 @@ paymentMethodNextBtn.click(() => {
         }, 400);
 
         appendAddresses();
-        displayTimeConfirm();
+        updateTimer();
         setTimeout(() => {
             confirmationMenuContainer.show()
             let totalDuration = sessionStorage.getItem('estimatedDuration');
