@@ -23,7 +23,7 @@ function showPositionStart(position) {
   let longitude = position.coords.longitude;
   console.log(latitude)
   console.log(longitude)
-  let currentStartLocation = [longitude, latitude]
+  currentStartLocation = [longitude, latitude]
   document.getElementById('current-starting-location').setAttribute('value', currentStartLocation);
   document.querySelector('.start-geocoder>.mapboxgl-ctrl-geocoder>.mapboxgl-ctrl-geocoder--input').setAttribute('value', 'Your Location');
 }
@@ -79,6 +79,7 @@ function showPositionBattery(position) {
   let longitude = position.coords.longitude;
   console.log(latitude)
   console.log(longitude)
+  startLocation = [longitude, latitude]
   let currentBatteryGetterLocation = [longitude, latitude]
   // This function is in the battery station footer
   plotCurrentLocationOfBatteryGetter(currentBatteryGetterLocation);

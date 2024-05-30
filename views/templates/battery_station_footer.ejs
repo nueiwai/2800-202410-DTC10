@@ -62,57 +62,7 @@
     } // Coordinates of Central Vancouver
   });
   endGeocoder.addTo('#destination');
-
-
   let geojson = JSON.parse('<%- stations %>')
-  
-  var myLocation = turf.point([49.3287177, -123.085623], {"marker-color": "#0F0"});
-
-  let results = []
-
-  geojson.features.forEach(feature => {
-    // turf distance between user and points
-    let from = turf.point(feature.location.coordinates)
-    let to = myLocation
-    let distance = turf.distance(from, to)
-
-    let result = {
-      distance: distance,
-      address: feature.properties.address,
-      to: to,
-      from: from
-    }
-    results.push(result)
-  });
-
-  let sorted = results.sort((a, b) => {
-    const distanceDifference = Math.abs(parseInt(a.distance) - parseInt(b.distance))
-    // console.log(distanceDifference)
-    if (distanceDifference >= 4){
-      return -1
-    } else {
-      return 1
-    }
-  })
-
-  sorted.slice(0, 3).forEach(points => {
-    // create a HTML element for each feature
-    const el = document.createElement('div');
-    el.className = 'marker';
-    let sortedCoordinates = points.from.geometry.coordinates
-    const popup = new mapboxgl.Popup({
-      offset: 25
-    }).setHTML(
-      '<button class="roadsideBtn inline-block px-4 py-2 bg-buttonBg text-white rounded-md transition-colors">Select this station</button>'
-    );
-    // console.log(sortedCoordinates)
-    // make a marker for each feature and add to the map
-    new mapboxgl.Marker(el).setLngLat(sortedCoordinates)
-      .setPopup(popup)
-      .addTo(map);
-  })
-
-  
 
   // After the map style has loaded on the page,
   // add a source layer and default styling for a single point
@@ -379,7 +329,103 @@
       center: currentBatteryGetterLocation,
       zoom: 12.7, // optimal zoom so that on average the closet three stations are within frame
     });
+
+    setTimeout(() => {
+      findNearestPoints(currentBatteryGetterLocation);
+    }, 500);
+
   }
+
+  function findNearestPoints(userLocation) {
+    $(".marker").each(function(){
+      $(this).remove()
+    })
+    
+  let targetPoint = turf.point(userLocation);
+
+  const turfPoints = geojson.features.map(feature => {
+    return turf.point(feature.location.coordinates);
+  });
+
+  const turfCollection = turf.featureCollection(turfPoints);
+
+  // Calculate distances between userLocation and each point
+  const distances = turfPoints.map(point => {
+    return {
+      point: point,
+      distance: turf.distance(targetPoint, point)
+    };
+  });
+
+  // Sort points by distance
+  distances.sort((a, b) => a.distance - b.distance);
+
+  // Get the 3 nearest points
+  const nearestPoints = distances.slice(0, 3).map(item => item.point);
+
+  nearestPoints.forEach(nearestPoint => {
+    const el = document.createElement('div');
+    el.className = 'marker';
+    const popup = new mapboxgl.Popup({
+      offset: 25
+    }).setHTML(
+      `<button long-data=${nearestPoint.geometry.coordinates[0]} lat-data="${nearestPoint.geometry.coordinates[1]}" class="roadsideBtn inline-block px-4 py-2 bg-buttonBg text-white rounded-md transition-colors">Select this station</button>`
+    );
+
+    new mapboxgl.Marker(el).setLngLat(nearestPoint.geometry.coordinates)
+      .setPopup(popup)
+      .addTo(map);
+  });
+
+  // Adjust map view to include the nearest points
+  const bounds = new mapboxgl.LngLatBounds();
+  nearestPoints.forEach(nearestPoint => {
+    bounds.extend(nearestPoint.geometry.coordinates);
+  });
+
+  map.fitBounds(bounds, {
+    padding: 100,
+    pitch: 44
+  });
+
+  // console.log(turfCollection);
+}
+
+function renderBatteryStations(){
+  geojson.features.forEach(point => {
+  // get coords
+  // create new marker object and pass coords into object
+  // console.log(point.location.coordinates)
+  const el = document.createElement('div');
+  el.className = 'marker';
+  const popup = new mapboxgl
+  .Popup({offset: 25})
+  .setHTML(`<button long-data=${point.location.coordinates[0]} lat-data="${point.location.coordinates[1]}" class="roadsideBtn inline-block px-4 py-2 bg-buttonBg text-white rounded-md transition-colors">Select this station</button>`);
+  
+  new mapboxgl.Marker(el).setLngLat(point.location.coordinates)
+  .setPopup(popup)
+  .addTo(map);
+  
+  $("#swipe-aria").click()
+
+  var bounds = new mapboxgl.LngLatBounds();
+
+  geojson.features.forEach(function(feature) {
+  bounds.extend(feature.location.coordinates);
+  });
+
+  map.fitBounds(bounds, {
+    padding: 100,
+    pitch: 44
+  });
+    
+})}
+
+
+// console.log(geojson)
+
+
+
 </script>
 </body>
 

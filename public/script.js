@@ -44,8 +44,8 @@ droneShareBtn.click(() => {
 roadsideAssistanceBtn.click(() => {
     clearSessionStorage()
     sessionStorage.setItem("feature", "roadside")
-    swipeAria.click()
-    getCurrentLocationBattery()
+    $("#swipe-aria").click()
+    renderBatteryStations()
 })
 
 /**
@@ -183,6 +183,7 @@ paymentMethodNextBtn.click(() => {
             paymentMethods.addClass("slide-out-left")
             confirmationCard.addClass("slide-in-left")
 
+
             $("#main-menu-drawer").css("height", newMenuHeight)
             // paymentMethods.addClass("transition ease-in duration-300 transform translate-x-0")
             // paymentMethods.hide()
@@ -212,24 +213,32 @@ function selectPaymentCancel() {
     }, 600);
 }
 
-// /**
-//  * hide bottom main menu card and show available battery info
-//  * @returns {void}
-//  */
-// function displayAvailableBattery() {
-//     console.log("show available battery card")
-//     swipeAria.click()
-//     toggleBatteryStations()
-// }
+function selectBatteryStation() {
+    const long = parseFloat(this.getAttribute("long-data"))
+    const lat = parseFloat(this.getAttribute("lat-data"))
+    // console.log(long, lat)
+    const coordinates = [long, lat]
+    endLocation = coordinates
+    
+    map.flyTo({
+        center: coordinates,
+        zoom: 12.7, // optimal zoom so that on average the closet three stations are within frame
+    });
 
-/**
- * Toggle visibility of the battery station markers
- * @returns {void}
- */
-function toggleBatteryStations() {
-    $(".marker").each(function () {
-        $(this).toggle()
-    })
+    // console.log(startLocation)
+    // console.log(endLocation)
+    // console.log(this)
+    $(this).next().click()
+    drawRoute()
+    swipeAria.click()
+    mainMenuCard.addClass("slide-out-left")
+    availableBatteryCard.removeClass("invisible").addClass("slide-in-left")
+
+    mainMenuCard.css("height", availableBatteryCard.height())
+
+    setTimeout(() => {
+        // mainMenuCard.hide()
+    }, 300);
 }
 
 /**
@@ -237,6 +246,6 @@ function toggleBatteryStations() {
  * @returns {void}
  */
 $(document).ready(async function () {
-    toggleBatteryStations()
+    $(document).on("click", ".roadsideBtn", selectBatteryStation)
 })
 
