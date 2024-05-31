@@ -102,7 +102,7 @@ confirmLocationBtn.click(() => {
                     getConfirmationAddress();
                     packageSizeOptions.show()
                     packageSizeOptions.addClass("transition ease-out duration-500 transform translate-x-0")
-                }, 600);
+                }, 800);
             });
 
         } else if (sessionStorage.getItem("feature") === "share") {
