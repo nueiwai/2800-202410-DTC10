@@ -1,11 +1,13 @@
-<div id="packageSizeOptions" class="hidden">
+<div id="packageSizeOptions" class="hidden font-Nunito">
   <p class="font-bold text-center py-2">Choose package size</p>
 
   <div class="grid grid-cols-1 grid-rows-3 gap-4 p-4">
     <button id="small" class="pkg-select px-4 py-2 rounded-lg bg-buttonBg flex container focus:ring-2 ring-white">
       <div class="flex container gap-6">
         <div class="flex justify-start p-2 rounded-full w-[48px] h-[48px] max-w-[48px] max-h-[48px]">
-          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-box-seam" width="36" height="36" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-box-seam" width="36" height="36"
+            viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round"
+            stroke-linejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
             <path d="M12 3l8 4.5v9l-8 4.5l-8 -4.5v-9l8 -4.5" />
             <path d="M12 12l8 -4.5" />
@@ -21,12 +23,17 @@
       </div>
       <div class="flex justify-end me-2 text-gray-200">$<span id="smallPrice">0</span></div>
     </button>
-    <button id="medium" class="pkg-select px-4 py-2 rounded-lg bg-buttonBg flex container gap-6 focus:ring-2 ring-white">
+    <button id="medium"
+      class="pkg-select px-4 py-2 rounded-lg bg-buttonBg flex container gap-6 focus:ring-2 ring-white">
       <div class="flex container gap-6">
         <div class="flex justify-start p-2 rounded-full w-[48px] h-[48px] max-w-[48px] max-h-[48px]">
           <svg width="46" height="39" viewBox="0 0 46 39" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M13.5273 38.2148V23.8287L0 16.557V29.1744C0 29.7508 0.147955 30.2749 0.443864 30.7466C0.739774 31.2183 1.15546 31.5982 1.69091 31.8865L13.5273 38.2148ZM16.9091 38.2148L28.7455 31.8865C29.2809 31.5982 29.6966 31.2183 29.9925 30.7466C30.2884 30.2749 30.4364 29.7508 30.4364 29.1744V16.557L16.9091 23.8287V38.2148ZM23.6305 16.5963L28.6187 13.8842L16.9091 7.63452C16.3737 7.34627 15.81 7.20215 15.2182 7.20215C14.6264 7.20215 14.0627 7.34627 13.5273 7.63452L10.1877 9.4033L23.6305 16.5963ZM15.2182 21.1166L20.2487 18.4437L6.84819 11.2114L1.77546 13.9235L15.2182 21.1166Z" fill="white" />
-            <path d="M16.0229 24.114L16.6446 24.5646C16.3487 24.0929 16.6446 25.141 16.6446 24.5646C16.9405 25.0362 16.2741 24.3961 16.8096 24.6843L16.0229 24.114ZM32.0278 31.0126L43.8642 24.6843C44.3996 24.3961 44.8153 24.0161 45.1112 23.5445C45.4071 23.0728 45.5551 22.5487 45.5551 21.9722V9.35489L32.0278 16.6266V31.0126ZM38.7492 9.3942L43.7373 6.68206L32.0278 0.432369C31.4923 0.144123 30.9287 0 30.3369 0C29.7451 0 29.1814 0.144123 28.646 0.432369L25.3064 2.20115L38.7492 9.3942ZM30.3369 13.9144L35.3673 11.2416L21.9669 4.00924L16.8941 6.72137L30.3369 13.9144Z" fill="white" />
+            <path
+              d="M13.5273 38.2148V23.8287L0 16.557V29.1744C0 29.7508 0.147955 30.2749 0.443864 30.7466C0.739774 31.2183 1.15546 31.5982 1.69091 31.8865L13.5273 38.2148ZM16.9091 38.2148L28.7455 31.8865C29.2809 31.5982 29.6966 31.2183 29.9925 30.7466C30.2884 30.2749 30.4364 29.7508 30.4364 29.1744V16.557L16.9091 23.8287V38.2148ZM23.6305 16.5963L28.6187 13.8842L16.9091 7.63452C16.3737 7.34627 15.81 7.20215 15.2182 7.20215C14.6264 7.20215 14.0627 7.34627 13.5273 7.63452L10.1877 9.4033L23.6305 16.5963ZM15.2182 21.1166L20.2487 18.4437L6.84819 11.2114L1.77546 13.9235L15.2182 21.1166Z"
+              fill="white" />
+            <path
+              d="M16.0229 24.114L16.6446 24.5646C16.3487 24.0929 16.6446 25.141 16.6446 24.5646C16.9405 25.0362 16.2741 24.3961 16.8096 24.6843L16.0229 24.114ZM32.0278 31.0126L43.8642 24.6843C44.3996 24.3961 44.8153 24.0161 45.1112 23.5445C45.4071 23.0728 45.5551 22.5487 45.5551 21.9722V9.35489L32.0278 16.6266V31.0126ZM38.7492 9.3942L43.7373 6.68206L32.0278 0.432369C31.4923 0.144123 30.9287 0 30.3369 0C29.7451 0 29.1814 0.144123 28.646 0.432369L25.3064 2.20115L38.7492 9.3942ZM30.3369 13.9144L35.3673 11.2416L21.9669 4.00924L16.8941 6.72137L30.3369 13.9144Z"
+              fill="white" />
           </svg>
         </div>
         <div class="flex flex-col">
@@ -39,7 +46,9 @@
     <button id="large" class="pkg-select px-4 py-2 rounded-lg bg-buttonBg flex container gap-6 focus:ring-2 ring-white">
       <div class="flex container gap-6">
         <div class="flex justify-start p-2 rounded-full w-[48px] h-[48px] max-w-[48px] max-h-[48px]">
-          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-packages" width="36" height="36" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-packages" width="36" height="36"
+            viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round"
+            stroke-linejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
             <path d="M7 16.5l-5 -3l5 -3l5 3v5.5l-5 3z" />
             <path d="M2 13.5v5.5l5 3" />
@@ -61,8 +70,10 @@
     </button>
     <div class="flex justify-center">
       <div class="flex space-x-2 w-64">
-        <button class="bg-white text-black py-2 px-4 rounded-lg text-lg flex-1" onclick="selectPackageSizeCancel()">Cancel</button>
-        <button id="selectSizeNextBtn" class="bg-black text-white py-2 px-4 rounded-lg text-lg flex-1">Next</button>
+        <button class="bg-white text-black py-2 px-4 rounded-lg text-lg flex-1 focus:ring-black focus:ring-2"
+          onclick="selectPackageSizeCancel()">Cancel</button>
+        <button id="selectSizeNextBtn"
+          class="bg-black text-white py-2 px-4 rounded-lg text-lg flex-1  focus:ring-white focus:ring-2">Next</button>
       </div>
     </div>
   </div>

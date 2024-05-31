@@ -1,57 +1,69 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <title>Dronify</title>
-    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
 
-    <!-- CSS style sheet -->
-    <link rel="stylesheet" type="text/css" href="styles.css" />
+<head>
+  <meta charset="utf-8" />
+  <title>Dronify</title>
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/images/Dronify_Favicon.png" />
+  <!-- CSS style sheet -->
+  <link rel="stylesheet" type="text/css" href="styles.css" />
 
-    <!-- JQuery -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/images/Dronify_Favicon.png">
 
-    <!-- Tailwind and Flowbite -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+  <!-- Google Font family  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Raleway:ital@0;1&display=swap" rel="stylesheet">
 
-    <!-- import map JS (different from tiles) -->
-    <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet" />
-    <script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
+  <!-- JQuery -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-    <!-- import turf JS -->
-    <script src="https://api.mapbox.com/mapbox.js/plugins/turf/v3.0.11/turf.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
+  <!-- Tailwind and Flowbite -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
 
-    <!-- import geocoder plugins for search bar from Mapbox -->
-    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
-    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css" />
+  <!-- import map JS (different from tiles) -->
+  <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet" />
+  <script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
 
-    <script>
-      tailwind.config = {
-        theme: {
+  <!-- import turf JS -->
+  <script src="https://api.mapbox.com/mapbox.js/plugins/turf/v3.0.11/turf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
+
+  <!-- import geocoder plugins for search bar from Mapbox -->
+  <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
+  <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
           colors: {
-            transparent: "transparent",
-            current: "currentColor",
-            white: "#ffffff",
-            black: "#000000",
-            cardBg: "#31B6C0",
-            cardBgHover: "#2A9AA2",
-            buttonBg: "#074464",
-            bluishGray: "#8FA3AD",
-            yellowishGray: "#CBCBCB",
-            darkestShade: "#010204",
+            transparent: 'transparent',
+            current: 'currentColor',
+            'white': '#ffffff',
+            'black': '#000000',
+            'cardBg': '#31B6C0',
+            'cardBgHover': '#2A9AA2',
+            'buttonBg': '#074464',
+            'bluishGray': '#8FA3AD',
+            'yellowishGray': '#CBCBCB',
+            'darkestShade': '#010204',
           },
-        },
-      };
-    </script>
+          fontFamily: {
+            'Nunito': ['Nunito', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
 
-    <link rel="stylesheet" href="/styles/animation.css" />
-    <link rel="stylesheet" href="/styles/battery_stations_map.css" />
-  </head>
+  <link rel="stylesheet" href="/styles/animation.css" />
+  <link rel="stylesheet" href="/styles/battery_stations_map.css" />
+</head>
 
-  <body></body>
+<body></body>
+
 </html>
