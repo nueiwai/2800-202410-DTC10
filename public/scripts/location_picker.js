@@ -13,7 +13,6 @@ function getCurrentLocationStart() {
 }
 
 
-
 /**
  * Function to get the current location of the user for starting location
  * @returns {void}
@@ -119,6 +118,18 @@ function isLocationEmpty() {
 function appendAddresses() {
   let startAddress = sessionStorage.getItem('startAddress');
   let endAddress = sessionStorage.getItem('endAddress');
-  document.getElementById('startAddress').textContent = startAddress;
-  document.getElementById('endAddress').textContent = endAddress;
+
+  // Check if startAddress is present in session storage
+  if (!startAddress) {
+    document.getElementById('startAddress').textContent = "Chosen Battery Station";
+  } else {
+    document.getElementById('startAddress').textContent = startAddress;
+  }
+
+  // Check if endAddress is present in session storage
+  if (!endAddress) {
+    document.getElementById('endAddress').textContent = "Your Location";
+  } else {
+    document.getElementById('endAddress').textContent = endAddress;
+  }
 }

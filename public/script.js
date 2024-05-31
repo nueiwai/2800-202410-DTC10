@@ -92,7 +92,7 @@ confirmLocationBtn.click(() => {
 
             // Hide mainMenuCard
             mainMenuCard.hide()
-        }, 400);
+        }, 300);
 
         if (sessionStorage.getItem("feature") === "direct") {
             setTimeout(() => {
@@ -101,8 +101,8 @@ confirmLocationBtn.click(() => {
                     calculateDistance(startLocation, endLocation);
                     getConfirmationAddress();
                     packageSizeOptions.show()
-                    packageSizeOptions.addClass("transition ease-out duration-500 transform translate-x-0")
-                }, 800);
+                    packageSizeOptions.addClass("transition ease-out duration-300 transform translate-x-0")
+                }, 600);
             });
 
         } else if (sessionStorage.getItem("feature") === "share") {
@@ -114,9 +114,9 @@ confirmLocationBtn.click(() => {
                     getConfirmationAddress();
                     displayTimeRoutes()
                     availableSharedRoutes.show();
-                    availableSharedRoutes.addClass("transition ease-out duration-500 transform translate-x-0")
+                    availableSharedRoutes.addClass("transition ease-out duration-300 transform translate-x-0")
                 });
-            }, 500);
+            }, 600);
             // }
         }
     }
@@ -140,11 +140,11 @@ function availableSharedRoutesNext() {
         return
     } else {
         setTimeout(() => {
-            availableSharedRoutes.addClass("transition ease-in duration-400 transform translate-x-0")
+            availableSharedRoutes.addClass("transition ease-in duration-300 transform translate-x-0")
             availableSharedRoutes.hide()
             packageSizeOptions.show()
-            packageSizeOptions.addClass("transition ease-out duration-400 transform translate-x-0")
-        }, 800);
+            packageSizeOptions.addClass("transition ease-out duration-300 transform translate-x-0")
+        }, 600);
     }
 }
 
@@ -155,12 +155,12 @@ selectSizeNextBtn.click(() => {
         return
     } else {
         setTimeout(() => {
-            packageSizeOptions.addClass("transition ease-in duration-400 transform translate-x-0")
+            packageSizeOptions.addClass("transition ease-in duration-300 transform translate-x-0")
             packageSizeOptions.hide();
             getCardsAndAppendToModal()
             paymentMethods.show()
-            paymentMethods.addClass("transition ease-out duration-400 transform translate-x-0")
-        }, 800);
+            paymentMethods.addClass("transition ease-out duration-300 transform translate-x-0")
+        }, 600);
     }
 });
 
@@ -174,11 +174,12 @@ function selectPackageSizeCancel() {
         location.reload();
     } else if (sessionStorage.getItem("feature") === "share") {
         setTimeout(() => {
-            packageSizeOptions.addClass("transition ease-in duration-400 transform translate-x-0")
+            sessionStorage.removeItem("selectedRoute")
+            packageSizeOptions.addClass("transition ease-in duration-300 transform translate-x-0")
             packageSizeOptions.hide()
             availableSharedRoutes.show()
-            availableSharedRoutes.addClass("transition ease-out duration-400 transform translate-x-0")
-        }, 800);
+            availableSharedRoutes.addClass("transition ease-out duration-300 transform translate-x-0")
+        }, 600);
     }
 }
 
@@ -189,10 +190,10 @@ paymentMethodNextBtn.click(() => {
         return
     } else {
         setTimeout(() => {
-            paymentMethods.addClass("transition ease-in duration-400 transform translate-x-0")
+            paymentMethods.addClass("transition ease-in duration-300 transform translate-x-0")
             paymentMethods.hide()
 
-        }, 400);
+        }, 300);
 
         appendAddresses();
         updateTimer();
@@ -201,8 +202,8 @@ paymentMethodNextBtn.click(() => {
             let totalDuration = sessionStorage.getItem('estimatedDuration');
             let eachDuration = parseFloat(totalDuration) / 4;
             animateComponents(totalDuration, eachDuration)
-            confirmationMenuContainer.addClass("transition ease-out duration-400 transform translate-x-0")
-        }, 400);
+            confirmationMenuContainer.addClass("transition ease-out duration-300 transform translate-x-0")
+        }, 300);
     }
 });
 
@@ -213,20 +214,23 @@ paymentMethodNextBtn.click(() => {
 function selectPaymentCancel() {
     setTimeout(() => {
         sessionStorage.removeItem("paymentMethod")
-        paymentMethods.addClass("transition ease-in duration-400 transform translate-x-0")
+        paymentMethods.addClass("transition ease-in duration-300 transform translate-x-0")
         paymentMethods.hide()
         if (sessionStorage.getItem("feature") === "direct") {
+            sessionStorage.removeItem("pkgSize")
             packageSizeOptions.show()
-            packageSizeOptions.addClass("transition ease-out duration-400 transform translate-x-0")
+            packageSizeOptions.addClass("transition ease-out duration-300 transform translate-x-0")
         } else if (sessionStorage.getItem("feature") === "share") {
+            sessionStorage.removeItem("pkgSize")
             packageSizeOptions.show()
-            packageSizeOptions.addClass("transition ease-out duration-400 transform translate-x-0")
+            packageSizeOptions.addClass("transition ease-out duration-300 transform translate-x-0")
         } else if (sessionStorage.getItem("feature") === "roadside") {
+            sessionStorage.removeItem("batteryOption")
             availableBatteryCard.show()
             sessionStorage.removeItem("batteryOption")
-            availableBatteryCard.addClass("transition ease-out duration-400 transform translate-x-0")
+            availableBatteryCard.addClass("transition ease-out duration-300 transform translate-x-0")
         }
-    }, 800);
+    }, 600);
 }
 
 /**
@@ -255,13 +259,13 @@ function availableBatteryCancel() {
     clearMarkers();
     sessionStorage.clear();
     setTimeout(() => {
-        availableBatteryCard.removeClass("transition ease-in duration-400 transform translate-x-0")
-        availableBatteryCard.addClass("transition ease-out duration-400 transform translate-x-0")
+        availableBatteryCard.removeClass("transition ease-in duration-300 transform translate-x-0")
+        availableBatteryCard.addClass("transition ease-out duration-300 transform translate-x-0")
         getLocationBatteryBtn.hide()
         availableBatteryCard.hide()
         mainMenuCard.show()
-        mainMenuCard.addClass("transition ease-in duration-400 transform translate-x-0")
-    }, 800);
+        mainMenuCard.addClass("transition ease-in duration-300 transform translate-x-0")
+    }, 600);
 }
 
 /**
@@ -274,12 +278,12 @@ function availableBatteryNext() {
         return
     } else {
         setTimeout(() => {
-            availableBatteryCard.addClass("transition ease-in duration-400 transform translate-x-0")
+            availableBatteryCard.addClass("transition ease-in duration-300 transform translate-x-0")
             availableBatteryCard.hide()
             getCardsAndAppendToModal()
             paymentMethods.show()
-            mainMenuCard.removeClass("transition ease-in duration-400 transform translate-x-0")
-            paymentMethods.addClass("transition ease-out duration-400 transform translate-x-0")
+            mainMenuCard.removeClass("transition ease-in duration-300 transform translate-x-0")
+            paymentMethods.addClass("transition ease-out duration-300 transform translate-x-0")
         });
     }
 }
