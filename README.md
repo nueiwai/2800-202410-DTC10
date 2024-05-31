@@ -16,41 +16,27 @@
 **Dronify** is a web application that deploys autonomous drones (on-demand) to offer package delivery and roadside assistance for autonomous car owners during accidents, thereby reducing delivery time and traffic congestion.
 
 ## Project Technologies
-**Front-End**
+### Front-End
 * HTML, CSS 
 * Tailwind
 * Express.js
 * EJS
 * AJAX
 
-**UI Component Library**
+### UI Component Library
 * Flowbite
-* Cloudinary
+* **Cloudinary** for populating user’s profile image
 
-**Back-End**
+### Back-End
 * JavaScript
 * jQuery
-* Turf.js
-* MongoDB
-
-**API**
-* Mapbox API
-* Geolocation API
-* Open Weather API
-
-
-For the **front-end** we used:
-* **Flowbite** as our UI library
-
-For the **back-end** we used:
-* **Mapbox API** for the map interface and the foundation for the visual interface
 * **Turf.js** for routing display on the map
+* **MongoDB** for hosting our data collection (user’s personal information, user’s session, battery station geo-coordinates)
+
+### API
+* **Mapbox API** for the map interface and the foundation for the visual interface
 * **Geolocation API** for getting the user’s current location
 * **Open Weather API** for our Easter egg
-Cloudinary for populating user’s profile image
-
-For the **database** we used:
-* **MongoDB** for hosting our data collection (user’s personal information, user’s session, battery station geo-coordinates)
 
 ## List of Files
 ```
@@ -60,10 +46,10 @@ For the **database** we used:
 ├── .env                                # env file
 ├── package-lock.json                   # package-lock.json file
 ├── package.json                        # package.json file                        
-├── server.js                           # 
-├── users.js                            # 
-├── battery_station.js                  # 
-├── tailwind.config.js                  # 
+├── server.js                           # server.js file
+├── users.js                            # users.js file
+├── battery_station.js                  # battery_station.js file
+├── tailwind.config.js                  # tailwind.config.js file
 └── README.md
 
 It has the following subfolders and files:
@@ -219,8 +205,8 @@ https://opendata.vancouver.ca/explore/dataset/electric-vehicle-charging-stations
 * Icons8 for in-app icons - https://icons8.com/icons/
 * Tabler for in-app icons - https://tablericons.com/
 * Gemini Advanced for mathematical logic implemented in map routing - https://gemini.google.com/advanced
-
-## References
+* Default profile image from - Google Image
+* Landing page video from - Freepik
 * 404 page animation design - https://www.silocreativo.com/en/creative-examples-404-error-css
 
 ## AI Usage
@@ -238,12 +224,7 @@ https://opendata.vancouver.ca/explore/dataset/electric-vehicle-charging-stations
 **Limitations Encountered:**
 * Integration testing is hard for the current “free” models of AI to do well, when there are many components of the application coming together and working together in a somewhat delicate manner, it is hard for the current AI models to fully capture this well and provide accurate trouble-shooting
 
-## Sources
-* Default profile image from - Google Image
-* Landing page video from - Freepik
-
 ## Contact Information
-
 You can reach us via GitHub profiles:
 
 [![GitHub](https://img.shields.io/badge/GitHub-CandiceWei-blue?logo=github)](https://github.com/candiceweily)
