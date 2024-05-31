@@ -42,3 +42,33 @@ async function calculateDistanceAndTimeForDroneShare() {
 
   calculateSharedPrices(length, pointsAlongRouteOrdered.length - 2);
 }
+
+
+/**
+ * Timer for the delivery processes
+ * @returns {void}
+ */
+function updateTimer() {
+  const startingSeconds = parseInt(sessionStorage.getItem("estimatedDuration"), 10);
+  let timeRemaining = startingSeconds;
+  const timerElement = document.getElementById("estimatedTime");
+
+  function update() {
+    const minutes = Math.floor(timeRemaining / 60);
+    const seconds = timeRemaining % 60;
+    timerElement.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+    if (timeRemaining > 0) {
+      timeRemaining--;
+    } else {
+      clearInterval(timer);
+      setTimeout(() => {
+        timerElement.textContent = "00:00";
+        window.location.href = "/postlogin";
+      }, 2000);
+    }
+  }
+
+  update();
+  const timer = setInterval(update, 1000); // Update every second
+}

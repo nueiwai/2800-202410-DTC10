@@ -35,7 +35,7 @@
       zoom: 8.7,
     });
   }
- 
+
   let startLocation;
   let endLocation;
 
@@ -110,12 +110,12 @@
     });
   });
 
-  startGeocoder.on('result', function (e) {
+  startGeocoder.on('result', function(e) {
     startLocation = e.result.geometry.coordinates;
     window.mapboxStartLocation = startLocation;
   });
 
-  endGeocoder.on('result', function (e) {
+  endGeocoder.on('result', function(e) {
     endLocation = e.result.geometry.coordinates;
     window.mapboxDestination = endLocation;
     marker.setLngLat(endLocation).addTo(mini_map);
@@ -138,12 +138,11 @@
     }
 
     if (typeof endLocation === 'undefined') {
-      endLocation = window.manualDestination;
+      endLocation = window.manualEndLocation;
     }
 
     // Check if start and end locations are defined, then plot the points
     if (startLocation && endLocation) {
-      console.log('destination:', window.destination);
       plotPoints(startLocation, endLocation);
       setTimeout(() => {
         map.flyTo({
@@ -183,21 +182,21 @@
     const pointsGeojson = {
       type: 'FeatureCollection',
       features: [{
-        type: 'Feature',
-        geometry: {
-          type: 'Point',
-          coordinates: start
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: start
+          },
+          properties: {}
         },
-        properties: {}
-      },
-      {
-        type: 'Feature',
-        geometry: {
-          type: 'Point',
-          coordinates: end
-        },
-        properties: {}
-      }
+        {
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: end
+          },
+          properties: {}
+        }
       ]
     };
 

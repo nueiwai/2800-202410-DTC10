@@ -1,0 +1,61 @@
+/* #availableBatteriesCard {
+  transform: translateX(100%);
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+} */
+
+.slide-in-left {
+  transform: translateX(0%) !important;
+  transition-property: transform !important;
+  transition-duration: 300ms !important;
+  animation-timing-function: ease-in-out !important;
+}
+
+.slide-out-left {
+  transform: translateX(-100%) !important;
+  transition-property: transform !important;
+  transition-duration: 300ms !important;
+  animation-timing-function: ease-in-out !important;
+}
+
+.slide-up {
+  transform: translateY(-100%) !important;
+  transition-property: transform !important;
+  transition-duration: 300ms !important;
+  animation-timing-function: ease-in-out !important;
+}
+
+.set-offscreen-right {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  transform: translateX(100%);
+}
+
+/* #paymentMethods {
+  transform: translateX(100%);
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  padding-top: 20px;
+} */
+
+#starting-location>div {
+  border-radius: 15px !important;
+}
+
+#destination>div {
+  border-radius: 15px !important;
+}
+
+input {
+  outline: none !important;
+}
+
+.mapboxgl-ctrl-geocoder--input {
+  padding-left: 45px !important;
+}

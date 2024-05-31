@@ -48,7 +48,7 @@ function plotCurrentLocationOfBatteryGetter(currentBatteryGetterLocation) {
 
   setTimeout(() => {
     findNearestPoints(currentBatteryGetterLocation);
-  }, 500);
+  }, 1250);
 }
 
 
@@ -69,8 +69,6 @@ function findNearestPoints(userLocation) {
   const turfPoints = geojson.features.map(feature => {
     return turf.point(feature.location.coordinates);
   });
-
-  const turfCollection = turf.featureCollection(turfPoints);
 
   // Calculate distances between userLocation and each point
   const distances = turfPoints.map(point => {
@@ -143,7 +141,6 @@ function selectBatteryStation(event) {
   }, 500);
 
   endLocation = endCoordinates
-
 
   map.flyTo({
     center: endCoordinates,
