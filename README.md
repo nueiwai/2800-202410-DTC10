@@ -68,9 +68,9 @@ For the **database** we used:
 
 It has the following subfolders and files:
 ├── .git                                # Folder for git repo
-├── node_modules/                        # node_modules file
-├── .vscode/                             # .vscode file
-├── public/                              # Folder for all static files
+├── node_modules/                       # node_modules file
+├── .vscode/                            # .vscode file
+├── public/                             # Folder for all static files
     └── images/
         ├── battery_marker.svg
         ├── catmeme.png
@@ -82,12 +82,20 @@ It has the following subfolders and files:
         ├── core_feature_icon1.svg
         ├── core_feature_icon2.svg
         ├── core_feature_icon3.svg
-        ├── chevrons-right.png
-        ├── chevrons-right.png
-        ├── chevrons-right.png
-        ├── chevrons-right.png
-        ├── chevrons-right.png
-        └── image1.png 
+        ├── Dronify_Favicon.png
+        ├── Feature_1.png
+        ├── Feature_2.png
+        ├── Feature_3.png
+        ├── Feature_4.png
+        ├── Feature_5.png
+        ├── Feature_6.png
+        ├── Feature_7.png
+        ├── Feature_8.png
+        ├── Feature_9.png
+        ├── Feature_cover.png
+        ├── logo.png
+        ├── package.png
+        └── profile.png 
     └── scripts/
         ├── animation.js
         ├── battery_stations.js
@@ -102,35 +110,33 @@ It has the following subfolders and files:
         └── battery_stations_map.css
     └── videos/
         └── landing_page_video.webm
-
-    └── script.js/
-
-
-
+    └── script.js
 ├── views                            # Folder for all ejs files
-    /authentication.js
-    /firebaseAPI_DTC11.js
-    /main.js
-    /profile.js
-    /script.js
-    /skeleton.js
-    /notes.js
-    /timer.js
-    /resource_main_page.js
-    /resource_navbar_footer.js
-    /resource_consultation_page.js
-    /resource_fitness_course_page.js
-    /resource_helping_group_page.js
-    /helping_group_each.js
-    /helping_group_review.js                         
-├── styles                              # Folder for styles
-    /style_notes.css    
-    /style.css
-    /style1.css                        
-├── text                                # Folder for nav bar and footer
-    /footer.html
-    /nav_after_login.html
-    /nav_before.login.html
+    └── templates/
+        ├── 404page_header.ejs
+        ├── bottom_main_menu.ejs
+        ├── footer.ejs
+        ├── header.ejs
+        ├── map_footer.ejs
+        ├── map_header.ejs
+        └── map.ejs
+    └── 404.ejs
+    └── account.ejs
+    └── available_battery.ejs
+    └── available_routes.ejs
+    └── confirmation.ejs
+    └── forgotpassword.ejs
+    └── landing_page.ejs
+    └── location_modal.ejs
+    └── login.ejs
+    └── old_payment_edit.ejs
+    └── package_sizes.ejs
+    └── payment_edit.ejs
+    └── postlogin.ejs
+    └── profile_edit.ejs
+    └── resetpassword.ejs
+    └── select_payment.ejs
+    └── signup.ejs                      
 
 ```
 
