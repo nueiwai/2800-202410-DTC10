@@ -17,6 +17,7 @@
 
 ## Project Technologies
 ### Front-End
+### Front-End
 * HTML, CSS 
 * Tailwind
 * Express.js
@@ -24,12 +25,19 @@
 * AJAX
 
 ### UI Component Library
+### UI Component Library
 * Flowbite
+* **Cloudinary** for populating user’s profile image
 * **Cloudinary** for populating user’s profile image
 
 ### Back-End
+### Back-End
 * JavaScript
 * jQuery
+* **Turf.js** for routing display on the map
+* **MongoDB** for hosting our data collection (user’s personal information, user’s session, battery station geo-coordinates)
+
+### API
 * **Turf.js** for routing display on the map
 * **MongoDB** for hosting our data collection (user’s personal information, user’s session, battery station geo-coordinates)
 
@@ -50,6 +58,10 @@
 ├── users.js                            # users.js file
 ├── battery_station.js                  # battery_station.js file
 ├── tailwind.config.js                  # tailwind.config.js file
+├── server.js                           # server.js file
+├── users.js                            # users.js file
+├── battery_station.js                  # battery_station.js file
+├── tailwind.config.js                  # tailwind.config.js file
 └── README.md
 
 It has the following subfolders and files:
@@ -57,7 +69,10 @@ It has the following subfolders and files:
 ├── node_modules/                       # node_modules file
 ├── .vscode/                            # .vscode file
 ├── public/                             # Folder for all static files
-    └── images/
+├── node_modules/                       # node_modules file
+├── .vscode/                            # .vscode file
+├── public/                             # Folder for all static files
+    ├── images/
         ├── battery_marker.svg
         ├── catmeme.png
         ├── chevrons-right.png
@@ -81,8 +96,22 @@ It has the following subfolders and files:
         ├── Feature_cover.png
         ├── logo.png
         ├── package.png
+        ├── profile.png 
+        ├── Dronify_Favicon.png
+        ├── Feature_1.png
+        ├── Feature_2.png
+        ├── Feature_3.png
+        ├── Feature_4.png
+        ├── Feature_5.png
+        ├── Feature_6.png
+        ├── Feature_7.png
+        ├── Feature_8.png
+        ├── Feature_9.png
+        ├── Feature_cover.png
+        ├── logo.png
+        ├── package.png
         └── profile.png 
-    └── scripts/
+    ├── scripts/
         ├── animation.js
         ├── battery_stations.js
         ├── calculate_distance_time.js
@@ -90,15 +119,15 @@ It has the following subfolders and files:
         ├── drone_share.js
         ├── get_cards_from_DB.js
         ├── location_picker.js
+        ├── script.js
         └── session_storage.js
-    └── styles/
+    ├── styles/
         ├── animation.css
         └── battery_stations_map.css
     └── videos/
         └── landing_page_video.webm
-    └── script.js
-├── views                            # Folder for all ejs files
-    └── templates/
+└── views                            # Folder for all ejs files
+    ├── templates/
         ├── 404page_header.ejs
         ├── bottom_main_menu.ejs
         ├── footer.ejs
@@ -106,22 +135,22 @@ It has the following subfolders and files:
         ├── map_footer.ejs
         ├── map_header.ejs
         └── map.ejs
-    └── 404.ejs
-    └── account.ejs
-    └── available_battery.ejs
-    └── available_routes.ejs
-    └── confirmation.ejs
-    └── forgotpassword.ejs
-    └── landing_page.ejs
-    └── location_modal.ejs
-    └── login.ejs
-    └── old_payment_edit.ejs
-    └── package_sizes.ejs
-    └── payment_edit.ejs
-    └── postlogin.ejs
-    └── profile_edit.ejs
-    └── resetpassword.ejs
-    └── select_payment.ejs
+    ├── 404.ejs
+    ├── account.ejs
+    ├── available_battery.ejs
+    ├── available_routes.ejs
+    ├── confirmation.ejs
+    ├── forgotpassword.ejs
+    ├── landing_page.ejs
+    ├── location_modal.ejs
+    ├── login.ejs
+    ├── old_payment_edit.ejs
+    ├── package_sizes.ejs
+    ├── payment_edit.ejs
+    ├── postlogin.ejs
+    ├── profile_edit.ejs
+    ├── resetpassword.ejs
+    ├── select_payment.ejs
     └── signup.ejs                      
 
 ```
