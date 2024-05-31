@@ -1,4 +1,4 @@
-<%- include('templates/map_header') %>
+<%- include('templates/header') %>
 
   <!-- the account icon to the right of the search bar -->
   <div class="account-icon">
@@ -6,19 +6,23 @@
       <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="44" height="44" viewBox="0 0 64 64" id="Account">
         <path
           d="M32,2A30.034,30.034,0,0,0,2,32a29.6307,29.6307,0,0,0,1.1387,8.1758,1,1,0,1,0,1.9218-.5518A27.64,27.64,0,0,1,4,32a28,28,0,0,1,56,0,27.64,27.64,0,0,1-1.06,7.624,1,1,0,1,0,1.9218.5518A29.6307,29.6307,0,0,0,62,32,30.034,30.034,0,0,0,32,2Z"
-          fill="#cbcbcb" class="color000000 svgShape"></path>
+          fill="#074464" class="color000000 svgShape"></path>
         <path
           d="M37.8383,35.5991a13,13,0,1,0-11.6766,0,28.89,28.89,0,0,0-16.5474,9.97,5.0514,5.0514,0,0,0,.1484,6.564,29.9923,29.9923,0,0,0,44.4746,0,5.0514,5.0514,0,0,0,.1484-6.564A28.89,28.89,0,0,0,37.8383,35.5991Z"
-          fill="#cbcbcb" class="color000000 svgShape"></path>
+          fill="#074464" class="color000000 svgShape"></path>
       </svg>
     </a>
   </div>
+
+  <h1
+    style="text-align: center; margin: 20px 0; position: absolute; left: 50%; transform: translateX(-50%); z-index: 1; color: black; font-size:xx-large; font-weight:800; font-family: 'Nunito', sans-serif; letter-spacing: 2px;">
+    Dronify</h1>
 
   <!-- the home icon to the left of the search bar -->
   <div class="home-icon">
     <a href="/postlogin">
       <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="44" height="44" viewBox="0 0 48 48"
-        style="fill:#cbcbcb;">
+        style="fill:#074464;">
         <path
           d="M39.5,43h-9c-1.381,0-2.5-1.119-2.5-2.5v-9c0-1.105-0.895-2-2-2h-4c-1.105,0-2,0.895-2,2v9c0,1.381-1.119,2.5-2.5,2.5h-9	C7.119,43,6,41.881,6,40.5V21.413c0-2.299,1.054-4.471,2.859-5.893L23.071,4.321c0.545-0.428,1.313-0.428,1.857,0L39.142,15.52	C40.947,16.942,42,19.113,42,21.411V40.5C42,41.881,40.881,43,39.5,43z">
         </path>
@@ -26,14 +30,19 @@
     </a>
   </div>
 
-  <div class="w-full bg-cardBg h-full fixed bottom-0 left-1/2 transform -translate-x-1/2 pt-56">
+  <div class="w-full bg-cardBg h-full fixed bottom-0 left-1/2 transform -translate-x-1/2 pt-56 font-Nunito">
 
     <div class="flex flex-col items-center">
-      <img class="w-40 h-40 mb-3 rounded-full shadow-lg" src="profile.png" alt="Profile image" />
-      <div class="flex items-center">
-        <h5 class="m-4 text-xl font-medium text-gray-900 dark:text-white">
-          <%= user && user.name ? user.name : 'Unknown User' %>
-        </h5>
+      <div class="profile-pic" style="position: relative;">
+        <img class="w-40 h-40 mb-3 rounded-full shadow-lg"
+          src="<%= user.profileImageUrl ? user.profileImageUrl : 'profile.png' %>" alt="Profile image" />
+        <svg onclick="document.getElementById('fileUpload').click();" fill="#000000" width="40px" height="40px"
+          style="position: absolute; right:2; bottom:2;" viewBox="-1 0 19 19" xmlns="http://www.w3.org/2000/svg"
+          class="cf-icon-svg">
+          <path
+            d="M16.5 9.5a8 8 0 1 1-8-8 8 8 0 0 1 8 8zm-2.874-2.287a.803.803 0 0 0-.8-.8h-2.054v-.251a.802.802 0 0 0-.8-.8h-2.93a.802.802 0 0 0-.8.8v.25H4.186a.802.802 0 0 0-.8.8v5.166a.802.802 0 0 0 .8.8h8.639a.803.803 0 0 0 .8-.8zm-2.692 2.582a2.427 2.427 0 1 1-2.428-2.427 2.428 2.428 0 0 1 2.428 2.427zm-4.055 0a1.627 1.627 0 1 0 1.627-1.627A1.63 1.63 0 0 0 6.88 9.795zm2.75-3.931a.4.4 0 1 0 .4.4.4.4 0 0 0-.4-.4z" />
+        </svg>
+        <input type="file" id="fileUpload" style="display: none;" onchange="uploadFile(this.files)">
       </div>
 
       <div class="flex flex-col items-center space-y-4 mt-10">
@@ -47,9 +56,38 @@
       </div>
       <div>
         <button onclick="window.location.href='/logout'"
-          class="w-full py-3 px-8 mt-14 text-md font-medium text-center text-white bg-red-500 rounded-xl hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Sign
+          class="w-full py-3 px-8 mt-14 text-md font-medium text-center text-white bg-red-600 rounded-xl hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Sign
           Out</button>
       </div>
     </div>
   </div>
+
+  <script>
+    function uploadFile(files) {
+      if (files.length === 0) {
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('image', files[0]);
+
+      fetch('/upload_profile_image', {
+        method: 'POST',
+        body: formData
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            document.querySelector('.profile-pic img').src = data.url;
+          } else {
+            alert('Failed to upload image');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('Error uploading image');
+        });
+    }
+  </script>
+
   <%- include('templates/footer') %>

@@ -1,39 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dronify</title>
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/images/Dronify_Favicon.png" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dronify</title>
 
-    <!-- JQuery -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <!-- CSS style sheet -->
+  <link rel="stylesheet" type="text/css" href="styles.css" />
 
-    <!-- Tailwind and Flowbite -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/images/Dronify_Favicon.png" />
 
-    <script>
-      tailwind.config = {
-        theme: {
+  <!-- Google Font family  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+
+  <!-- JQuery -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+  <!-- Tailwind and Flowbite -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+
+  <style>
+    .account-icon {
+      position: absolute;
+      top: 24px;
+      right: 5%;
+      z-index: 1;
+    }
+
+    .home-icon {
+      position: absolute;
+      top: 24px;
+      left: 5%;
+      z-index: 1;
+    }
+  </style>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
           colors: {
-            transparent: "transparent",
-            current: "currentColor",
-            white: "#ffffff",
-            black: "#000000",
-            cardBg: "#31B6C0",
-            cardBgHover: "#2A9AA2",
-            buttonBg: "#074464",
-            bluishGray: "#8FA3AD",
-            yellowishGray: "#CBCBCB",
-            darkestShade: "#010204",
+            transparent: 'transparent',
+            current: 'currentColor',
+            'white': '#ffffff',
+            'black': '#000000',
+            'cardBg': '#31B6C0',
+            'cardBgHover': '#2A9AA2',
+            'buttonBg': '#074464',
+            'bluishGray': '#8FA3AD',
+            'yellowishGray': '#CBCBCB',
+            'darkestShade': '#010204',
           },
-        },
-      };
-    </script>
-  </head>
+          fontFamily: {
+            'Nunito': ['Nunito', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+</head>
 
-  <body></body>
+<body></body>
+
 </html>

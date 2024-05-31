@@ -33,9 +33,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  // address: {
-  //   type: String
-  // },
   phonenumber: {
     type: String
   },
@@ -46,6 +43,9 @@ const userSchema = new mongoose.Schema({
     type: String
   },
   postal: {
+    type: String
+  },
+  profileImageUrl: {
     type: String
   }
 });

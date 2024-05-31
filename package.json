@@ -11,6 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "cloudinary": "^1.41.3",
+    "cloudinary-jquery": "^2.13.1",
     "connect-mongo": "^5.1.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
@@ -18,8 +20,11 @@
     "express": "^4.19.2",
     "express-connect": "^0.0.1",
     "express-session": "^1.18.0",
+    "joi": "^17.13.1",
     "mongodb": "^6.6.1",
     "mongoose": "^8.3.4",
+    "multer": "^1.4.5-lts.1",
+    "multer-storage-cloudinary": "^4.0.0",
     "nodemon": "^3.1.0"
   }
 }

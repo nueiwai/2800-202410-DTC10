@@ -2,12 +2,20 @@
 <html>
 
 <head>
-  <meta charset='utf-8' />
+  <meta charset="utf-8" />
   <title>Dronify</title>
-  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+
+  <!-- CSS style sheet -->
+  <link rel="stylesheet" type="text/css" href="styles.css" />
 
   <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="/images/Dronify_Favicon.png">
+
+  <!-- Google Font family  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
 
   <!-- JQuery -->
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -17,42 +25,45 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
 
   <!-- import map JS (different from tiles) -->
-  <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet">
+  <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet" />
   <script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
 
   <!-- import turf JS -->
   <script src="https://api.mapbox.com/mapbox.js/plugins/turf/v3.0.11/turf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
 
   <!-- import geocoder plugins for search bar from Mapbox -->
-  <script
-    src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
-  <link rel="stylesheet"
-    href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css">
+  <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
+  <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css" />
 
   <script>
     tailwind.config = {
       theme: {
-        colors: {
-          transparent: 'transparent',
-          current: 'currentColor',
-          'white': '#ffffff',
-          'black': '#000000',
-          'cardBg': '#31B6C0',
-          'cardBgHover': '#2A9AA2',
-          'buttonBg': '#074464',
-          'bluishGray': '#8FA3AD',
-          'yellowishGray': '#CBCBCB',
-          'darkestShade': '#010204',
-        },
-      },
+        extend: {
+          colors: {
+            transparent: 'transparent',
+            current: 'currentColor',
+            'white': '#ffffff',
+            'black': '#000000',
+            'cardBg': '#31B6C0',
+            'cardBgHover': '#2A9AA2',
+            'buttonBg': '#074464',
+            'bluishGray': '#8FA3AD',
+            'yellowishGray': '#CBCBCB',
+            'darkestShade': '#010204',
+          },
+          fontFamily: {
+            'Nunito': ['Nunito', 'sans-serif']
+          }
+        }
+      }
     }
   </script>
 
-  <% if (typeof stations !=='undefined' ) { %>
-    <link rel="stylesheet" href="/styles/battery_stations_map.css">
-    <% } else { %>
-      <link rel="stylesheet" href="/styles/style.css">
-      <% } %>
+  <link rel="stylesheet" href="/styles/animation.css" />
+  <link rel="stylesheet" href="/styles/battery_stations_map.css" />
 </head>
 
-<body>
+<body></body>
+
+</html>
