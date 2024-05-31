@@ -1,10 +1,10 @@
-#availableBatteriesCard {
+/* #availableBatteriesCard {
   transform: translateX(100%);
   position: absolute;
   bottom: 0px;
   left: 0px;
   width: 100%;
-}
+} */
 
 .slide-in-left {
   transform: translateX(0%) !important;
@@ -35,14 +35,14 @@
   transform: translateX(100%);
 }
 
-#paymentMethods {
+/* #paymentMethods {
   transform: translateX(100%);
   position: absolute;
   bottom: 0px;
   left: 0px;
   width: 100%;
   padding-top: 20px;
-}
+} */
 
 #starting-location>div {
   border-radius: 15px !important;
@@ -58,7 +58,4 @@ input {
 
 .mapboxgl-ctrl-geocoder--input {
   padding-left: 45px !important;
-}
-
-#deliveryLocationModal{
 }
