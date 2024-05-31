@@ -129,6 +129,8 @@ It has the following subfolders and files:
 ## How to Run Our Project
 To get started with Dronify, the hosted version of the product can be used. You can get started immediately [here](https://dronify-mbme.onrender.com/). After the login page, you will be greeted with our three core features to select from.
 
+Or install using ```npm install```.
+
 ### What to Install
 
 **Language(s):**
