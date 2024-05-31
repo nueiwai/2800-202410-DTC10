@@ -160,9 +160,10 @@ Or install using ```npm install```.
 | Geolocation API | Getting the user's current location    |
 | Open Weather API | Our Easter Egg component    |
 
-### Required API Keys
+### Required Keys
 * Mapbox Acess Token
 * Open Weather API
+* Cloudinary Cloud Key
 
 ### Testing
 Here is our [link](https://docs.google.com/spreadsheets/d/14Fitry6ACC5__D6XGdvO7034vG4NWeVpk5qbL6u0m30/edit?usp=sharing) to the testing done for this project, feel free to take a look and contribute to any bugfix!
@@ -210,6 +211,19 @@ https://opendata.vancouver.ca/explore/dataset/electric-vehicle-charging-stations
 * Default profile image from - Google Image
 * Landing page video from - Freepik
 * 404 page animation design - https://www.silocreativo.com/en/creative-examples-404-error-css
+
+### API Licenses
+**[Mapbox Web SDK](https://github.com/mapbox/mapbox-gl-js)**
+
+Copyright © 2021 - 2023 Mapbox, Inc. All rights reserved.
+
+The software and files in this repository (collectively, “Software”) are licensed under the Mapbox TOS for use only with the relevant Mapbox product(s) listed at www.mapbox.com/pricing. This license allows developers with a current active Mapbox account to use and modify the authorized portions of the Software as needed for use only with the relevant Mapbox product(s) through their Mapbox account in accordance with the Mapbox TOS. This license terminates automatically if a developer no longer has a Mapbox account in good standing or breaches the Mapbox TOS. For the license terms, please see the Mapbox TOS at https://www.mapbox.com/legal/tos/ which incorporates the Mapbox Product Terms at www.mapbox.com/legal/service-terms. If this Software is a SDK, modifications that change or interfere with marked portions of the code related to billing, accounting, or data collection are not authorized and the SDK sends limited de-identified location and usage data which is used in accordance with the Mapbox TOS. [Updated 2023-01]
+
+**[OpenWeather API](https://openweathermap.org/full-price#licenses)**
+
+You can freely use our products and data for non-commercial or commercial purposes by crediting OpenWeather (TM) as a weather data provider in your product. We provide our products under [Creative Commons Attribution-ShareAlike 4.0 International license (CC BY-SA 4.0)](https://creativecommons.org/licenses/by-sa/4.0/).
+
+Data and database are open and licensed by [Open Data Commons Open Database License (ODbL)](https://opendatacommons.org/licenses/odbl/).
 
 ## AI Usage
 **Project Support:**
