@@ -135,10 +135,11 @@ function selectBatteryStation(event) {
   displayTimeBatteryStation();
 
   setTimeout(() => {
+    drawBatteryRoute(endCoordinates, startCoordinates);
     $("#mainMenuCard").hide()
     $("#availableBatteriesCard").show()
     $("#availableBatteriesCard").addClass("transition ease-in duration-300 transform translate-x-0")
-  }, 500);
+  }, 3400);
 
   endLocation = endCoordinates
 
@@ -148,6 +149,141 @@ function selectBatteryStation(event) {
   });
 }
 
+async function drawBatteryRoute(startLocation, endLocation) {
+
+  // Check if start and end locations are defined, then plot the points
+  if (startLocation && endLocation) {
+    setTimeout(() => {
+      map.flyTo({
+        center: startLocation,
+        zoom: 18,
+      });
+
+      setTimeout(() => {
+        map.flyTo({
+          center: endLocation,
+          zoom: 18,
+        });
+
+        setTimeout(() => {
+          drawArc(startLocation, endLocation);
+          map.flyTo({
+            center: [(startLocation[0] + endLocation[0]) / 2, (startLocation[1] + endLocation[1]) / 2],
+            zoom: ((startLocation[0] + endLocation[0]) / 2, (startLocation[1] + endLocation[1]) / 2) * 0.3,
+          });
+
+
+          drawShadow(startLocation, endLocation);
+        }, 1600);
+      }, 1300);
+    }, 200)
+  } else {
+    console.alert("Please enter a starting location and destination.");
+  }
+}
+
+
+/**
+ * Draw a curved arc between the start and end location points
+ * @param {Array} start - The start location coordinates
+ * @param {Array} end - The end location coordinates
+ *
+ * This line-arc block of code was adapted from code found here:
+ * source: https://www.youtube.com/watch?v=VNVmlWv4gdQ
+ */
+function drawArc(start, end) {
+  // First calculate the distance between start and end location points
+  const distance = Math.sqrt(Math.pow(end[0] - start[0], 2) + Math.pow(end[1] - start[1], 2));
+
+  // Calculate the midpoint between the start and end location points
+  const midpoint = [(start[0] + end[0]) / 2, (start[1] + end[1]) / 2];
+
+  // Next, offset the midpoint to create a control point for the curve arc
+  // We need to adjust the offset proportionally to the distance to avoid steep curves for short distances
+  const controlPoint = [midpoint[0], midpoint[1] + 0.7 * distance]; // Set multiplier to 0.7
+
+  const steps = 100;
+  const arcCoordinates = [];
+
+  for (let i = 0; i <= steps; i++) {
+    const t = i / steps;
+    const x = (1 - t) * (1 - t) * start[0] + 2 * (1 - t) * t * controlPoint[0] + t * t * end[0];
+    const y = (1 - t) * (1 - t) * start[1] + 2 * (1 - t) * t * controlPoint[1] + t * t * end[1];
+    arcCoordinates.push([x, y]);
+  }
+  const arcGeojson = {
+    type: 'FeatureCollection',
+    features: [{
+      type: 'Feature',
+      geometry: {
+        type: 'LineString',
+        coordinates: arcCoordinates
+      }
+    }]
+  };
+  if (map.getSource('line-arc')) {
+    map.getSource('line-arc').setData(arcGeojson);
+  } else {
+    map.addSource('line-arc', {
+      type: 'geojson',
+      data: arcGeojson
+    });
+    map.addLayer({
+      id: 'line-arc',
+      type: 'line',
+      source: 'line-arc',
+      layout: {
+        'line-join': 'round',
+        'line-cap': 'round'
+      },
+      paint: {
+        'line-color': '#31B6C0',
+        'line-width': 4,
+        'line-dasharray': [2, 2]
+      }
+    });
+  }
+}
+
+/** 
+ * Draw a straight line that simulates a shadow between the start and end location points 
+ * @param {Array} start - The start location coordinates
+ * @param {Array} end - The end location coordinates
+ */
+function drawShadow(start, end) {
+  const lineGeojson = {
+    type: 'FeatureCollection',
+    features: [{
+      type: 'Feature',
+      geometry: {
+        type: 'LineString',
+        coordinates: [start, end]
+      }
+    }]
+  } // Add the shadow 
+  if (map.getSource('line-shadow')) {
+    map.getSource('line-shadow').setData(lineGeojson);
+  } else {
+    map.addSource('line-shadow', {
+      type: 'geojson',
+      data: lineGeojson
+    });
+    map.addLayer({
+      id: 'line-shadow',
+      type: 'line',
+      source: 'line-shadow',
+      layout: {
+        'line-join': 'round',
+        'line-cap': 'round'
+      },
+      paint: {
+        'line-color': '#929090', // Shadow colour 
+        'line-width': 6, // Shadow width 
+        'line-opacity': 0.5 // Shadow opacity 
+      }
+    });
+  }
+}
 
 /**
  * Clear the map of all markers, popups

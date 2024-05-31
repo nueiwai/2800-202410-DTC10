@@ -1,5 +1,5 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
-<script type="text/javascript" src="/script.js"></script>
+<script src="/scripts/script.js"></script>
 <script src="/scripts/location_picker.js"></script>
 <script src="/scripts/calculate_distance_time.js"></script>
 <script src="/scripts/calculate_price.js"></script>
@@ -81,32 +81,28 @@
   });
   endGeocoder.addTo('#destination');
 
-  // After the map style has loaded on the page,
-  // add a source layer and default styling for a single point
   map.on('load', () => {
-    map.addSource('single-point', {
-      type: 'geojson',
-      data: {
-        type: 'FeatureCollection',
-        features: []
-      }
-    });
 
-    map.addLayer({
-      id: 'point',
-      source: 'single-point',
-      type: 'circle',
-      paint: {
-        'circle-radius': 10,
-        'circle-color': '#40E0D0'
-      }
-    });
+    // Variable to store the current marker
+    let currentMarker = null;
 
     // Listen for the result event from the Geocoder
     // result event is triggered when a user makes a selection
     // Add a marker at the result's coordinates
     geocoder.on('result', (event) => {
-      map.getSource('single-point').setData(event.result.geometry);
+      const location = event.result.geometry.coordinates;
+
+      // Remove the existing marker if it exists
+      if (currentMarker) {
+        currentMarker.remove();
+      }
+
+      // Create a new marker and add it to the map
+      currentMarker = new mapboxgl.Marker({
+          color: '#CD3434',
+          draggable: true
+        }).setLngLat(location)
+        .addTo(map);
     });
   });
 
@@ -160,7 +156,7 @@
             drawArc(startLocation, endLocation);
             map.flyTo({
               center: [(startLocation[0] + endLocation[0]) / 2, (startLocation[1] + endLocation[1]) / 2],
-              zoom: ((startLocation[0] + endLocation[0]) / 2, (startLocation[1] + endLocation[1]) / 2) * 0.23,
+              zoom: ((startLocation[0] + endLocation[0]) / 2, (startLocation[1] + endLocation[1]) / 2) * 0.3,
             });
 
 
@@ -174,7 +170,7 @@
   }
 
   /**
-   * Plot the start and end location points on the map
+   * Plot the start and end location markers on the map
    * @param {Array} start - The start location coordinates
    * @param {Array} end - The end location coordinates
    */
@@ -200,24 +196,21 @@
       ]
     };
 
-    if (map.getSource('points')) {
-      map.getSource('points').setData(pointsGeojson);
-    } else {
-      map.addSource('points', {
-        type: 'geojson',
-        data: pointsGeojson
-      });
-      map.addLayer({
-        id: 'points',
-        type: 'circle',
-        source: 'points',
-        paint: {
-          'circle-radius': 6,
-          'circle-color': '#CD3434' // Sign out button colour
-        }
-      });
-    }
+    const markerStart = new mapboxgl.Marker({
+        color: '#31B6C0',
+        draggable: false
+      })
+      .setLngLat(pointsGeojson.features[0].geometry.coordinates)
+      .addTo(map); // Add the marker to the map
+
+    const markerEnd = new mapboxgl.Marker({
+        color: '#074464',
+        draggable: false
+      })
+      .setLngLat(pointsGeojson.features[1].geometry.coordinates)
+      .addTo(map); // Add the marker to the map
   }
+
 
   /**
    * Draw a curved arc between the start and end location points

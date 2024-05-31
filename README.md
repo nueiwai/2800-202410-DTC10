@@ -16,41 +16,27 @@
 **Dronify** is a web application that deploys autonomous drones (on-demand) to offer package delivery and roadside assistance for autonomous car owners during accidents, thereby reducing delivery time and traffic congestion.
 
 ## Project Technologies
-**Front-End**
+### Front-End
 * HTML, CSS 
 * Tailwind
 * Express.js
 * EJS
 * AJAX
 
-**UI Component Library**
+### UI Component Library
 * Flowbite
-* Cloudinary
+* **Cloudinary** for populating user’s profile image
 
-**Back-End**
+### Back-End
 * JavaScript
 * jQuery
-* Turf.js
-* MongoDB
-
-**API**
-* Mapbox API
-* Geolocation API
-* Open Weather API
-
-
-For the **front-end** we used:
-* **Flowbite** as our UI library
-
-For the **back-end** we used:
-* **Mapbox API** for the map interface and the foundation for the visual interface
 * **Turf.js** for routing display on the map
+* **MongoDB** for hosting our data collection (user’s personal information, user’s session, battery station geo-coordinates)
+
+### API
+* **Mapbox API** for the map interface and the foundation for the visual interface
 * **Geolocation API** for getting the user’s current location
 * **Open Weather API** for our Easter egg
-Cloudinary for populating user’s profile image
-
-For the **database** we used:
-* **MongoDB** for hosting our data collection (user’s personal information, user’s session, battery station geo-coordinates)
 
 ## List of Files
 ```
@@ -60,17 +46,17 @@ For the **database** we used:
 ├── .env                                # env file
 ├── package-lock.json                   # package-lock.json file
 ├── package.json                        # package.json file                        
-├── server.js                           # 
-├── users.js                            # 
-├── battery_station.js                  # 
-├── tailwind.config.js                  # 
+├── server.js                           # server.js file
+├── users.js                            # users.js file
+├── battery_station.js                  # battery_station.js file
+├── tailwind.config.js                  # tailwind.config.js file
 └── README.md
 
 It has the following subfolders and files:
 ├── .git                                # Folder for git repo
-├── node_modules/                        # node_modules file
-├── .vscode/                             # .vscode file
-├── public/                              # Folder for all static files
+├── node_modules/                       # node_modules file
+├── .vscode/                            # .vscode file
+├── public/                             # Folder for all static files
     └── images/
         ├── battery_marker.svg
         ├── catmeme.png
@@ -82,12 +68,20 @@ It has the following subfolders and files:
         ├── core_feature_icon1.svg
         ├── core_feature_icon2.svg
         ├── core_feature_icon3.svg
-        ├── chevrons-right.png
-        ├── chevrons-right.png
-        ├── chevrons-right.png
-        ├── chevrons-right.png
-        ├── chevrons-right.png
-        └── image1.png 
+        ├── Dronify_Favicon.png
+        ├── Feature_1.png
+        ├── Feature_2.png
+        ├── Feature_3.png
+        ├── Feature_4.png
+        ├── Feature_5.png
+        ├── Feature_6.png
+        ├── Feature_7.png
+        ├── Feature_8.png
+        ├── Feature_9.png
+        ├── Feature_cover.png
+        ├── logo.png
+        ├── package.png
+        └── profile.png 
     └── scripts/
         ├── animation.js
         ├── battery_stations.js
@@ -96,46 +90,46 @@ It has the following subfolders and files:
         ├── drone_share.js
         ├── get_cards_from_DB.js
         ├── location_picker.js
+        ├── script.js
         └── session_storage.js
     └── styles/
         ├── animation.css
         └── battery_stations_map.css
     └── videos/
         └── landing_page_video.webm
-
-    └── script.js/
-
-
-
 ├── views                            # Folder for all ejs files
-    /authentication.js
-    /firebaseAPI_DTC11.js
-    /main.js
-    /profile.js
-    /script.js
-    /skeleton.js
-    /notes.js
-    /timer.js
-    /resource_main_page.js
-    /resource_navbar_footer.js
-    /resource_consultation_page.js
-    /resource_fitness_course_page.js
-    /resource_helping_group_page.js
-    /helping_group_each.js
-    /helping_group_review.js                         
-├── styles                              # Folder for styles
-    /style_notes.css    
-    /style.css
-    /style1.css                        
-├── text                                # Folder for nav bar and footer
-    /footer.html
-    /nav_after_login.html
-    /nav_before.login.html
+    └── templates/
+        ├── 404page_header.ejs
+        ├── bottom_main_menu.ejs
+        ├── footer.ejs
+        ├── header.ejs
+        ├── map_footer.ejs
+        ├── map_header.ejs
+        └── map.ejs
+    └── 404.ejs
+    └── account.ejs
+    └── available_battery.ejs
+    └── available_routes.ejs
+    └── confirmation.ejs
+    └── forgotpassword.ejs
+    └── landing_page.ejs
+    └── location_modal.ejs
+    └── login.ejs
+    └── old_payment_edit.ejs
+    └── package_sizes.ejs
+    └── payment_edit.ejs
+    └── postlogin.ejs
+    └── profile_edit.ejs
+    └── resetpassword.ejs
+    └── select_payment.ejs
+    └── signup.ejs                      
 
 ```
 
 ## How to Run Our Project
 To get started with Dronify, the hosted version of the product can be used. You can get started immediately [here](https://dronify-mbme.onrender.com/). After the login page, you will be greeted with our three core features to select from.
+
+Or install using ```npm install```.
 
 ### What to Install
 
@@ -213,8 +207,8 @@ https://opendata.vancouver.ca/explore/dataset/electric-vehicle-charging-stations
 * Icons8 for in-app icons - https://icons8.com/icons/
 * Tabler for in-app icons - https://tablericons.com/
 * Gemini Advanced for mathematical logic implemented in map routing - https://gemini.google.com/advanced
-
-## References
+* Default profile image from - Google Image
+* Landing page video from - Freepik
 * 404 page animation design - https://www.silocreativo.com/en/creative-examples-404-error-css
 
 ## AI Usage
@@ -232,12 +226,7 @@ https://opendata.vancouver.ca/explore/dataset/electric-vehicle-charging-stations
 **Limitations Encountered:**
 * Integration testing is hard for the current “free” models of AI to do well, when there are many components of the application coming together and working together in a somewhat delicate manner, it is hard for the current AI models to fully capture this well and provide accurate trouble-shooting
 
-## Sources
-* Default profile image from - Google Image
-* Landing page video from - Freepik
-
 ## Contact Information
-
 You can reach us via GitHub profiles:
 
 [![GitHub](https://img.shields.io/badge/GitHub-CandiceWei-blue?logo=github)](https://github.com/candiceweily)
