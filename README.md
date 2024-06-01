@@ -16,7 +16,7 @@
 **Dronify** is a web application that deploys autonomous drones (on-demand) to offer package delivery and roadside assistance for autonomous car owners during accidents, thereby reducing delivery time and traffic congestion.
 
 ## Project Technologies
-### Front-End
+
 ### Front-End
 * HTML, CSS 
 * Tailwind
@@ -25,19 +25,12 @@
 * AJAX
 
 ### UI Component Library
-### UI Component Library
 * Flowbite
 * **Cloudinary** for populating user’s profile image
-* **Cloudinary** for populating user’s profile image
 
-### Back-End
 ### Back-End
 * JavaScript
 * jQuery
-* **Turf.js** for routing display on the map
-* **MongoDB** for hosting our data collection (user’s personal information, user’s session, battery station geo-coordinates)
-
-### API
 * **Turf.js** for routing display on the map
 * **MongoDB** for hosting our data collection (user’s personal information, user’s session, battery station geo-coordinates)
 
@@ -58,17 +51,10 @@
 ├── users.js                            # users.js file
 ├── battery_station.js                  # battery_station.js file
 ├── tailwind.config.js                  # tailwind.config.js file
-├── server.js                           # server.js file
-├── users.js                            # users.js file
-├── battery_station.js                  # battery_station.js file
-├── tailwind.config.js                  # tailwind.config.js file
 └── README.md
 
 It has the following subfolders and files:
 ├── .git                                # Folder for git repo
-├── node_modules/                       # node_modules file
-├── .vscode/                            # .vscode file
-├── public/                             # Folder for all static files
 ├── node_modules/                       # node_modules file
 ├── .vscode/                            # .vscode file
 ├── public/                             # Folder for all static files
@@ -96,20 +82,6 @@ It has the following subfolders and files:
         ├── Feature_cover.png
         ├── logo.png
         ├── package.png
-        ├── profile.png 
-        ├── Dronify_Favicon.png
-        ├── Feature_1.png
-        ├── Feature_2.png
-        ├── Feature_3.png
-        ├── Feature_4.png
-        ├── Feature_5.png
-        ├── Feature_6.png
-        ├── Feature_7.png
-        ├── Feature_8.png
-        ├── Feature_9.png
-        ├── Feature_cover.png
-        ├── logo.png
-        ├── package.png
         └── profile.png 
     ├── scripts/
         ├── animation.js
@@ -123,7 +95,8 @@ It has the following subfolders and files:
         └── session_storage.js
     ├── styles/
         ├── animation.css
-        └── battery_stations_map.css
+        ├── battery_stations_map.css
+        └── styles.css
     └── videos/
         └── landing_page_video.webm
 └── views                            # Folder for all ejs files
@@ -147,6 +120,7 @@ It has the following subfolders and files:
     ├── old_payment_edit.ejs
     ├── package_sizes.ejs
     ├── payment_edit.ejs
+    ├── payment_list.ejs
     ├── postlogin.ejs
     ├── profile_edit.ejs
     ├── resetpassword.ejs
@@ -237,8 +211,8 @@ https://opendata.vancouver.ca/explore/dataset/electric-vehicle-charging-stations
 * Icons8 for in-app icons - https://icons8.com/icons/
 * Tabler for in-app icons - https://tablericons.com/
 * Gemini Advanced for mathematical logic implemented in map routing - https://gemini.google.com/advanced
-* Default profile image from - Google Image
-* Landing page video from - Freepik
+* Default profile image - Google Image
+* Landing page video - Freepik
 * 404 page animation design - https://www.silocreativo.com/en/creative-examples-404-error-css
 
 ### API Licenses
